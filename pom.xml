@@ -46,7 +46,19 @@
                 </picUrl> -->
             </properties>
         </developer>
+        
+        <developer>
+            <id>antpelmor</id>
+            <name>Antonio</name>
+            <email>antpelmor@alum.us.es</email>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+            </properties>
+        </developer>
     </developers>
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
