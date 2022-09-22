@@ -57,6 +57,16 @@
             <properties>
             </properties>
         </developer>
+                <developer>
+            <id>alvvegrod</id>
+            <name>Alvaro</name>
+            <email>alvvegrod@alum.us.es</email>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+            </properties>
+        </developer>
     </developers>
 
     <dependencies>
