@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
+    <artifactId>spring-petclinic-NEW-NAME</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -61,6 +61,26 @@
             <id>alvvegrod</id>
             <name>Alvaro</name>
             <email>alvvegrod@alum.us.es</email>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+            </properties>
+        </developer>
+        <developer>
+            <id>carlosdelrioperez</id>
+            <name>Carlos</name>
+            <email>carlosmix52@gmail.com</email>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+            </properties>
+        </developer>
+        <developer>
+            <id>gabvidtev</id>
+            <name>Gabriel</name>
+            <email>gabvidtev@alum.us.es</email>
             <roles>
                 <role>leader</role>
             </roles>

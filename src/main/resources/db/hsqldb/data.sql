@@ -14,8 +14,20 @@ INSERT INTO authorities(id,username,authority) VALUES (5,'frafermot','owner');
 INSERT INTO users(username,password,enabled) VALUES ('antpelmor','ant1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'antpelmor','owner');
 
+<<<<<<< HEAD
 INSERT INTO users(username,password,enabled) VALUES ('alvvegrod','admin',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (8,'alvvegrod','owner');
+=======
+INSERT INTO users(username, password, enable) VALUES ('alvvegrod', 'admin', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES (6, 'alvvegrod', 'owner');
+
+INSERT INTO users(username, password, enable) VALUES ('carlosdelrioperez', 'carlos', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES (7, 'carlosdelrioperez', 'owner');
+
+INSERT INTO users(username,password,enabled) VALUES ('gabvidtev','admin',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'gabvidtev','owner');
+
+>>>>>>> 737575b083531c8b8d494dabe984c1378810038c
 
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
