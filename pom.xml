@@ -67,6 +67,16 @@
             <properties>
             </properties>
         </developer>
+        <developer>
+            <id>carlosdelrioperez</id>
+            <name>Carlos</name>
+            <email>carlosmix52@gmail.com</email>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+            </properties>
+        </developer>
     </developers>
 
     <dependencies>
