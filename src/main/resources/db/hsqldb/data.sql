@@ -12,13 +12,16 @@ INSERT INTO users(username,password,enabled) VALUES ('frafermot','fra1',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (5,'frafermot','owner');
 
 INSERT INTO users(username,password,enabled) VALUES ('antpelmor','ant1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (4,'antpelmor','owner');+
+INSERT INTO authorities(id,username,authority) VALUES (4,'antpelmor','owner');
 
 INSERT INTO users(username, password, enable) VALUES ('alvvegrod', 'admin', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES (6, 'alvvegrod', 'owner');
 
 INSERT INTO users(username, password, enable) VALUES ('carlosdelrioperez', 'carlos', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES (7, 'carlosdelrioperez', 'owner');
+
+INSERT INTO users(username,password,enabled) VALUES ('gabvidtev','admin',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'gabvidtev','owner');
 
 
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
