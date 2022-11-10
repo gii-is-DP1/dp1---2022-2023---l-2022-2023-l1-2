@@ -9,6 +9,11 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 @Entity
 @Table(name="cartas")
 public class Carta extends BaseEntity{
