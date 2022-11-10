@@ -7,9 +7,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.samples.petclinic.model.BaseEntity;
+
 @Entity
 @Table(name="cartas")
-public class Carta {
+public class Carta extends BaseEntity{
 
     @Column(name = "tipoCarta")
     @NotEmpty
