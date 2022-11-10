@@ -33,4 +33,10 @@ public class Usuario extends BaseEntity {
 	@Column(name = "fecha_nacimiento")
 	@NotNull
 	LocalDate fechaNacimiento;
+	@Column(name = "administrador")
+	@NotNull
+	Boolean esAdministrador;
+	@Column(name = "jugador")
+	@NotNull
+	Boolean esJugador;
 }
