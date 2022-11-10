@@ -38,13 +38,13 @@ public class UsuarioService {
 		this.userRepository = userRepository;
 	}
 
-	@Transactional
-	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
-		userRepository.save(user);
-	}
+	// @Transactional
+	// public void saveUser(Usuario user) throws DataAccessException {
+	// 	user.setEnabled(true);
+	// 	userRepository.save(user);
+	// }
 
-	public Optional<User> findUser(String username) {
-		return userRepository.findById(username);
-	}
+	// public Optional<Usuario> findUser(String username) {
+	// 	return userRepository.findById(username);
+	// }
 }
