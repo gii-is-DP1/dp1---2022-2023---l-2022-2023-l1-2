@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.user;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  */
 @Service
-public class UserService {
+public class UsuarioService {
 
-	private UserRepository userRepository;
+	private UsuarioRepository userRepository;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UsuarioRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
@@ -44,7 +43,7 @@ public class UserService {
 		user.setEnabled(true);
 		userRepository.save(user);
 	}
-	
+
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
 	}
