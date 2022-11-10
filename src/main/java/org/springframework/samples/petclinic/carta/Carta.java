@@ -13,11 +13,11 @@ public class Carta {
 
     @Column(name = "tipoCarta")
     @NotEmpty
-    private String tipoCarta;
+    private TipoCarta tipoCarta;
 
     @Column(name = "estadoCarta")
     @NotEmpty
-    private String estadoCarta;
+    private EstadoCarta estadoCarta;
 
     @Column(name = "posicion")
     @NotEmpty
@@ -28,19 +28,19 @@ public class Carta {
     private Jugador jugador;
 
     
-    public String getTipo(){
+    public TipoCarta getTipo(){
         return this.tipoCarta;
     }
 
-    public void setTipo(String tipo){
+    public void setTipo(TipoCarta tipo){
         this.tipoCarta = tipo;
     }
 
-    public String getEstado(){
+    public EstadoCarta getEstado(){
         return this.estadoCarta;
     }
 
-    public void setEstado(String estado){
+    public void setEstado(EstadoCarta estado){
         this.estadoCarta = estado;
     }
 
