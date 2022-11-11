@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
-import org.springframework.samples.petclinic.user.Usuario;
+import org.springframework.samples.petclinic.usuario.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;

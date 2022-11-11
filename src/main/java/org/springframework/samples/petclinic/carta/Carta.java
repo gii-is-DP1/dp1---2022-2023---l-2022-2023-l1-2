@@ -13,9 +13,10 @@ import org.springframework.samples.petclinic.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+
 @Entity
+@Getter
+@Setter
 @Table(name="cartas")
 public class Carta extends BaseEntity{
 
@@ -34,6 +35,7 @@ public class Carta extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "jugador_id")
     private Jugador jugador;
+
 
     
     public TipoCarta getTipo(){
@@ -67,5 +69,6 @@ public class Carta extends BaseEntity{
     public void setJugador(Jugador jugador){
         this.jugador = jugador;
     }
+
 
 }
