@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.carta;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CartaService {
     
     private CartaRepository cr;
