@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.usuario.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;

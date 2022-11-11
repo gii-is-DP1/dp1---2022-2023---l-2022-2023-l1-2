@@ -37,38 +37,6 @@ public class Carta extends BaseEntity{
     private Jugador jugador;
 
 
-    
-    public TipoCarta getTipo(){
-        return this.tipoCarta;
-    }
-
-    public void setTipo(TipoCarta tipo){
-        this.tipoCarta = tipo;
-    }
-
-    public EstadoCarta getEstado(){
-        return this.estadoCarta;
-    }
-
-    public void setEstado(EstadoCarta estado){
-        this.estadoCarta = estado;
-    }
-
-    public Integer getPosicion(){
-        return this.posicion;
-    }
-
-    public void setPosicion(Integer posicion){
-        this.posicion = posicion;
-    }
-
-    public Jugador getJugador(){
-        return this.jugador;
-    }
-
-    public void setJugador(Jugador jugador){
-        this.jugador = jugador;
-    }
-
+  
 
 }
