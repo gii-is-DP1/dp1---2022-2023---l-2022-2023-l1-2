@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.usuario.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class Authorities extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "username")
-	Usuario user;
+	User user;
 	
 	@Size(min = 3, max = 50)
 	String authority;

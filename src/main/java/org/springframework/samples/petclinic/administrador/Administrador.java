@@ -3,7 +3,7 @@ package org.springframework.samples.petclinic.administrador;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.springframework.samples.petclinic.user.Usuario;
+import org.springframework.samples.petclinic.usuario.Usuario;
 
 import lombok.Getter;
 import lombok.Setter;
