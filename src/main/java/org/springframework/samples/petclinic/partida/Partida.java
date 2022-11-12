@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.partida;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

@@ -12,11 +12,12 @@
     <table class="table table-striped">
         <tr>
             <th>Codigo</th>
-            <td><b><c:out value="${partida.codigo}"/></b></td>
+            <td><b><c:out value="${partida.get().codigo}"/></b></td>
         </tr>
+
         <tr>
             <th>Fecha</th>
-            <td><c:out value="${partida.fecha}"/></td>
+            <td><b><c:out value="${partida.get().fecha}"/></b></td>
         </tr>
     </table>
 
