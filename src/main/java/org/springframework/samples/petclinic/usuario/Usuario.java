@@ -1,13 +1,10 @@
-package org.springframework.samples.petclinic.user;
+package org.springframework.samples.petclinic.usuario;
+
 
 import java.time.LocalDate;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,12 +15,12 @@ import org.springframework.samples.petclinic.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "usuarios")
-public class Usuario extends BaseEntity {
-	@NotBlank
+@Table(name="usuarios")
+public class Usuario extends BaseEntity{
+    @NotBlank
 	@Column(name = "nombre_usuario")
 	String nombreUsuario;
 	@NotBlank
@@ -33,4 +30,10 @@ public class Usuario extends BaseEntity {
 	@Column(name = "fecha_nacimiento")
 	@NotNull
 	LocalDate fechaNacimiento;
+	@Column(name = "administrador")
+	@NotNull
+	Boolean esAdministrador;
+	@Column(name = "jugador")
+	@NotNull
+	Boolean esJugador;
 }
