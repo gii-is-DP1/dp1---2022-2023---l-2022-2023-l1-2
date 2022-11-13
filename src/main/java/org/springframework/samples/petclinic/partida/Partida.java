@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name = "partidas")
 public class Partida extends BaseEntity {
     
-    @NotNull
+
     @Column(name = "fecha")
     private LocalDate fecha;
 
@@ -30,7 +31,7 @@ public class Partida extends BaseEntity {
     @Column(name = "hora_fin")
     private LocalTime horaFin;
 
-    @NotNull
+    
     @Column(name = "estado")
     private EstadoPartida estado;
 
