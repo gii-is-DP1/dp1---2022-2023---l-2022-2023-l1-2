@@ -1,8 +1,10 @@
 package org.springframework.samples.petclinic.partida;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -53,7 +55,7 @@ public class PartidaController {
     @GetMapping("/{partidaId}")
  	public ModelAndView showPartida(@PathVariable("partidaId") int partidaId) {
  		ModelAndView mav = new ModelAndView("partidas/showPartida");
- 		mav.addObject("partida",this.partidaService.findById(partidaId));
- 		return mav;
+			mav.addObject("partida",this.partidaService.findById(partidaId));
+			return mav;
  	}
 }
