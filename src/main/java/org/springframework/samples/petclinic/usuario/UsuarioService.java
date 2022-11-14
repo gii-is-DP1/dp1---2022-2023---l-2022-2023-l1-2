@@ -20,7 +20,7 @@ public class UsuarioService {
 
     @Transactional
 	public void saveUser(Usuario user) throws DataAccessException {
-		
+		user.setEnabled(true);
 		usuarioRepository.save(user);
 	}
 

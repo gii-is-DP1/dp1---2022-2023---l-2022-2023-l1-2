@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.usuario.AdministradorService;
+import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,7 +15,7 @@ public class JugadorController {
     private final JugadorService jugadorService;
 
     @Autowired
-    public JugadorController(JugadorService jugadorService, UsuarioService uService, AdministradorService admnistradorService){
+    public JugadorController(JugadorService jugadorService, UsuarioService uService, AutoridadService admnistradorService){
         this.jugadorService=jugadorService; 
     }
 

@@ -16,8 +16,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "administradores")
-public class Administrador extends BaseEntity {
+@Table(name = "autoridades")
+public class Autoridad extends BaseEntity {
 
     @Size(min = 3, max = 50)
 	String autoridad;

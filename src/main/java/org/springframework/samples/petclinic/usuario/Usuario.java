@@ -38,7 +38,9 @@ public class Usuario {
 	@NotNull
 	LocalDate fechaNacimiento;
 
+	boolean enabled;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-	private Set<Administrador> administrador;
+	private Set<Autoridad> administrador;
 
 }

@@ -11,24 +11,24 @@ import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdministradorService {
-    private AdministradorRepository administradoRepository;
+public class AutoridadService {
+    private AutoridadRepository administradoRepository;
 	private UsuarioService userService;
 
     @Autowired
-	public AdministradorService(AdministradorRepository administradorRepository,UsuarioService usuarioService) {
+	public AutoridadService(AutoridadRepository administradorRepository,UsuarioService usuarioService) {
 		this.administradoRepository = administradorRepository;
 		this.userService= usuarioService;
 	}
 
 	@Transactional
-	public void saveAdministradores(Administrador ad) throws DataAccessException{
+	public void saveAdministradores(Autoridad ad) throws DataAccessException{
 		administradoRepository.save(ad);
 	}
 
 	@Transactional
 	public void saveAdministradores(String nombreUsuario, String rol) throws DataAccessException{
-		Administrador ad = new Administrador();
+		Autoridad ad = new Autoridad();
 		Optional<Usuario> usuario = userService.findUsuario(nombreUsuario);
 		if(usuario.isPresent()){
 			ad.setUsuario(usuario.get());
