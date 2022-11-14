@@ -11,4 +11,8 @@ public class JugadorService {
 	public JugadorService(JugadorRepository jugadorRepository) {
 		this.jugadorRepository = jugadorRepository;
 	}
+
+	public Jugador save(Jugador j){
+		return jugadorRepository.save(j);
+	}
 }

@@ -23,6 +23,9 @@ public class PartidaService {
 		return partidaRepository.findById(id);
 	} 
 
+	public Optional<Partida> findPartidaByCodigo(String codigo){
+		return partidaRepository.findByCodigo(codigo);
+	}
 	public Partida save(Partida p){
 		return partidaRepository.save(p);
 	}

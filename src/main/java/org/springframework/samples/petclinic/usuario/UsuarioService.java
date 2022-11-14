@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.usuario;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +12,9 @@ public class UsuarioService {
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository){
         this.usuarioRepository=usuarioRepository;
+    }
+
+    public Optional<Usuario> findUserByNombreUsuario(String nombreUsuario){
+        return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
 }
