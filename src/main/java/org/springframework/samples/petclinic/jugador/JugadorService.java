@@ -1,8 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -10,6 +9,7 @@ import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -47,4 +47,14 @@ public class JugadorService {
 		administradorService.saveAdministradores(jugador.getUsuario().getNombreUsuario(),"jugador");
 	
 	}	
+
+	@Transactional(readOnly = true)
+	public Optional<Jugador> findJugadorById(int id) throws DataAccessException {
+		return jugadorRepository.findById(id);
+	}
+
+	@Transactional
+	public void deleteJugador(Jugador jugador) throws DataAccessException{
+		jugadorRepository.delete(jugador);
+	}
 }
