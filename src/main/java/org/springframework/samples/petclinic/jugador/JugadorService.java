@@ -28,8 +28,10 @@ public class JugadorService {
 
 	@Transactional
 	public void saveJugador(Jugador jugador) throws DataAccessException {
-		//creating owner
-		jugadorRepository.save(jugador);		
+		//creating jugador
+		
+		jugadorRepository.save(jugador);	
+		
 		//creating user
 		usuarioService.saveUser(jugador.getUsuario());
 		//creating authorities
