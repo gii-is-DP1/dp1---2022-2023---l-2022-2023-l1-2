@@ -22,7 +22,7 @@
         <c:forEach items="${partidas}" var="partida">
             <tr>
                 <td>
-                    <spring:url value="/partidas/{partidaId}" var="partidaUrl">
+                    <spring:url value="/partidas/join/{partidaId}" var="partidaUrl">
                         <spring:param name="partidaId" value="${partida.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(partidaUrl)}"><c:out value="${partida.id}"/></a>

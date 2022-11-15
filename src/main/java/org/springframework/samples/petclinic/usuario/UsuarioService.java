@@ -21,6 +21,10 @@ public class UsuarioService {
     public Optional<Usuario> findUserByNombreUsuario(String nombreUsuario){
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
+
+    public Optional<Usuario> find(String usuario){
+        return usuarioRepository.findById(usuario);
+    }
     @Transactional
 	public void saveUser(Usuario user) throws DataAccessException {
 		user.setEnabled(true);

@@ -20,6 +20,7 @@ import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,31 +47,32 @@ public class PartidaController {
 
     @GetMapping("/join/{partidaId}")
     public String initUnirPartida(ModelMap model) {
-        String codigo = null;
-        model.put("codigo", codigo);
+        Partida p = new Partida();
+        model.put("partida", p);
         return PARTIDA_JOIN;
     }
 
     @PostMapping("/join/{partidaId}")
-    public String processUnirPartida(Principal principal, @Valid String codigo, BindingResult result,
+    public String processUnirPartida(Principal principal, @Valid Partida partida, BindingResult result,
             @PathVariable("partidaId") int partidaId) {
         if (result.hasErrors()) {
             return PARTIDA_JOIN;
         } else {
             Partida p = partidaService.findById(partidaId).get();
-            if (!(p.getCodigo().equals(codigo))) {
+            if (!(p.getCodigo().equals(partida.getCodigo()))) {
                 throw new IllegalArgumentException("El código no es correcto");
-                return "redirect:/partidas/join/{partidaId}";
             } else {
-                Usuario u = usuarioService.findUserByNombreUsuario(principal.getName()).get();
+                Usuario u = usuarioService.find(principal.getName()).get();
                 Jugador j = jugadorService.findByUsuario(u);
-                j.setUsuario(u);
                 j.setPartidasJugadas(0);
                 j.setPartidasGanadas(0);
                 j.setRecordPuntos(0);
                 j.setTotalPuntos(0);
+                Set<Jugador> set = p.getJugadores();
+                set.add(j);
+                p.setJugadores(set);
                 jugadorService.saveJugador(j);
-                p.getJugadores().add(j);
+                partidaService.save(p);
                 return "redirect:/partidas/{partidaId}";
             }   
         }
@@ -113,7 +115,7 @@ public class PartidaController {
  	}
 
 	@GetMapping("/join")
-	public  ModelAndView listPartidas(){
+	public ModelAndView listPartidas(){
 		ModelAndView mav = new ModelAndView("partidas/listPartidas");
 		List<Partida> partidas = partidaService.findAllPartidas();
 		List<Partida> partidasEnCola =partidas.stream().filter(x->x.getEstado()==EstadoPartida.EN_COLA).collect(Collectors.toList());
