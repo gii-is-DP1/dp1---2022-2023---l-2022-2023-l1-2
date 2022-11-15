@@ -29,7 +29,7 @@ public class AutoridadService {
 	@Transactional
 	public void saveAdministradores(String nombreUsuario, String rol) throws DataAccessException{
 		Autoridad ad = new Autoridad();
-		Optional<Usuario> usuario = userService.findUsuario(nombreUsuario);
+		Optional<Usuario> usuario = userService.findUserByNombreUsuario(nombreUsuario);
 		if(usuario.isPresent()){
 			ad.setUsuario(usuario.get());
 			ad.setAutoridad(rol);
