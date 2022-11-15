@@ -37,6 +37,5 @@ public class Carta extends BaseEntity{
     private Jugador jugador;
 
 
-  
 
 }
