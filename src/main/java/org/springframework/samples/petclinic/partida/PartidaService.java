@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PartidaService {
@@ -26,6 +27,7 @@ public class PartidaService {
 	public Optional<Partida> findPartidaByCodigo(String codigo){
 		return partidaRepository.findByCodigo(codigo);
 	}
+	@Transactional
 	public Partida save(Partida p){
 		return partidaRepository.save(p);
 	}
