@@ -4,10 +4,12 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -76,4 +78,13 @@ public class PartidaController {
 			mav.addObject("partida",this.partidaService.findById(partidaId));
 			return mav;
  	}
+
+	@GetMapping("/join")
+	public  ModelAndView listPartidas(){
+		ModelAndView mav = new ModelAndView("partidas/listPartidas");
+		List<Partida> partidas = partidaService.findAllPartidas();
+		List<Partida> partidasEnCola =partidas.stream().filter(x->x.getEstado()==EstadoPartida.EN_COLA).collect(Collectors.toList());
+		mav.addObject("partidas", partidasEnCola);
+		return mav;
+	}
 }

@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
+
 
 
 
@@ -27,6 +30,9 @@ public class JugadorService {
 		this.jugadorRepository = jugadorRepository;
 	}
 
+	public List<Jugador> findAll(){
+		return jugadorRepository.findAll();
+	}
 	public Jugador findByUsuario(Usuario usuario){
 		return jugadorRepository.findByUsuario(usuario);
 	}

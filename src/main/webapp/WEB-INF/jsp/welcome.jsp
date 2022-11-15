@@ -11,5 +11,17 @@
             <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
             <img class="img-responsive" src="${petsImage}"/>
         </div>
+        <div>
+            <a class="btn btn-default" href='<spring:url value="/partidas/create" htmlEscape="true"/>'> Crear Partida</a>
+        </div>
+
+        <br/>
+        <div>
+            <a class="btn btn-default" href='<spring:url value="/partidas/join" htmlEscape="true"/>'> Unirse a Partida</a>
+        </div>
+        <br/>
+        <div>
+            <a class="btn btn-default" href='<spring:url value="/jugadores/find" htmlEscape="true"/>'> Ver jugadores</a>
+        </div>
     </div>
 </petclinic:layout>
