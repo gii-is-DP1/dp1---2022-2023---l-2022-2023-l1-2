@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
+import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,10 @@ public class JugadorService {
     @Autowired
 	public JugadorService(JugadorRepository jugadorRepository) {
 		this.jugadorRepository = jugadorRepository;
+	}
+
+	public Jugador findByUsuario(Usuario usuario){
+		return jugadorRepository.findByUsuario(usuario);
 	}
 
 	@Transactional
