@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer>{
-    List<Usuario> findAll();
+    List<Usuario> findAll();   
 }
