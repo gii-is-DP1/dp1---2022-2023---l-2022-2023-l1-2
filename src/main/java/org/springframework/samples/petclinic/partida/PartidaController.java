@@ -64,14 +64,9 @@ public class PartidaController {
             } else {
                 Usuario u = usuarioService.find(principal.getName()).get();
                 Jugador j = jugadorService.findByUsuario(u);
-                j.setPartidasJugadas(0);
-                j.setPartidasGanadas(0);
-                j.setRecordPuntos(0);
-                j.setTotalPuntos(0);
                 Set<Jugador> set = p.getJugadores();
                 set.add(j);
                 p.setJugadores(set);
-                jugadorService.saveJugador(j);
                 partidaService.save(p);
                 return "redirect:/partidas/{partidaId}";
             }   
