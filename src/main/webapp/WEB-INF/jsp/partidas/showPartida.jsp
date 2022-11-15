@@ -19,6 +19,18 @@
             <th>Fecha</th>
             <td><b><c:out value="${partida.get().fecha}"/></b></td>
         </tr>
+
+        <tr>
+            <th>Creador</th>
+            <td><b><c:out value="${partida.get().creador.getUsuario().getNombreUsuario()}"/></b></td>
+        </tr>
+
+        <c:forEach items="${partida.get().jugadores}" var="jugador">
+            <tr>
+                <th>Jugador: </th>
+                <td><b><c:out value="${jugador.getUsuario().getNombreUsuario()}"/></b></td>
+            </tr>
+        </c:forEach>
     </table>
 
 </petclinic:layout>
