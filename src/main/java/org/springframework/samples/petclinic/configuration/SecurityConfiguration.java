@@ -35,11 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
-				.antMatchers("/users/new").permitAll()
+				.antMatchers("/usuario/new").permitAll()
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
+				.antMatchers("/partidas/**").permitAll()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -61,13 +62,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.jdbcAuthentication()
 	      .dataSource(dataSource)
 	      .usersByUsernameQuery(
-	       "select username,password,enabled "
-	        + "from users "
-	        + "where username = ?")
+	       "select nombre_usuario,contrasena,enabled "
+	        + "from usuarios "
+	        + "where nombre_usuario = ?")
 	      .authoritiesByUsernameQuery(
-	       "select username, authority "
-	        + "from authorities "
-	        + "where username = ?")	      	      
+	       "select nombre_usuario,autoridad "
+	        + "from autoridades "
+	        + "where nombre_usuario = ?")	      	      
 	      .passwordEncoder(passwordEncoder());	
 	}
 	
