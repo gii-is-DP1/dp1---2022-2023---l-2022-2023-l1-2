@@ -59,4 +59,6 @@ public class JugadorService {
 	public void deleteJugador(Jugador jugador) throws DataAccessException{
 		jugadorRepository.delete(jugador);
 	}
+
+	
 }
