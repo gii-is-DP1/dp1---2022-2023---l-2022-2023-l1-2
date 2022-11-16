@@ -40,13 +40,16 @@ public class JugadorController {
 	}
 
     @GetMapping(value = "/jugador/delete/{jugadorId}")
-    public String deleteJugador(@PathVariable("jugadorId") int jugadorId){
+    public ModelAndView deleteJugador(@PathVariable("jugadorId") int jugadorId){
         Optional<Jugador> opt = jugadorService.findJugadorById(jugadorId);
         if(opt.isPresent()){
             var jugador = opt.get();
             jugadorService.deleteJugador(jugador);
         }
-        return "redirect:/";
+        ModelAndView mav = new ModelAndView("redirect:/jugadores/find");
+		List<Jugador> jugadores = jugadorService.findAll();
+		mav.addObject("jugadores", jugadores);
+        return mav;
     }
 
 
