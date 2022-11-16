@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -36,6 +38,20 @@ public class JugadorController {
 		mav.addObject("jugadores", jugadores);
 		return mav;
 	}
+
+    @GetMapping(value = "/jugador/delete/{jugadorId}")
+    public ModelAndView deleteJugador(@PathVariable("jugadorId") int jugadorId){
+        Optional<Jugador> opt = jugadorService.findJugadorById(jugadorId);
+        if(opt.isPresent()){
+            var jugador = opt.get();
+            jugadorService.deleteJugador(jugador);
+        }
+        ModelAndView mav = new ModelAndView("redirect:/jugadores/find");
+		List<Jugador> jugadores = jugadorService.findAll();
+		mav.addObject("jugadores", jugadores);
+        return mav;
+    }
+
 
     
 }

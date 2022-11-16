@@ -48,6 +48,10 @@ public class UsuarioController {
 		}
 		else {
 			//creating jugador, usuario, and administrador
+			jugador.setPartidasGanadas(0);	
+			jugador.setPartidasJugadas(0);
+			jugador.setRecordPuntos(0);
+			jugador.setTotalPuntos(0);
 			this.jugadorService.saveJugador(jugador);
 			return "redirect:/";
 		}

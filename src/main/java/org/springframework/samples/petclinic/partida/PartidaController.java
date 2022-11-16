@@ -37,6 +37,7 @@ public class PartidaController {
 	private final UsuarioService usuarioService;
     private static final String PARTIDA_CREATE = "partidas/createPartidas";
     private static final String PARTIDA_JOIN = "partidas/joinPartidas";
+	private static final String TABLERO = "partidas/Tablero";
 
     @Autowired
 	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService) {
@@ -44,6 +45,28 @@ public class PartidaController {
 		this.jugadorService = jugadorService;
 		this.usuarioService = usuarioService;
 	}
+
+    @GetMapping("/start/{partidaId}")
+    public String initEmpezarPartida(ModelMap model) {
+        Partida p = new Partida();
+        model.put("partida", p);
+        return "redirect:/partidas/{partidaId}";
+    }
+
+    @PostMapping("start/{partidaId}")
+    public String processEmpezarPartida(@Valid Partida partida, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/partidas/{partidaId}";
+        } else {
+            if (partida.getJugadores().size() < 2 || partida.getJugadores().size() > 4) {
+                throw new IllegalArgumentException(
+                        "La partida no puede comenzar con el número de jugadores presentes en la sala");
+            } else {
+                partida.setEstado(EstadoPartida.EN_CURSO);
+                return TABLERO;
+            }
+        }
+    }
 
     @GetMapping("/join/{partidaId}")
     public String initUnirPartida(ModelMap model) {
@@ -116,5 +139,13 @@ public class PartidaController {
 		List<Partida> partidasEnCola =partidas.stream().filter(x->x.getEstado()==EstadoPartida.EN_COLA).collect(Collectors.toList());
 		mav.addObject("partidas", partidasEnCola);
 		return mav;
+	}
+
+
+	@GetMapping("/{partidaId}/tablero")
+	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId) {
+		ModelAndView mav = new ModelAndView(TABLERO);
+		   mav.addObject("partida",this.partidaService.findById(partidaId));
+		   return mav;
 	}
 }

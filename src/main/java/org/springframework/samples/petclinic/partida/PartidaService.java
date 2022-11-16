@@ -31,4 +31,6 @@ public class PartidaService {
 	public Partida save(Partida p){
 		return partidaRepository.save(p);
 	}
+
+
 }
