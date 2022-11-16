@@ -47,17 +47,15 @@ public class JugadorController {
 		return mav;
 	}
 
+
     @GetMapping(value = "/jugadores/delete/{jugadorId}")
-    public ModelAndView deleteJugador(@PathVariable("jugadorId") int jugadorId){
+    public String deleteJugador(@PathVariable("jugadorId") int jugadorId){
         Optional<Jugador> opt = jugadorService.findJugadorById(jugadorId);
         if(opt.isPresent()){
             var jugador = opt.get();
             jugadorService.deleteJugador(jugador);
         }
-        ModelAndView mav = new ModelAndView("redirect:/jugadores/find");
-		List<Jugador> jugadores = jugadorService.findAll();
-		mav.addObject("jugadores", jugadores);
-        return mav;
+        return "redirect:/jugadores/find";
     }
 
     @GetMapping(value = "/jugadores/edit/{jugadorId}")
@@ -76,6 +74,14 @@ public class JugadorController {
 		else {
 			jugador.setId(jugadorId);
             Usuario usuario = jugador.getUsuario();
+			Integer a = jugador.getPartidasGanadas();
+			Integer b= jugador.getPartidasJugadas();
+			Integer c = jugador.getRecordPuntos();
+			Integer e = jugador.getTotalPuntos();
+			jugador.setPartidasGanadas(a);
+			jugador.setPartidasJugadas(b);
+			jugador.setRecordPuntos(c);
+			jugador.setTotalPuntos(e);
 			this.jugadorService.saveJugador(jugador);
             this.usuarioService.saveUser(usuario);
 			return "redirect:/jugadores/{jugadorId}";
