@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12">
             <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
-            <img class="img-responsive" src="${petsImage}"/>
+            <img class="img-responsive" style="height: 200px;" src="https://www.fecantri.org/wp-content/uploads/2015/09/Imagen1.png"/>
         </div>
         <div>
             <a class="btn btn-default" href='<spring:url value="/partidas/create" htmlEscape="true"/>'> Crear Partida</a>
