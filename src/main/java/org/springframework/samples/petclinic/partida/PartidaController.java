@@ -34,6 +34,7 @@ public class PartidaController {
 	private final JugadorService jugadorService;
 	private final UsuarioService usuarioService;
     private static final String PARTIDA_CREATE = "partidas/createPartidas";
+	private static final String TABLERO = "partidas/Tablero";
 
     @Autowired
 	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService) {
@@ -86,5 +87,13 @@ public class PartidaController {
 		List<Partida> partidasEnCola =partidas.stream().filter(x->x.getEstado()==EstadoPartida.EN_COLA).collect(Collectors.toList());
 		mav.addObject("partidas", partidasEnCola);
 		return mav;
+	}
+
+
+	@GetMapping("/{partidaId}/tablero")
+	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId) {
+		ModelAndView mav = new ModelAndView(TABLERO);
+		   mav.addObject("partida",this.partidaService.findById(partidaId));
+		   return mav;
 	}
 }
