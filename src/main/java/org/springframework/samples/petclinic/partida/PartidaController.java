@@ -46,28 +46,6 @@ public class PartidaController {
 		this.usuarioService = usuarioService;
 	}
 
-    @GetMapping("/start/{partidaId}")
-    public String initEmpezarPartida(ModelMap model) {
-        Partida p = new Partida();
-        model.put("partida", p);
-        return "redirect:/partidas/{partidaId}";
-    }
-
-    @PostMapping("start/{partidaId}")
-    public String processEmpezarPartida(@Valid Partida partida, BindingResult result) {
-        if (result.hasErrors()) {
-            return "redirect:/partidas/{partidaId}";
-        } else {
-            if (partida.getJugadores().size() < 2 || partida.getJugadores().size() > 4) {
-                throw new IllegalArgumentException(
-                        "La partida no puede comenzar con el número de jugadores presentes en la sala");
-            } else {
-                partida.setEstado(EstadoPartida.EN_CURSO);
-                return TABLERO;
-            }
-        }
-    }
-
     @GetMapping("/join/{partidaId}")
     public String initUnirPartida(ModelMap model) {
         Partida p = new Partida();
@@ -141,11 +119,17 @@ public class PartidaController {
 		return mav;
 	}
 
-
 	@GetMapping("/{partidaId}/tablero")
 	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId) {
 		ModelAndView mav = new ModelAndView(TABLERO);
-		   mav.addObject("partida",this.partidaService.findById(partidaId));
-		   return mav;
+		mav.addObject("partida",this.partidaService.findById(partidaId));
+        Partida partida = partidaService.findById(partidaId).get();
+           if (partida.getJugadores().size() < 2 || partida.getJugadores().size() > 4) {
+                throw new IllegalArgumentException(
+                                "La partida no puede comenzar con el número de jugadores presentes en la sala");
+            } else {
+                partida.setEstado(EstadoPartida.EN_CURSO);
+                return mav;
+            }
 	}
 }

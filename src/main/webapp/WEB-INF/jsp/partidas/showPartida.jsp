@@ -31,6 +31,11 @@
                 <td><b><c:out value="${jugador.getUsuario().getNombreUsuario()}"/></b></td>
             </tr>
         </c:forEach>
+        
     </table>
+    
+    <div>
+        <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero" htmlEscape="true"/>'> Empezar Partida</a>
+    </div>
 
 </petclinic:layout>
