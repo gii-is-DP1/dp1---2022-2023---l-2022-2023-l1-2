@@ -76,6 +76,14 @@ public class JugadorController {
 		else {
 			jugador.setId(jugadorId);
             Usuario usuario = jugador.getUsuario();
+			Integer a = jugador.getPartidasGanadas();
+			Integer b= jugador.getPartidasJugadas();
+			Integer c = jugador.getRecordPuntos();
+			Integer e = jugador.getTotalPuntos();
+			jugador.setPartidasGanadas(a);
+			jugador.setPartidasJugadas(b);
+			jugador.setRecordPuntos(c);
+			jugador.setTotalPuntos(e);
 			this.jugadorService.saveJugador(jugador);
             this.usuarioService.saveUser(usuario);
 			return "redirect:/jugadores/{jugadorId}";
