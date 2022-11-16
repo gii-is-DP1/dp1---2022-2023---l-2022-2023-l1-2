@@ -39,7 +39,7 @@
                     <c:out value="${jugador.recordPuntos}"/>
                 </td>
                 <td>
-                    <a class="btn btn-danger" href='<spring:url value="/jugador/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
+                    <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
                 </td>
                 <td>
                     <a class="btn" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>

@@ -47,7 +47,8 @@ public class JugadorController {
 		return mav;
 	}
 
-    @GetMapping(value = "/jugador/delete/{jugadorId}")
+
+    @GetMapping(value = "/jugadores/delete/{jugadorId}")
     public String deleteJugador(@PathVariable("jugadorId") int jugadorId){
         Optional<Jugador> opt = jugadorService.findJugadorById(jugadorId);
         if(opt.isPresent()){
