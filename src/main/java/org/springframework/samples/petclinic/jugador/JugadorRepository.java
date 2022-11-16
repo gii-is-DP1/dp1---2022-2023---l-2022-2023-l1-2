@@ -13,7 +13,7 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
     
     List<Jugador> findAll();
 
-    Jugador save (Jugador jugador)  throws DataAccessException;
+    Jugador save (Jugador jugador) throws DataAccessException;
 
 
     Jugador findByUsuario(Usuario usuario);
