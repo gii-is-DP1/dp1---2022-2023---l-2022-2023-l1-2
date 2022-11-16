@@ -16,6 +16,7 @@
             <th>Partidas Ganadas</th>
             <th>Puntos Totales</th>
             <th>Record de Puntos</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,9 @@
                 </td>
                 <td>
                     <c:out value="${jugador.recordPuntos}"/>
+                </td>
+                <td>
+                    <a class="btn btn-danger" href='<spring:url value="/jugador/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
                 </td>
             </tr>
         </c:forEach>
