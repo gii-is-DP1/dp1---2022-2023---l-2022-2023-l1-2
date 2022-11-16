@@ -30,7 +30,7 @@ public class Partida extends BaseEntity {
 
     @Column(name = "fecha")
     private LocalDate fecha;
-
+  
     @Column(name = "hora_inicio")
     private LocalTime horaInicio;
 
@@ -41,6 +41,7 @@ public class Partida extends BaseEntity {
     @Column(name = "estado")
     private EstadoPartida estado;
 
+    
     @NotEmpty
     @Column(name = "codigo")
     private String codigo;
