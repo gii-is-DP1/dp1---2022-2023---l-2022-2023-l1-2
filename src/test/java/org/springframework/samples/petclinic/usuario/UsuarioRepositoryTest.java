@@ -2,9 +2,11 @@ package org.springframework.samples.petclinic.usuario;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +29,30 @@ public class UsuarioRepositoryTest {
 
     @Test
     public void testFindByNombreUsuario(){
-        Optional<Usuario> usuario = usuarioRepository.findByNombreUsuario("Pepe");
-        assertNotNull(usuario);
-        assertFalse(usuario.isEmpty());
+        Optional<Usuario> usuarioOp = usuarioRepository.findByNombreUsuario("Pepe");
+        Usuario usuario = usuarioOp.get();
+        LocalDate fechaNacimiento = LocalDate.of(2001, 1, 10);
+        assertNotNull(usuarioOp);
+        assertFalse(usuarioOp.isEmpty());
+        assertEquals("pepe",usuario.getContrasena() );
+        assertEquals(fechaNacimiento,usuario.getFechaNacimiento());
+    }
+
+    @Test
+    public void testFindByNombreUsuarioFail(){
+        Optional<Usuario> usuarioOp = usuarioRepository.findByNombreUsuario("Pepe");
+        Usuario usuario = usuarioOp.get();
+        LocalDate fechaNacimiento = LocalDate.of(2002, 1, 10);
+        assertNotNull(usuarioOp);
+        assertFalse(usuarioOp.isEmpty());
+        assertNotEquals("constraseña",usuario.getContrasena() );
+        assertNotEquals(fechaNacimiento,usuario.getFechaNacimiento());
+    }
+
+    @Test
+    public void testFindByNombreUsuarioNotExists(){
+        Optional<Usuario> usuarioOp = usuarioRepository.findByNombreUsuario("Antonio");
+        assertTrue(usuarioOp.isEmpty());
     }
     
 }

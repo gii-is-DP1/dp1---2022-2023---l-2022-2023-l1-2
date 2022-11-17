@@ -39,7 +39,8 @@
     <spring:url value="{jugadorId}/edit" var="editUrl">
         <spring:param name="jugadorId" value="${jugador.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Jugador</a>
+
+    <a href="/" class="btn btn-default">Volver</a>
 
     <br/>
     <br/>
