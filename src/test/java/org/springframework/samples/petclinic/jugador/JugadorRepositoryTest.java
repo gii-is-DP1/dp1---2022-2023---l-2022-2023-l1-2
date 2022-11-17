@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.jugador;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.samples.petclinic.usuario.Usuario;
+import org.springframework.samples.petclinic.usuario.UsuarioRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,26 +18,28 @@ import java.util.List;
 public class JugadorRepositoryTest {
     
 
-    @Autowired JugadorRepository jugadorRepository;
+    @Autowired 
+    JugadorRepository jugadorRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @Test
     public void testFindAll(){
         List<Jugador> jugadores = jugadorRepository.findAll();
-        assertNotNull(jugadorRepository);
+        assertNotNull(jugadores);
         assertFalse(jugadores.isEmpty());
+        assertEquals(3, jugadores.size(),"Faltan datos de inicialización");
     }
 
     @Test
     public void testFindByUsuario(){
-        LocalDate cumple = LocalDate.of(2000, 03, 10);
-        Usuario pepe = new Usuario();
-        pepe.setNombreUsuario("Pepe");
-        pepe.setContrasena("pepe");
-        pepe.setFechaNacimiento(cumple);
-        pepe.setEnabled(true);
-        Jugador jug = jugadorRepository.findByUsuario(pepe);
+        Usuario usu = usuarioRepository.findById("Pepe").get();
+        Jugador jug = jugadorRepository.findByUsuario(usu);
         assertNotNull(jug);
-       
+        assertEquals(10,jug.getPartidasJugadas() );
+        assertEquals(2,jug.getPartidasGanadas() );
+        assertEquals(21,jug.getTotalPuntos() );
+        assertEquals(12,jug.getRecordPuntos() );
 
     }
 }

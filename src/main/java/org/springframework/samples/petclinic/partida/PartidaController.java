@@ -63,7 +63,7 @@ public class PartidaController {
             if (!(p.getCodigo().equals(partida.getCodigo()))) {
                 throw new IllegalArgumentException("El código no es correcto");
             } else {
-                Usuario u = usuarioService.find(principal.getName()).get();
+                Usuario u = usuarioService.findUserByNombreUsuario(principal.getName()).get();
                 Jugador j = jugadorService.findByUsuario(u);
                 Set<Jugador> set = p.getJugadores();
                 set.add(j);
