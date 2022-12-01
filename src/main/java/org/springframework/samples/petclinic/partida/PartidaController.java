@@ -7,8 +7,6 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +18,6 @@ import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;

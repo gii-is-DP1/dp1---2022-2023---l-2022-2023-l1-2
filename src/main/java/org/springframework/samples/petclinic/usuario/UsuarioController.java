@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.usuario;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -44,6 +46,8 @@ public class UsuarioController {
 	@RequestMapping(value = "/usuario/new", method = RequestMethod.POST)
 	public String processCreationForm(@Valid Jugador jugador, BindingResult result) {
 		if (result.hasErrors()) {
+			return VIEW_CREATE_FORM;
+		} else if(Period.between(jugador.getUsuario().getFechaNacimiento(), LocalDate.now()).getYears() < 8){
 			return VIEW_CREATE_FORM;
 		}
 		else {
