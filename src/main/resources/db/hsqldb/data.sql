@@ -83,13 +83,13 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,fecha_nacimiento,enabled) VALUES ('Hola','hola','2000-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Hola','hola','hola','hola','2000-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (10,'Hola','admin');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,fecha_nacimiento,enabled) VALUES ('Pepe','pepe','2001-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pepe','pepe','pepe','pepe','2001-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (11,'Pepe','jugador');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,fecha_nacimiento,enabled) VALUES ('Pablo','pablo','2002-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pablo','pablo','pablo','pablo','2002-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (12,'Pablo','jugador');
 
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (10,2,21,12,'Pepe');

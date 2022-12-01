@@ -15,6 +15,8 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre de usuario" name="usuario.nombreUsuario"/>
             <petclinic:inputField label="Contraseña" name="usuario.contrasena"/>
+            <petclinic:inputField label="Fecha de nacimiento" name="usuario.nombre"/>
+            <petclinic:inputField label="Fecha de nacimiento" name="usuario.apellidos"/>
             <petclinic:inputField label="Fecha de nacimiento" name="usuario.fechaNacimiento"/>
         </div>
         <div class="form-group">
