@@ -30,5 +30,9 @@ public class PartidaService {
 		return partidaRepository.save(p);
 	}
 
+	public List<Partida> partidasByPlayer(Integer id){
+		return partidaRepository.findByPlayer(id);
+	}
+
 
 }

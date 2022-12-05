@@ -28,6 +28,11 @@
         </tr>
 
         <tr>
+            <th>Estado</th>
+            <td><b><c:out value="${partida.get().estado}"/></b></td>
+        </tr>
+
+        <tr>
             <th>Creador</th>
             <td><b><c:out value="${partida.get().creador.getUsuario().getNombreUsuario()}"/></b></td>
         </tr>
@@ -41,8 +46,14 @@
         
     </table>
     
-    <div>
-        <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero" htmlEscape="true"/>'> Empezar Partida</a>
-    </div>
+    <c:if test = "${partida.get().estado == 'EN_COLA'}">
+        <c:if test = "${partida.get().creador.getUsuario().getNombreUsuario().equals(jugador.get().getNombreUsuario())}">
+            <div>
+                <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero" htmlEscape="true"/>'> Empezar Partida</a>
+            </div>
+        </c:if>
+    </c:if>
+    
+    
 
 </petclinic:layout>
