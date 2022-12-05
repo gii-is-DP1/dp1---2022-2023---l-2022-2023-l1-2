@@ -13,9 +13,6 @@ public interface PartidaRepository extends CrudRepository<Partida, Integer>{
     @Query("SELECT part FROM Partida part")
     List<Partida> findAll();
 
-    @Query("SELECT p FROM Partida p WHERE p.codigo = ?1")
-    Optional<Partida> findByCodigo(String codigo);
-
     Partida save(Partida p);
 
 

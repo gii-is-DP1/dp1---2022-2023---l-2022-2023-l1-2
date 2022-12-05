@@ -4,9 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="jugadores">
-    <h2>Owners</h2>
+    <h2>Jugadores</h2>
 
     <table id="jugadoresTable" class="table table-striped">
         <thead>
@@ -38,7 +39,7 @@
                     <c:out value="${jugador.recordPuntos}"/>
                 </td>
                 <td>
-                    <a class="btn btn-danger" href='<spring:url value="/jugador/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
+                    <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
                 </td>
                 <td>
                     <a class="btn" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>

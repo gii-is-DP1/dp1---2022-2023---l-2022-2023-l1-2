@@ -86,6 +86,20 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO usuarios(nombre_usuario,contrasena,fecha_nacimiento,enabled) VALUES ('Hola','hola','2000-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (10,'Hola','admin');
 
+INSERT INTO usuarios(nombre_usuario,contrasena,fecha_nacimiento,enabled) VALUES ('Pepe','pepe','2001-01-10',True);
+INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (11,'Pepe','jugador');
+
+INSERT INTO usuarios(nombre_usuario,contrasena,fecha_nacimiento,enabled) VALUES ('Pablo','pablo','2002-01-10',True);
+INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (12,'Pablo','jugador');
+
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (10,2,21,12,'Pepe');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (9,2,21,12,'Hola');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (5,2,21,12,'Pablo');
+
+INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id) VALUES (1,'2001-01-10','23:00:00','23:20:00',2,'qwerty',1);
+
+INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,1);
+
 INSERT INTO cartas(tipo_carta,estado_carta,posicion,jugador_id) VALUES (0,2,0,null);
 INSERT INTO cartas(tipo_carta,estado_carta,posicion,jugador_id) VALUES (0,2,0,null);
 INSERT INTO cartas(tipo_carta,estado_carta,posicion,jugador_id) VALUES (0,2,0,null);

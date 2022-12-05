@@ -8,6 +8,13 @@
 
     <h2>Partida Informacion</h2>
 
+    <c:if test="${message != null}">
+		<div class="alert alert-${messageType}">
+			<c:out value="${message}"></c:out>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">�</a>
+		</div>
+	</c:if>
+
 
     <table class="table table-striped">
         <tr>
