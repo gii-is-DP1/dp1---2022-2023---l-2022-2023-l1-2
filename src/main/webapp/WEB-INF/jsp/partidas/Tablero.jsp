@@ -5,18 +5,18 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="partidas">
+<petclinic:layout pageName="tablero">
    
-
-
     
-    <div style="background-image: url(/resources/images/Tablero.png);background-size: 700px; height: 850px; width: 700px; background-position: center; " >
-        <spring:url value="/resources/images/Tablero.png" htmlEscape="true" var="petsImage"/>
-        
+    <div class="row">
+        <div class="col-md-12">
+            <petclinic:board tablero="${tablero}">
+            <c:forEach items="${cartasIniciales}" var="carta">
+            	<petclinic:carta size="100" carta="${carta}"/>            	
+            </c:forEach> 
+            </petclinic:board>
+        </div>
     </div>
 
-
-
-   
     
 </petclinic:layout>

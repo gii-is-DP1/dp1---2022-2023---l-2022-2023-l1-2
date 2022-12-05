@@ -15,5 +15,8 @@ public interface PartidaRepository extends CrudRepository<Partida, Integer>{
 
     Partida save(Partida p);
 
+    @Query("SELECT p from Partida p INNER JOIN FETCH p.jugadores as j WHERE j.id = ?1")
+    List<Partida> findByPlayer(Integer id);
+
 
 }
