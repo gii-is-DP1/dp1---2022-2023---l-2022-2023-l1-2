@@ -72,7 +72,7 @@ public class LogroController {
             return LOGRO_CREATE_UPDATE;
         } else {
             logro.setId(logroId);
-            logro.setNombre(logro.getNombre());
+            logro.setName(logro.getName());
             logro.setTipoLogro(logro.getTipoLogro());
             this.logroService.save(logro);
             return "redirect:/logros/{logroId}";

@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.samples.petclinic.jugador.Jugador;
-import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.model.NamedEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,10 +19,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "logro")
-public class Logro extends BaseEntity {
-
-	@Column(name = "nombre")
-	private String nombre;
+public class Logro extends NamedEntity {
 	
 	@Column(name = "tipoLogro")
 	private TipoLogro tipoLogro;
