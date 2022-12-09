@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.carta.CartaService;
+import org.springframework.samples.petclinic.carta.EstadoCarta;
 import org.springframework.samples.petclinic.carta.TipoCarta;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
@@ -50,7 +51,6 @@ public class PartidaController {
     private static final String PARTIDA_CREATE = "partidas/createPartidas";
     private static final String PARTIDA_JOIN = "partidas/joinPartidas";
 	private static final String TABLERO = "partidas/Tablero";
-    private static List<Carta> cartasIniciales;
 
     @Autowired
 	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService, TableroService tableroService, CartaService cartaService) {
@@ -124,6 +124,7 @@ public class PartidaController {
 			Set<Jugador> set = new HashSet<>();
 			set.add(jug);
 			partida.setJugadores(set);
+            
 
             this.partidaService.save(partida);
 
@@ -136,21 +137,30 @@ public class PartidaController {
  		response.addHeader("Refresh", "3");
         ModelAndView mav = new ModelAndView("partidas/showPartida");
         Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
-		mav.addObject("partida",this.partidaService.findById(partidaId));
+		Partida p = this.partidaService.findById(partidaId).get();
+        List<Carta> cartas = cartasAleatorias(p);
+        
+        p.setCartas(cartas);
+        partidaService.save(p);
+        mav.addObject("partida",this.partidaService.findById(partidaId));
         mav.addObject("jugador", user);
-        cartasAleatorias();
         return mav;
  	}
 
-    public void cartasAleatorias(){
-        List<Carta> todasCartas = cartaService.findAllCartas();
-        Collections.shuffle(todasCartas);
-        List<Carta> cartasAleatorias = todasCartas.subList(0, 6);
-        for(int i =0; i<6;i++){
-            Carta carta = cartasAleatorias.get(i);
-            carta.setPosicion(i+1);
+    public List<Carta> cartasAleatorias(Partida p){
+        List<Carta> cartas = p.getCartas();
+        if(cartas.isEmpty() || cartas == null || cartas.size() !=6){
+            List<Carta> todasCartas = cartaService.findAllCartas();
+            Collections.shuffle(todasCartas);
+            cartas = todasCartas.subList(0, 6);
+
+            for(int i =0; i<6;i++){
+                Carta carta = cartas.get(i);
+                carta.setPosicion(i+1);
+                cartaService.save(carta);
+            }
         }
-        cartasIniciales = cartasAleatorias;
+        return cartas;
     }
 
 	@GetMapping("/join2")
@@ -191,7 +201,7 @@ public class PartidaController {
             } else {
                 mav.addObject("partida",this.partidaService.findById(partidaId));
                 mav.addObject("tablero", tableroService.findById(1).get());
-                mav.addObject("cartasIniciales", cartasIniciales);
+                mav.addObject("cartasIniciales", this.partidaService.findById(partidaId).get().getCartas());
                 /*
                 Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
                 Jugador jug = jugadorService.findByUsuario(user.get());

@@ -23,15 +23,12 @@ import lombok.Setter;
 public class Carta extends BaseEntity{
 
     @Column(name = "tipoCarta")
-    @NotEmpty
     private TipoCarta tipoCarta;
 
     @Column(name = "estadoCarta")
-    @NotEmpty
     private EstadoCarta estadoCarta;
 
     @Column(name = "posicion")
-    @NotEmpty
     private Integer posicion;
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})

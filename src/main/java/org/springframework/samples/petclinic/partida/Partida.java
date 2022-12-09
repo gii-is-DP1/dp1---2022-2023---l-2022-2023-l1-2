@@ -2,8 +2,10 @@ package org.springframework.samples.petclinic.partida;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
@@ -54,6 +57,10 @@ public class Partida extends BaseEntity {
 	@JoinTable(name = "partida_jugador", joinColumns = @JoinColumn(name = "partida_id"),
 			inverseJoinColumns = @JoinColumn(name = "jugador_id"))
 	private Set<Jugador> jugadores;
+
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+    
+	private List<Carta> cartas;
 
 
 
