@@ -10,13 +10,20 @@ import javax.persistence.Table;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
 
 
 
+@Getter
+@Setter
 @Entity
 @Table(name = "logro")
 public class Logro extends BaseEntity {
 
+	@Column(name = "nombre")
+	private String nombre;
+	
 	@Column(name = "tipoLogro")
 	private TipoLogro tipoLogro;
 
