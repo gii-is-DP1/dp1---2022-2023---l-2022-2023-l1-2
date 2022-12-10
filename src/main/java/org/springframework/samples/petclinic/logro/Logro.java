@@ -21,6 +21,8 @@ import lombok.Setter;
 @Table(name = "logro")
 public class Logro extends NamedEntity {
 	
+	
+
 	@Column(name = "tipoLogro")
 	private TipoLogro tipoLogro;
 

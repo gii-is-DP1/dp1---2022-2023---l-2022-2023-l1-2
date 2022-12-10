@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.logro;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/logros")
@@ -22,7 +24,6 @@ public class LogroController {
     private final LogroService logroService;
     private final UsuarioService usuarioService;
     private static final String LOGRO_CREATE_UPDATE = "logros/createLogros";
-    private static final String LOGRO_DELETE = "logros/deleteLogros";
 
     @Autowired
     public LogroController(LogroService logroService, UsuarioService usuarioService) {
@@ -80,7 +81,7 @@ public class LogroController {
     }
 
     @GetMapping(value = "/delete/{logroId}")
-    public String deleteJugador(@PathVariable("logroId") int logroId){
+    public String deleteLogro(@PathVariable("logroId") int logroId){
         Optional<Logro> opt = logroService.findLogroById(logroId);
         if(opt.isPresent()){
             Logro logro = opt.get();
@@ -88,4 +89,19 @@ public class LogroController {
         }
         return "redirect:/logros";
     }
+
+    @GetMapping("")
+    public ModelAndView listLogros(){
+		ModelAndView mav = new ModelAndView("logros/listLogros");
+		List<Logro> logros = logroService.findAllLogros();
+		mav.addObject("logros", logros);
+		return mav;
+	}
+
+    @GetMapping("/{logroId}")
+	public ModelAndView showLogro(@PathVariable("logroId") int logroId) {
+		ModelAndView mav = new ModelAndView("logros/showLogros");
+		mav.addObject("logro", this.logroService.findLogroById(logroId).get());
+		return mav;
+	}
 }

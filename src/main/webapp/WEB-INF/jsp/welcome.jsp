@@ -19,5 +19,9 @@
         <div align="center">
             <a class="btn btn-default" href='<spring:url value="/jugadores/find" htmlEscape="true"/>'> Ver jugadores</a>
         </div>
+        <br/>
+        <div align="center">
+            <a class="btn btn-default" href='<spring:url value="/logros" htmlEscape="true"/>'> Logros</a>
+        </div>
     </div>
 </petclinic:layout>
