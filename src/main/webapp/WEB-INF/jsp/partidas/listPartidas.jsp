@@ -8,6 +8,7 @@
 <petclinic:layout pageName="partidas">
     <h2>Partidas</h2>
 
+  
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>

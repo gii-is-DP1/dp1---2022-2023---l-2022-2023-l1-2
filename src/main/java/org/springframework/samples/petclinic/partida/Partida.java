@@ -56,7 +56,7 @@ public class Partida extends BaseEntity {
     @ManyToMany
 	@JoinTable(name = "partida_jugador", joinColumns = @JoinColumn(name = "partida_id"),
 			inverseJoinColumns = @JoinColumn(name = "jugador_id"))
-	private Set<Jugador> jugadores;
+	private List<Jugador> jugadores;
 
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     
