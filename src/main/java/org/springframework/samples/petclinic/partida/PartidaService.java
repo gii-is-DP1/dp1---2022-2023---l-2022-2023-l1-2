@@ -34,5 +34,13 @@ public class PartidaService {
 		return partidaRepository.findByPlayer(id);
 	}
 
+	public Boolean numeroCorrecto(Partida p){
+		if(p.getJugadores().size()>=2 && p.getJugadores().size()<=4){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 
 }

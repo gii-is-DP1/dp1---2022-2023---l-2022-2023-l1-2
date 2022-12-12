@@ -12,7 +12,9 @@
         <div class="col-md-12">
             <petclinic:board tablero="${tablero}">
             <c:forEach items="${cartasIniciales}" var="carta">
-            	<petclinic:carta size="100" carta="${carta}"/>            	
+                <c:if test="${carta.posicion!=0 && carta.posicion!=7}">
+            	    <petclinic:carta size="100" carta="${carta}"/>
+                </c:if>      	
             </c:forEach> 
             </petclinic:board>
         </div>
