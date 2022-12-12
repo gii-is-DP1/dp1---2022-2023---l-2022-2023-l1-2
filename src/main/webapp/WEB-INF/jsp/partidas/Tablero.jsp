@@ -6,69 +6,78 @@
 
 
 <petclinic:layout pageName="tablero">
-   
-    
-
-    <div style="background-image: url(/resources/images/Tablero.png);background-size: 600px; height: 710px; width: 600px; background-position: center; " >
-        <spring:url value="/resources/images/Tablero.png" htmlEscape="true" var="petsImage"/>
+    <div class="row">
+        <div class="col-md-12">
+            <petclinic:board tablero="${tablero}">
+            <c:forEach items="${cartasIniciales}" var="carta">
+                <c:if test="${carta.posicion!=0 && carta.posicion!=7}">
+            	    <petclinic:carta size="100" carta="${carta}"/>
+                </c:if>      	
+            </c:forEach> 
+            </petclinic:board>
+        </div>
         
-        <!--a href='<spring:url value="/session/rolldices" htmlEscape="true"/>'-->
-            <div class="container-cube" style="position: relative; left: 500px; top: 150px;">
+        <div class="container-cube" style="position: relative; left: 500px; top: 150px;">
             
-                <div class="cube">
-                    <div class="cube-face front">
-                        <div class="inside">
-                            <span class="dot"></span>
-                        </div>
+            <div class="cube">
+                <div class="cube-face front">
+                    <div class="inside">
+                        <span class="dot"></span>
                     </div>
-                    <div class="cube-face back">
-                        <div class="inside">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
+                </div>
+                <div class="cube-face back">
+                    <div class="inside">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
-                    <div class="cube-face left">
-                        <div class="inside">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
+                </div>
+                <div class="cube-face left">
+                    <div class="inside">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
-                    <div class="cube-face right">
-                        <div class="inside">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
+                </div>
+                <div class="cube-face right">
+                    <div class="inside">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
-                    <div class="cube-face top">
-                        <div class="inside">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
+                </div>
+                <div class="cube-face top">
+                    <div class="inside">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
-                    <div class="cube-face bottom">
-                        <div class="inside">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
+                </div>
+                <div class="cube-face bottom">
+                    <div class="inside">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
                 </div>
             </div>
-        <!--/a-->
-        <script src="/resources/js/dado.js"></script>
-
+        </div>
+    
+    <script src="/resources/js/dado.js"></script>
     </div>
 
     
 
+
+
+    
+
+    
+</petclinic:layout>
    
 
