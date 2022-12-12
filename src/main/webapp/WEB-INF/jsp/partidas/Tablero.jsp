@@ -5,11 +5,10 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="partidas">
+<petclinic:layout pageName="tablero">
    
-
-
     
+
     <div style="background-image: url(/resources/images/Tablero.png);background-size: 600px; height: 710px; width: 600px; background-position: center; " >
         <spring:url value="/resources/images/Tablero.png" htmlEscape="true" var="petsImage"/>
         
@@ -72,4 +71,4 @@
     
 
    
-</petclinic:layout>
+

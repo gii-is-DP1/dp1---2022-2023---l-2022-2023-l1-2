@@ -1,9 +1,12 @@
 package org.springframework.samples.petclinic.partida;
 
 import java.util.Optional;
+import java.util.Random;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +15,18 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.carta.Carta;
+import org.springframework.samples.petclinic.carta.CartaService;
+import org.springframework.samples.petclinic.carta.EstadoCarta;
+import org.springframework.samples.petclinic.carta.TipoCarta;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
+import org.springframework.samples.petclinic.tablero.TableroService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
@@ -27,6 +37,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -35,15 +46,19 @@ public class PartidaController {
     private final PartidaService partidaService;
 	private final JugadorService jugadorService;
 	private final UsuarioService usuarioService;
+    private final TableroService tableroService;
+    private final CartaService cartaService;
     private static final String PARTIDA_CREATE = "partidas/createPartidas";
     private static final String PARTIDA_JOIN = "partidas/joinPartidas";
 	private static final String TABLERO = "partidas/Tablero";
 
     @Autowired
-	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService) {
+	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService, TableroService tableroService, CartaService cartaService) {
 		this.partidaService = partidaService;
 		this.jugadorService = jugadorService;
 		this.usuarioService = usuarioService;
+        this.tableroService = tableroService;
+        this.cartaService = cartaService;
 	}
 
     @GetMapping("/join/{partidaId}")
@@ -55,17 +70,19 @@ public class PartidaController {
 
     @PostMapping("/join/{partidaId}")
     public String processUnirPartida(Principal principal, @Valid Partida partida, BindingResult result,
-            @PathVariable("partidaId") int partidaId) {
+            @PathVariable("partidaId") int partidaId, HttpSession sesion) {
         if (result.hasErrors()) {
             return PARTIDA_JOIN;
         } else {
             Partida p = partidaService.findById(partidaId).get();
             if (!(p.getCodigo().equals(partida.getCodigo()))) {
-                throw new IllegalArgumentException("El código no es correcto");
+                String message = "El código no es correcto";
+                sesion.setAttribute("message", message);
+                return "redirect:/partidas/join";
             } else {
                 Usuario u = usuarioService.findUserByNombreUsuario(principal.getName()).get();
                 Jugador j = jugadorService.findByUsuario(u);
-                Set<Jugador> set = p.getJugadores();
+                List<Jugador> set = p.getJugadores();
                 set.add(j);
                 p.setJugadores(set);
                 partidaService.save(p);
@@ -75,10 +92,23 @@ public class PartidaController {
     }
 
     @GetMapping(value = "/create")
-    public String initCreationForm(Map<String, Object> model) {
+    public String initCreationForm(Map<String, Object> model, Principal principal) {
         Partida partida = new Partida();
-        model.put("partida", partida);
-        return PARTIDA_CREATE;
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+		Jugador jug = jugadorService.findByUsuario(user.get());
+        List<Partida> partidasJugador = partidaService.partidasByPlayer(jug.getId());
+        Partida partidaJugadorActual = partidasJugador.stream().filter(p->p.getEstado().equals(EstadoPartida.EN_COLA)|| p.getEstado().equals(EstadoPartida.EN_CURSO)).findFirst().orElse(null);
+        if(partidaJugadorActual==null){
+            model.put("partida", partida);
+            return PARTIDA_CREATE;
+        }else{
+            if(partidaJugadorActual.getEstado().equals(EstadoPartida.EN_COLA)){
+                return "redirect:/partidas/" + partidaJugadorActual.getId();
+            }else{
+                return "redirect:/partidas/" + partidaJugadorActual.getId() +"/tablero";
+            }
+            
+        }
     }
 
  	@PostMapping(value = "/create")
@@ -93,9 +123,10 @@ public class PartidaController {
             partida.setEstado(EstadoPartida.EN_COLA);
             partida.setHoraInicio(LocalTime.now());
 			partida.setCreador(jug);
-			Set<Jugador> set = new HashSet<>();
+			List<Jugador> set = new ArrayList<>();
 			set.add(jug);
 			partida.setJugadores(set);
+            
 
             this.partidaService.save(partida);
 
@@ -104,32 +135,152 @@ public class PartidaController {
     }
 
     @GetMapping("/{partidaId}")
- 	public ModelAndView showPartida(@PathVariable("partidaId") int partidaId) {
- 		ModelAndView mav = new ModelAndView("partidas/showPartida");
-			mav.addObject("partida",this.partidaService.findById(partidaId));
-			return mav;
+ 	public @ResponseBody ModelAndView showPartida(@PathVariable("partidaId") int partidaId, Principal principal, HttpServletResponse response, HttpSession sesion) {
+ 		response.addHeader("Refresh", "3");
+        ModelAndView mav = new ModelAndView("partidas/showPartida");
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+        mav.addObject("partida",this.partidaService.findById(partidaId));
+        mav.addObject("jugador", user);
+        mav.addObject("message", sesion.getAttribute("messageNumJugadores"));
+        mav.addObject("messageType", "info");
+        return mav;
  	}
 
-	@GetMapping("/join")
-	public ModelAndView listPartidas(){
+
+
+	@GetMapping("/join2")
+	public ModelAndView listPartidas(HttpSession sesion){
 		ModelAndView mav = new ModelAndView("partidas/listPartidas");
 		List<Partida> partidas = partidaService.findAllPartidas();
 		List<Partida> partidasEnCola =partidas.stream().filter(x->x.getEstado()==EstadoPartida.EN_COLA).collect(Collectors.toList());
-		mav.addObject("partidas", partidasEnCola);
+		mav.addObject("message", sesion.getAttribute("message"));
+        mav.addObject("messageType", "info");
+        mav.addObject("partidas", partidasEnCola);
 		return mav;
 	}
 
-	@GetMapping("/{partidaId}/tablero")
-	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId) {
-		ModelAndView mav = new ModelAndView(TABLERO);
-		mav.addObject("partida",this.partidaService.findById(partidaId));
-        Partida partida = partidaService.findById(partidaId).get();
-           if (partida.getJugadores().size() < 2 || partida.getJugadores().size() > 4) {
-                throw new IllegalArgumentException(
-                                "La partida no puede comenzar con el número de jugadores presentes en la sala");
-            } else {
-                partida.setEstado(EstadoPartida.EN_CURSO);
-                return mav;
+    @GetMapping("/join")
+    public String unirse(Principal principal){
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+		Jugador jug = jugadorService.findByUsuario(user.get());
+        List<Partida> partidasJugador = partidaService.partidasByPlayer(jug.getId());
+        Partida partidaJugadorActual = partidasJugador.stream().filter(p->p.getEstado().equals(EstadoPartida.EN_COLA)|| p.getEstado().equals(EstadoPartida.EN_CURSO)).findFirst().orElse(null);
+        if(partidaJugadorActual==null){
+            return "redirect:/partidas/join2";
+        }else{
+            if(partidaJugadorActual.getEstado().equals(EstadoPartida.EN_COLA)){
+                return "redirect:/partidas/" + partidaJugadorActual.getId();
+            }else{
+                return "redirect:/partidas/" + partidaJugadorActual.getId() +"/tablero";
             }
+        }
+    
+    }
+
+    @GetMapping("/{partidaId}/inicio")
+    public String iniciarPartida(@PathVariable("partidaId") int partidaId, Principal principal, HttpSession sesion){
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+        Jugador jug = jugadorService.findByUsuario(user.get());
+        Partida p = this.partidaService.findById(partidaId).get();
+        if(p.getCreador().equals(jug) && p.getEstado().equals(EstadoPartida.EN_COLA) && partidaService.numeroCorrecto(p)){
+            p.setEstado(EstadoPartida.EN_CURSO);
+            List<Carta> cartas = cartasAleatorias(p);
+            p.setCartas(cartas);    
+            partidaService.save(p);
+            return "redirect:/partidas/"+partidaId+"/tablero";
+        }else{
+            if(p.getJugadores().contains(jug)){
+                if(!partidaService.numeroCorrecto(p)){
+                    String message = "El número de jugadores debe estar entre 2 y 4";
+                    sesion.setAttribute("messageNumJugadores", message);
+                    return "redirect:/partidas/"+partidaId;
+                }else{
+                    return "redirect:/partidas/"+partidaId;
+                }
+            }else{
+                return "redirect:/";
+            }
+            
+        }
+    }
+
+    public List<Carta> cartasAleatorias(Partida p){
+        List<Carta> cartas = p.getCartas();
+        if(cartas.isEmpty() || cartas == null){
+            cartas = cartaService.findAllCartas();
+            cartas.stream().forEach(c->c.setPosicion(7));
+            List<Carta> doblones = cartas.stream().filter(x->x.getTipoCarta().equals(TipoCarta.DOBLON)).collect(Collectors.toList());
+            List<Carta> utilizadas = new ArrayList<>();
+            Integer x =0;
+            for(int j=0;j<p.getJugadores().size();j++){
+                Jugador jug = p.getJugadores().get(j);
+                for(int d = x; d<x+3;d++){
+                    Carta c = doblones.get(d);
+                    utilizadas.add(c);
+                    c.setJugador(jug);
+                    c.setPosicion(0);
+                    cartaService.save(c);
+                }
+                x=x+3;
+            }
+            cartas.removeAll(utilizadas);
+            Collections.shuffle(cartas);
+            cartas.stream().forEach(c->cartaService.save(c));
+            for(int i =0; i<6;i++){
+                Carta carta = cartas.get(i);
+                carta.setPosicion(i+1);
+                cartaService.save(carta);
+            }
+        }
+        return cartas;
+    }
+	@GetMapping("/{partidaId}/tablero")
+	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId, HttpServletResponse response, Principal principal, HttpSession sesion) {
+		response.addHeader("Refresh", "2");
+        ModelAndView mav = new ModelAndView(TABLERO);
+		
+        mav.addObject("partida",this.partidaService.findById(partidaId));
+        mav.addObject("tablero", tableroService.findById(1).get());
+        mav.addObject("cartasIniciales", this.partidaService.findById(partidaId).get().getCartas());
+        /*
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+        Jugador jug = jugadorService.findByUsuario(user.get());
+        List<Carta> cartasJug = cartaService.findByJugador(jug.getId());
+        if(cartasJug!=null && cartasJug.size()>=0){
+            Map<TipoCarta, List<Carta>> cartasPorTipo = cartasJug.stream().collect(Collectors.groupingBy(Carta::getTipoCarta));
+            mav.addObject("cartasJugador", cartasPorTipo);
+            System.out.println(cartasPorTipo.get(TipoCarta.DOBLON).size());
+        }
+        */     
+        return mav;
 	}
+
+    @GetMapping("/{partidaId}/tablero/{cartaId}")
+    public String viajarAIsla(@PathVariable("partidaId") int partidaId, @PathVariable("cartaId") int cartaId, Principal principal){
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+        Jugador jug = jugadorService.findByUsuario(user.get());
+        Partida p = this.partidaService.findById(partidaId).get();
+        Carta c = cartaService.findById(cartaId).get();
+
+        if(p.getJugadores().contains(jug) && c.getPosicion()!=0 && c.getPosicion()!=7){
+            Integer pos = c.getPosicion();
+            c.setPosicion(0);
+            c.setJugador(jug);
+            cartaService.save(c);
+
+            for(int i=7; i<p.getCartas().size();i++){
+                if(p.getCartas().get(i).getPosicion()==7){
+                    Carta nuevaCarta = p.getCartas().get(i);
+                    nuevaCarta.setPosicion(pos);
+                    cartaService.save(nuevaCarta);
+                    break;
+                }
+            }
+
+        }
+        
+
+        return "redirect:/partidas/"+partidaId+"/tablero";
+    }
+
 }
