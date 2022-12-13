@@ -236,7 +236,7 @@ public class PartidaController {
     }
 	@GetMapping("/{partidaId}/tablero")
 	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId, HttpServletResponse response, Principal principal, HttpSession sesion) {
-		response.addHeader("Refresh", "2");
+		response.addHeader("Refresh", "10");
         ModelAndView mav = new ModelAndView(TABLERO);
 		
         mav.addObject("partida",this.partidaService.findById(partidaId));
