@@ -16,5 +16,8 @@ public interface CartaRepository extends CrudRepository<Carta, Integer>{
     List<Carta> findByJugador(Integer jug);
 
     Carta save(Carta p);
+
+    @Query("SELECT cart FROM Carta cart WHERE cart.posicion = ?1")
+    Carta findByPosicion(Integer pos);
    
 }

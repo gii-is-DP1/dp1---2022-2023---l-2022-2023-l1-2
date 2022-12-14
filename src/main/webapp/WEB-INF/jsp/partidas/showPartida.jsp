@@ -6,6 +6,13 @@
 
 <petclinic:layout pageName="partidas">
 
+    <c:if test="${message != null}">
+        <div class="alert alert-${messageType}">
+           <c:out value="${message}"></c:out>
+           <a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+        </div>
+    </c:if>
+    
     <h2>Partida Informacion</h2>
 
 

@@ -5,7 +5,19 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
+
 <petclinic:layout pageName="tablero">
+    <c:if test="${message != null}">
+		<div class="alert alert-${messageType}">
+			<c:out value="${message}"></c:out>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+		</div>
+	</c:if>
+    <div>
+       <p> Valor del dado: </p>
+       <p> ${dado}</p>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <petclinic:board tablero="${tablero}">
@@ -16,7 +28,21 @@
             </c:forEach> 
             </petclinic:board>
         </div>
-        
+        <div>
+            <p>Seleccione la Isla a la que quiere viajar</p>
+            <form action = "/partidas/${partidaId}/tablero/viajar/">
+                <select name = isla>
+                    <option value = "NONE">--SELECT--</option>
+                    <c:forEach items="${islas}" var="isla">
+                        <option value = ${isla}> ${isla}</option>
+                    </c:forEach>
+                </select>
+                <input type="submit" value="Viajar a isla">
+            </form>
+
+            <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero/cogerCarta" htmlEscape="true"/>'> Quedarse con la carta del dado</a>
+        </div>
+
         <div class="container-cube" style="position: relative; left: 500px; top: 150px;">
             
             <div class="cube">
