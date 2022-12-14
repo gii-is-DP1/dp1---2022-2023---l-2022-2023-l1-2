@@ -9,7 +9,7 @@
 
 <petclinic:layout pageName="logros">
     <h2>
-        CREAR LOGRO
+        <c:if test="${logro['new']}">Crear </c:if> Logro
     </h2>
     <form:form modelAttribute="logro" class="form-horizontal" id="create-logro-form">
         <div class="form-group has-feedback">

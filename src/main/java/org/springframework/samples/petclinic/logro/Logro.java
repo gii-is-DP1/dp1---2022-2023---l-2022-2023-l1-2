@@ -39,7 +39,6 @@ public class Logro extends BaseEntity {
 	@Column(name = "objetivo")
 	private Integer objetivo;
 	
-	@NotEmpty
 	@Column(name = "tipo_logro")
 	private TipoLogro tipoLogro;
 

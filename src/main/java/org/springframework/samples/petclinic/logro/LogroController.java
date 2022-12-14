@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.logro;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class LogroController {
     public String initCrearLogro(Map<String, Object> model) {
         Logro logro = new Logro();
         model.put("logro", logro);
+        model.put("tipoLogro", Arrays.asList(TipoLogro.values()));
         return LOGRO_CREATE_UPDATE;
     }
 
@@ -59,6 +61,7 @@ public class LogroController {
     public String initEditarLogro(@PathVariable("logroId") int logroId, Map<String, Object> model) {
         Logro logro = logroService.findLogroById(logroId).get();
         model.put("logro", logro);
+        model.put("tipoLogro",Arrays.asList(TipoLogro.values()));
         return LOGRO_CREATE_UPDATE;
     }
 
