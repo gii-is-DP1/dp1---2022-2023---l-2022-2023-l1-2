@@ -21,10 +21,6 @@ public class LogroService {
 		return logroRepository.findAll();
 	}
 
-    public Optional<Logro> findLogroByNombre(String nombreLogro){
-        return logroRepository.findByNombre(nombreLogro);
-    }
-
     public Optional<Logro> findLogroById(Integer id){
         return logroRepository.findById(id);
     }

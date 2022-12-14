@@ -21,7 +21,7 @@
         </div>
         <br/>
         <div align="center">
-            <a class="btn btn-default" href='<spring:url value="/logros" htmlEscape="true"/>'> Logros</a>
+            <a class="btn btn-default" href='<spring:url value="/logros/list" htmlEscape="true"/>'> Logros</a>
         </div>
     </div>
 </petclinic:layout>

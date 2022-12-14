@@ -1,13 +1,18 @@
 package org.springframework.samples.petclinic.logro;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.usuario.Autoridad;
+import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
@@ -26,21 +31,16 @@ public class LogroController {
     private static final String LOGRO_CREATE_UPDATE = "logros/createLogros";
 
     @Autowired
-    public LogroController(LogroService logroService, UsuarioService usuarioService) {
+    public LogroController(LogroService logroService, UsuarioService usuarioService, AutoridadService autoridadService) {
         this.logroService = logroService;
         this.usuarioService = usuarioService;
     }
 
     @GetMapping("/create")
-    public String initCrearLogro(Map<String, Object> model, Principal principal) {
+    public String initCrearLogro(Map<String, Object> model) {
         Logro logro = new Logro();
-        Usuario usuario = usuarioService.findUserByNombreUsuario(principal.getName()).get();
-        if (usuario.getAdministrador().contains("admin")) {
-            model.put("logro", logro);
-            return LOGRO_CREATE_UPDATE;
-        } else {
-            return "redirect:/logros";
-        }
+        model.put("logro", logro);
+        return LOGRO_CREATE_UPDATE;
     }
 
     @PostMapping("/create")
@@ -48,22 +48,18 @@ public class LogroController {
         if (result.hasErrors() || logroService.findAllLogros().contains(logro)) {
             return LOGRO_CREATE_UPDATE;
         } else {
+            Set<Jugador> set = new HashSet<>();
+            logro.setJugadores(set);
             this.logroService.save(logro);
-            return "redirect:/logros/" + logro.getId();
+            return "redirect:/logros/list";
         }
     }
 
     @GetMapping("/edit/{logroId}")
-    public String initEditarLogro(@PathVariable("logroId") int logroId, Map<String, Object> model,
-            Principal principal) {
+    public String initEditarLogro(@PathVariable("logroId") int logroId, Map<String, Object> model) {
         Logro logro = logroService.findLogroById(logroId).get();
-        Usuario usuario = usuarioService.findUserByNombreUsuario(principal.getName()).get();
-        if (usuario.getAdministrador().contains("admin")) {
-            model.put("logro", logro);
-            return LOGRO_CREATE_UPDATE;
-        } else {
-            return "redirect:/logros";
-        }
+        model.put("logro", logro);
+        return LOGRO_CREATE_UPDATE;
     }
 
     @PostMapping("/edit/{logroId}")
@@ -73,10 +69,13 @@ public class LogroController {
             return LOGRO_CREATE_UPDATE;
         } else {
             logro.setId(logroId);
-            logro.setName(logro.getName());
+            logro.setNombreLogro(logro.getNombreLogro());
+            logro.setDescripcion(logro.getDescripcion());
+            logro.setObjetivo(logro.getObjetivo());
             logro.setTipoLogro(logro.getTipoLogro());
+            logro.setJugadores(logro.getJugadores());
             this.logroService.save(logro);
-            return "redirect:/logros/{logroId}";
+            return "redirect:/logros/list";
         }
     }
 
@@ -87,21 +86,18 @@ public class LogroController {
             Logro logro = opt.get();
             logroService.delete(logro);
         }
-        return "redirect:/logros";
+        return "redirect:/logros/list";
     }
 
-    @GetMapping("")
-    public ModelAndView listLogros(){
+    @GetMapping("/list")
+    public ModelAndView listLogros(Principal principal){
 		ModelAndView mav = new ModelAndView("logros/listLogros");
+        Usuario user = usuarioService.findUserByNombreUsuario(principal.getName()).get();
 		List<Logro> logros = logroService.findAllLogros();
+        Optional<Autoridad> autoridad = user.getAdministrador().stream().filter(x -> x.getAutoridad().equals("admin")).findAny();
 		mav.addObject("logros", logros);
+        mav.addObject("autoridad", autoridad);
 		return mav;
 	}
 
-    @GetMapping("/{logroId}")
-	public ModelAndView showLogro(@PathVariable("logroId") int logroId) {
-		ModelAndView mav = new ModelAndView("logros/showLogros");
-		mav.addObject("logro", this.logroService.findLogroById(logroId).get());
-		return mav;
-	}
 }

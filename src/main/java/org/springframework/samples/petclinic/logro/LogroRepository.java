@@ -12,9 +12,4 @@ public interface LogroRepository extends CrudRepository<Logro, Integer>{
     
     List<Logro> findAll();
 
-    @Query("SELECT l from Logros l WHERE l.nombre = ?1")
-    Optional<Logro> findByNombre(String nombreLogro);
-
-    @Query("SELECT l from Logros l WHERE l.id = ?1")
-    Optional<Logro> findById(Integer logroId);
 }
