@@ -32,14 +32,13 @@ public class TableroService {
 	@Transactional
     public String cambiarTurno(Partida p){
 
-        String codigo = p.getCodigo();
         Integer n = p.getJugadores().size();
 
         p.setJugadorActual((p.getJugadorActual()+1)%n);   
         p.setDadoTirado(false);
         partidaService.save(p);
 
-        return REDIRECT_TABLERO + codigo;
+        return "redirect:/partidas/"+p.getId()+"/tablero";
     }
 
 }
