@@ -111,6 +111,15 @@ public class PartidaService {
 		return map;
 	}
 
+	public Boolean numeroCorrecto(Partida p){
+		if(p.getJugadores().size()>=2 && p.getJugadores().size()<=4){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
 	public void comprobarLogrosPartidaFinalizada(Integer idPartida) {
 		Partida p = partidaRepository.findById(idPartida).get();
 		List<Logro> logros = logroRepository.findAll();

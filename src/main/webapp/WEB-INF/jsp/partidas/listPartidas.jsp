@@ -6,8 +6,15 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="partidas">
+    <c:if test="${message != null}">
+		<div class="alert alert-${messageType}">
+			<c:out value="${message}"></c:out>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+		</div>
+	</c:if>
     <h2>Partidas</h2>
 
+  
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>
