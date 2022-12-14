@@ -1,18 +1,14 @@
 package org.springframework.samples.petclinic.partida;
 
-import java.util.Optional;
-import java.util.Random;
 import java.security.Principal;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +18,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.carta.CartaService;
-import org.springframework.samples.petclinic.carta.EstadoCarta;
 import org.springframework.samples.petclinic.carta.TipoCarta;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
@@ -30,7 +25,6 @@ import org.springframework.samples.petclinic.tablero.TableroService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +46,7 @@ public class PartidaController {
     private static final String PARTIDA_CREATE = "partidas/createPartidas";
     private static final String PARTIDA_JOIN = "partidas/joinPartidas";
 	private static final String TABLERO = "partidas/Tablero";
+    private static final String FINPARTIDA = "partidas/fin";
 
     @Autowired
 	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService, TableroService tableroService, CartaService cartaService) {
@@ -341,6 +336,19 @@ public class PartidaController {
         }
     }
 
+    @GetMapping("/{partidaId}/fin")
+    public ModelAndView finishPartida(@PathVariable("partidaId") int partidaId) {
+        ModelAndView mav = new ModelAndView(FINPARTIDA);
+        Partida partida = partidaService.findById(partidaId).get();
+        partida.setEstado(EstadoPartida.FINALIZADA);
+        Map<String, Integer> map = partidaService.contarPuntos(partidaId);
+        partidaService.comprobarLogrosPartidaFinalizada(partidaId);
+        partidaService.save(partida);
+        mav.addObject("partida",this.partidaService.findById(partidaId).get());
+        mav.addObject("duracion", Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes());
+        mav.addObject("puntuacion",map);
+        return mav;
+    }
 
 
     
