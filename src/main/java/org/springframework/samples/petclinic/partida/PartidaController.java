@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -83,6 +84,7 @@ public class PartidaController {
                 Usuario u = usuarioService.findUserByNombreUsuario(principal.getName()).get();
                 Jugador j = jugadorService.findByUsuario(u);
                 List<Jugador> set = p.getJugadores();
+                sesion.removeAttribute("message");
                 set.add(j);
                 p.setJugadores(set);
                 partidaService.save(p);
@@ -195,6 +197,7 @@ public class PartidaController {
                     sesion.setAttribute("messageNumJugadores", message);
                     return "redirect:/partidas/"+partidaId;
                 }else{
+                    sesion.removeAttribute("messageNumJugadores");
                     return "redirect:/partidas/"+partidaId;
                 }
             }else{
@@ -238,10 +241,16 @@ public class PartidaController {
 	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId, HttpServletResponse response, Principal principal, HttpSession sesion) {
 		response.addHeader("Refresh", "10");
         ModelAndView mav = new ModelAndView(TABLERO);
+        Integer valorDado = (Integer) sesion.getAttribute("valordado");
 		
+        List<Integer> islas = List.of(1,2,3,4,5,6);
         mav.addObject("partida",this.partidaService.findById(partidaId));
         mav.addObject("tablero", tableroService.findById(1).get());
         mav.addObject("cartasIniciales", this.partidaService.findById(partidaId).get().getCartas());
+        mav.addObject("message", sesion.getAttribute("doblonesInsuficientes"));
+        mav.addObject("messageType", "info");
+        mav.addObject("islas", islas);
+        mav.addObject("dado", valorDado);
         /*
         Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
         Jugador jug = jugadorService.findByUsuario(user.get());
@@ -256,7 +265,7 @@ public class PartidaController {
 	}
 
     @GetMapping("/{partidaId}/tablero/{cartaId}")
-    public String viajarAIsla(@PathVariable("partidaId") int partidaId, @PathVariable("cartaId") int cartaId, Principal principal){
+    public String cogerCarta(@PathVariable("partidaId") int partidaId, @PathVariable("cartaId") int cartaId, Principal principal){
         Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
         Jugador jug = jugadorService.findByUsuario(user.get());
         Partida p = this.partidaService.findById(partidaId).get();
@@ -278,10 +287,61 @@ public class PartidaController {
             }
 
         }
-        
-
         return "redirect:/partidas/"+partidaId+"/tablero";
     }
+
+    @GetMapping("/{partidaId}/tablero/viajar")
+    public String viajarAIsla(@PathVariable("partidaId") int partidaId, @RequestParam("isla") Integer isla, Principal principal, HttpSession session){
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+        Jugador jug = jugadorService.findByUsuario(user.get());
+
+        List<Carta> cartasJugador = cartaService.findByJugador(jug.getId());
+        List<Carta> doblones = cartasJugador.stream().filter(x->x.getTipoCarta().equals(TipoCarta.DOBLON)).collect(Collectors.toList());
+        Integer numDoblones = doblones.size();
+        System.out.println("=================================");
+        System.out.println(isla);
+        
+        Integer posicionCartaActual = (Integer)  session.getAttribute("valordado");
+        if(doblonesSuficientes(isla,posicionCartaActual , numDoblones)){
+            Carta cartaDestino = cartaService.findByPosicion(isla);
+            Integer numDoblonesARetirar = Math.abs(isla-posicionCartaActual);
+            retirarDoblones(doblones, numDoblonesARetirar);
+            session.removeAttribute("doblonesInsuficientes");
+            return "redirect:/partidas/{partidaId}/tablero/"+cartaDestino.getId();
+        }else{
+            String mensaje = "No tienes doblones suficientes";
+            session.setAttribute("doblonesInsuficientes", mensaje);
+            return "redirect:/partidas/{partidaId}/tablero";
+        }
+        
+    }
+
+    @GetMapping("/{partidaId}/tablero/cogerCarta")
+    public String cogerCartaDado(@PathVariable("partidaId") int partidaId, HttpSession sesion, Principal principal){
+        Integer dado = (Integer) sesion.getAttribute("valordado");
+        Carta c = cartaService.findByPosicion(dado);
+        return "redirect:/partidas/{partidaId}/tablero/"+c.getId();
+    }
+
+    public Boolean doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones){
+        if(Math.abs(islaDestino-islaActual)<=doblones){
+			return true;
+		}else{
+			return false;
+		}
+    }
+
+    public void retirarDoblones(List<Carta> doblones, Integer numDoblones){
+        Integer i=0;
+        while(i<numDoblones){
+            Carta c = doblones.get(i);
+            c.setJugador(null);
+            cartaService.save(c);
+            i++;
+        }
+    }
+
+
 
     
 }
