@@ -9,6 +9,7 @@ cube.addEventListener('click', () => {
         const randomValue = Math.floor((Math.random() * 6) + 1);
         valordado=randomValue;
         sessionStorage.setItem("valordado", valordado);
+        window.location='http://localhost:8080/session/setdices/'+valordado;
         console.log(`randomValue: ${randomValue}` );
         
         switch(randomValue) {

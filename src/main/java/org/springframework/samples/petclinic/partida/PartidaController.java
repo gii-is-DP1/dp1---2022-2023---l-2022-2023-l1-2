@@ -283,4 +283,5 @@ public class PartidaController {
         return "redirect:/partidas/"+partidaId+"/tablero";
     }
 
+    
 }
