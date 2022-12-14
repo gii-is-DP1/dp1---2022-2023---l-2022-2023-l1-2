@@ -20,6 +20,10 @@ import javax.validation.constraints.NotNull;
 import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.model.NamedEntity;
+import org.springframework.samples.petclinic.web.Vistas;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +32,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "partidas")
-public class Partida extends BaseEntity {
+public class Partida extends NamedEntity {
     
 
     @Column(name = "fecha")
@@ -44,6 +48,9 @@ public class Partida extends BaseEntity {
     @Column(name = "estado")
     private EstadoPartida estado;
 
+    @Column(name="duracion")
+    private Integer duracion = 0;
+
     
     @NotEmpty
     @Column(name = "codigo")
@@ -52,6 +59,16 @@ public class Partida extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "creador_id")
     private Jugador creador;
+
+    @JsonView(Vistas.Public.class)
+    @Column(name = "jugador_actual")   
+    private Integer jugadorActual;
+
+    @Column(name = "valor_dado")   
+    private Integer valorDado = null;
+
+    @Column(name = "dado_tirado")   
+    private Boolean dadoTirado = false; 
 
     @ManyToMany
 	@JoinTable(name = "partida_jugador", joinColumns = @JoinColumn(name = "partida_id"),
