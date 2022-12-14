@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.partida;
 
+import java.time.Duration;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +15,8 @@ import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.carta.CartaRepository;
 import org.springframework.samples.petclinic.carta.TipoCarta;
 import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.logro.Logro;
+import org.springframework.samples.petclinic.logro.LogroRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartidaService {
 	private PartidaRepository partidaRepository;
 	private CartaRepository cartaRepository;
+	private LogroRepository logroRepository;
 
 	@Autowired
-	public PartidaService(PartidaRepository partidaRepository, CartaRepository cartaRepository) {
+	public PartidaService(PartidaRepository partidaRepository, CartaRepository cartaRepository,
+			LogroRepository logroRepository) {
 		this.partidaRepository = partidaRepository;
 		this.cartaRepository = cartaRepository;
+		this.logroRepository = logroRepository;
 	}
 
 	public PartidaService(PartidaRepository partidaRepository) {
@@ -102,5 +109,41 @@ public class PartidaService {
 			map.put(j.getUsuario().getNombreUsuario(), puntos);
 		}
 		return map;
+	}
+
+	public void comprobarLogrosPartidaFinalizada(Integer idPartida) {
+		Partida p = partidaRepository.findById(idPartida).get();
+		List<Logro> logros = logroRepository.findAll();
+		for (Jugador j : p.getJugadores()) {
+			for (Logro l : logros) {
+				switch (l.getTipoLogro()) {
+					case PARTIDAS:
+						if (j.getPartidasJugadas().equals(l.getObjetivo())) {
+							l.getJugadores().add(j);
+						}
+						break;
+					case PUNTOSPARTIDA:
+						if (j.getRecordPuntos().equals(l.getObjetivo())) {
+							l.getJugadores().add(j);
+						}
+						break;
+					case PUNTOSTOTALES:
+						if (j.getTotalPuntos().equals(l.getObjetivo())) {
+							l.getJugadores().add(j);
+						}
+						break;
+					case TIEMPO:
+						if (Duration.between(p.getHoraInicio(), p.getHoraFin()).toMinutes() == l.getObjetivo()) {
+							l.getJugadores().add(j);
+						}
+						break;
+					case VICTORIAS:
+						if (j.getPartidasGanadas().equals(l.getObjetivo())) {
+							l.getJugadores().add(j);
+						}
+						break;
+				}
+			}
+		}
 	}
 }
