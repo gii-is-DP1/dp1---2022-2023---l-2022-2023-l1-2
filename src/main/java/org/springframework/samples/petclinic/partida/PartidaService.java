@@ -130,30 +130,40 @@ public class PartidaService {
 					case PARTIDAS:
 						if (j.getPartidasJugadas().equals(l.getObjetivo())) {
 							l.getJugadores().add(j);
+							logroRepository.save(l);
 						}
 						break;
 					case PUNTOSPARTIDA:
 						if (j.getRecordPuntos().equals(l.getObjetivo())) {
 							l.getJugadores().add(j);
+							logroRepository.save(l);
 						}
 						break;
 					case PUNTOSTOTALES:
 						if (j.getTotalPuntos().equals(l.getObjetivo())) {
 							l.getJugadores().add(j);
+							logroRepository.save(l);
 						}
 						break;
 					case TIEMPO:
 						if (Duration.between(p.getHoraInicio(), p.getHoraFin()).toMinutes() == l.getObjetivo()) {
 							l.getJugadores().add(j);
+							logroRepository.save(l);
 						}
 						break;
 					case VICTORIAS:
 						if (j.getPartidasGanadas().equals(l.getObjetivo())) {
 							l.getJugadores().add(j);
+							logroRepository.save(l);
 						}
 						break;
 				}
 			}
 		}
 	}
+
+	public Boolean partidaFinalizada(Integer id){
+        Partida partida = partidaRepository.findById(id).get();
+        return partida.getCartas().stream().allMatch(p->p.getPosicion()==0);    
+    }
 }
