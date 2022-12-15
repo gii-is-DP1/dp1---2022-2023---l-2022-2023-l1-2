@@ -96,7 +96,7 @@ INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_p
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (9,2,21,12,'Hola');
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (5,2,21,12,'Pablo');
 
-INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id) VALUES (1,'2001-01-10','23:00:00','23:20:00',2,'qwerty',1);
+INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado) VALUES (1,'2001-01-10','23:00:00','23:20:00',2,'qwerty',1,1, false);
 
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,1);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,2);
