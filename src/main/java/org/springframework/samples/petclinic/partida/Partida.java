@@ -60,9 +60,9 @@ public class Partida extends NamedEntity {
     @JoinColumn(name = "creador_id")
     private Jugador creador;
 
-    @JsonView(Vistas.Public.class)
-    @Column(name = "jugador_actual")   
-    private Integer jugadorActual;
+    @ManyToOne
+    @JoinColumn(name = "jugador_actual_id")   
+    private Jugador jugadorActual;
 
     @Column(name = "valor_dado")   
     private Integer valorDado = null;

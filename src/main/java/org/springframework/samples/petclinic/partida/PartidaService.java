@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.carta.Carta;
@@ -62,9 +63,9 @@ public class PartidaService {
 			Integer puntos = 0;
 			List<Set<TipoCarta>> setsCartasJugador = new ArrayList<>();
 			List<TipoCarta> cartasJugador = cartaRepository.findByJugador(j.getId()).stream().map(Carta::getTipoCarta)
-					.toList();
+					.collect(Collectors.toList());
 			List<TipoCarta> doblones = cartasJugador.stream().filter(x -> x.equals(TipoCarta.DOBLON))
-					.toList();
+					.collect(Collectors.toList());
 			cartasJugador.removeAll(doblones);
 			puntos += doblones.size();
 			while (!cartasJugador.isEmpty()) {

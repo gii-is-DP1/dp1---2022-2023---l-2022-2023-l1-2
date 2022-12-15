@@ -55,8 +55,20 @@ public class DicesOnSessionController {
 		Jugador jug = jugadorService.findByUsuario(user.get());
         List<Partida> partidasJugador = partidaService.partidasByPlayer(jug.getId());
         Partida partidaJugadorActual = partidasJugador.stream().filter(p->p.getEstado().equals(EstadoPartida.EN_COLA)|| p.getEstado().equals(EstadoPartida.EN_CURSO)).findFirst().orElse(null);
-        session.setAttribute("valordado", valordado);
-        System.out.println(session.getAttribute("valordado"));
+        if(partidaJugadorActual.getJugadorActual().equals(jug)){
+            if(partidaJugadorActual.getDadoTirado().equals(false)){
+                session.setAttribute("valordado", valordado);
+                partidaJugadorActual.setDadoTirado(true);
+                partidaService.save(partidaJugadorActual);
+            }else{
+                String mensaje = "Ya has tirado el dado";
+                session.setAttribute("dadoYaTirado", mensaje);
+            }
+            
+        }else{
+            String mensaje = "No es tu turno";
+            session.setAttribute("turnoIncorrecto", mensaje);
+        }
         return "redirect:/partidas/"+partidaJugadorActual.getId()+"/tablero";
     }
 
