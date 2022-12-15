@@ -287,7 +287,11 @@ public class PartidaController {
 
         }
         cambiarTurno(p);
-        return "redirect:/partidas/"+partidaId+"/tablero";
+        if (partidaService.partidaFinalizada(partidaId)){
+            return "redirect:/partidas/"+partidaId+"/fin";
+        } else {
+            return "redirect:/partidas/"+partidaId+"/tablero";
+        }
     }
 
     public void cambiarTurno(Partida p){
@@ -398,6 +402,7 @@ public class PartidaController {
         partida.setEstado(EstadoPartida.FINALIZADA);
         Map<String, Integer> map = partidaService.contarPuntos(partidaId);
         partidaService.comprobarLogrosPartidaFinalizada(partidaId);
+        partida.setHoraFin(LocalTime.now());
         partidaService.save(partida);
         mav.addObject("partida",this.partidaService.findById(partidaId).get());
         mav.addObject("duracion", Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes());
