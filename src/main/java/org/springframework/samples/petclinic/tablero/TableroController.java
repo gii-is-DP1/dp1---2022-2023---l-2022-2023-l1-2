@@ -29,7 +29,7 @@ public class TableroController {
     private static final String ERROR = "/error";
     
     
-    @GetMapping(path = "/{partidaId}/cambiarTurno")
+  /*  @GetMapping(path = "/{partidaId}/cambiarTurno")
     public String cambiarTurno(@PathVariable("partidaId") int partidaId, ModelMap modelMap) {
 
         Optional<Partida> opt = partidaService.findById(partidaId).stream().findFirst();
@@ -41,6 +41,6 @@ public class TableroController {
             return ERROR;
         }
 
-    }
+    } */
     
 }
