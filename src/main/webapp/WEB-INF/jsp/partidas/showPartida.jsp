@@ -6,14 +6,14 @@
 
 <petclinic:layout pageName="partidas">
 
-    <h2>Partida Informacion</h2>
-
     <c:if test="${message != null}">
-		<div class="alert alert-${messageType}">
-			<c:out value="${message}"></c:out>
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">�</a>
-		</div>
-	</c:if>
+        <div class="alert alert-${messageType}">
+           <c:out value="${message}"></c:out>
+           <a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+        </div>
+    </c:if>
+    
+    <h2>Partida Informacion</h2>
 
 
     <table class="table table-striped">
@@ -25,6 +25,11 @@
         <tr>
             <th>Fecha</th>
             <td><b><c:out value="${partida.get().fecha}"/></b></td>
+        </tr>
+
+        <tr>
+            <th>Estado</th>
+            <td><b><c:out value="${partida.get().estado}"/></b></td>
         </tr>
 
         <tr>
@@ -41,8 +46,14 @@
         
     </table>
     
-    <div>
-        <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero" htmlEscape="true"/>'> Empezar Partida</a>
-    </div>
+    <c:if test = "${partida.get().estado == 'EN_COLA'}">
+        <c:if test = "${partida.get().creador.getUsuario().getNombreUsuario().equals(jugador.get().getNombreUsuario())}">
+            <div>
+                <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/inicio" htmlEscape="true"/>'> Empezar Partida</a>
+            </div>
+        </c:if>
+    </c:if>
+    
+    
 
 </petclinic:layout>
