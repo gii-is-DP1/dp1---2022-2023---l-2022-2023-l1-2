@@ -72,18 +72,20 @@ public class JugadorController {
 			return VIEWS_PLAYER_CREATE_OR_UPDATE;
 		}
 		else {
+			Optional<Jugador> jug = this.jugadorService.findJugadorById(jugadorId);
+			Jugador juga = jug.get();
 			jugador.setId(jugadorId);
-            Usuario usuario = jugador.getUsuario();
-			Integer a = jugador.getPartidasGanadas();
-			Integer b= jugador.getPartidasJugadas();
-			Integer c = jugador.getRecordPuntos();
-			Integer e = jugador.getTotalPuntos();
-			jugador.setPartidasGanadas(a);
+			Integer a = juga.getPartidasGanadas();
+			Integer b= juga.getPartidasJugadas();
+			Integer c = juga.getRecordPuntos();
+			Integer e = juga.getTotalPuntos();
+			jugador.setPartidasGanadas(a);	
 			jugador.setPartidasJugadas(b);
 			jugador.setRecordPuntos(c);
 			jugador.setTotalPuntos(e);
+			Usuario usuarioBorrar = juga.getUsuario();
 			this.jugadorService.saveJugador(jugador);
-            this.usuarioService.saveUser(usuario);
+			this.usuarioService.deleteUsuario(usuarioBorrar);
 			return "redirect:/jugadores/{jugadorId}";
 		}
 	}
