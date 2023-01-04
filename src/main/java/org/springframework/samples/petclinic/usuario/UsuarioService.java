@@ -26,4 +26,10 @@ public class UsuarioService {
 		user.setEnabled(true);
 		usuarioRepository.save(user);
 	}
+
+    @Transactional
+	public void deleteUsuario(Usuario usuario) throws DataAccessException{
+		usuarioRepository.delete(usuario);
+	}
+
 }

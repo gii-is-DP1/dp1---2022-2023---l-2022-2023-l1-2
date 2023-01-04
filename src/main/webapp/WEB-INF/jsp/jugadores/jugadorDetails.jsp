@@ -15,6 +15,14 @@
             <td><b><c:out value="${jugador.usuario.getNombreUsuario()}"/></b></td>
         </tr>
         <tr>
+            <th>Nombre </th>
+            <td><b><c:out value="${jugador.usuario.getNombre()}"/></b></td>
+        </tr>
+        <tr>
+            <th>Apellidos</th>
+            <td><b><c:out value="${jugador.usuario.getApellidos()}"/></b></td>
+        </tr>
+        <tr>
             <th>Fecha de Nacimiento</th>
             <td><c:out value="${jugador.usuario.getFechaNacimiento()}"/></td>
         </tr>

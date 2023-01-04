@@ -31,6 +31,12 @@ public class Usuario {
 	@Column(name = "nombre_usuario")
 	String nombreUsuario;
 	@NotBlank
+	@Column(name = "nombre")
+	String nombre;
+	@NotBlank
+	@Column(name = "apellidos")
+	String apellidos;
+	@NotBlank
 	@Column(name = "contrasena")
 	String contrasena;
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
