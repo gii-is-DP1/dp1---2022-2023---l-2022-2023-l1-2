@@ -79,6 +79,10 @@ public class Partida extends NamedEntity {
     
 	private List<Carta> cartas;
 
+    @ManyToOne
+    @JoinColumn(name = "ganador_id")
+    private Jugador ganador;
+
 
 
 }

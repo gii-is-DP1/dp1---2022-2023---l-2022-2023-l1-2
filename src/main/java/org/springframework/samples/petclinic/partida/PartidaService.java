@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.carta.CartaRepository;
+import org.springframework.samples.petclinic.carta.CartaService;
 import org.springframework.samples.petclinic.carta.TipoCarta;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.logro.Logro;
@@ -166,4 +167,26 @@ public class PartidaService {
         Partida partida = partidaRepository.findById(id).get();
         return partida.getCartas().stream().allMatch(p->p.getPosicion()==0);    
     }
+
+	public void cambiarTurno(Partida p){
+        Integer n = p.getJugadores().size();
+        List<Jugador> jugadores = p.getJugadores();
+        Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
+        System.out.println(poscionActual);
+        Integer posicionJugadorProximo = (poscionActual+1)%n;
+
+        Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
+        p.setJugadorActual(jugadorProximo);  
+        p.setDadoTirado(false);
+        save(p);
+    }
+
+	public Boolean 	doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones){
+        if(Math.abs(islaDestino-islaActual)<=doblones){
+			return true;
+		}else{
+			return false;
+		}
+    }
+	
 }

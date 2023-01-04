@@ -64,6 +64,20 @@
             <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero/cogerCarta" htmlEscape="true"/>'> Quedarse con la carta del dado</a>
         </div>
 
+        <div>
+            <c:forEach items="${cartasJugador}" var="carJug">
+                <tr>
+                    <td>
+                        <spring:url value="/resources/images/${carJug.key}.png" var="cartaImage"/>
+                        <img src="${cartaImage}" height="100" width="75"/>
+                    </td>
+                    <td>
+                        <c:out value=": ${carJug.value}"/>
+                    </td>
+                </tr>
+            </c:forEach>
+        </div>
+
         <div class="container-cube" style="position: relative; left: 500px; top: 150px;">
             
             <div class="cube">
