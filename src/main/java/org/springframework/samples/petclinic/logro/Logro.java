@@ -44,7 +44,8 @@ public class Logro extends BaseEntity {
 	private TipoLogro tipoLogro;
 
 
-
+	@ManyToMany(mappedBy = "logros")
+	private Set<Jugador> jugadores;
 
 	
 
