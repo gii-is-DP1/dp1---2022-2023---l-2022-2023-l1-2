@@ -76,7 +76,6 @@ public class Partida extends NamedEntity {
 	private List<Jugador> jugadores;
 
     @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
-    
 	private List<Carta> cartas;
 
     @ManyToOne

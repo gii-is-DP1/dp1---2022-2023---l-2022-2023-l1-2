@@ -52,7 +52,7 @@ public class JugadorController {
     public String deleteJugador(@PathVariable("jugadorId") int jugadorId){
         Optional<Jugador> opt = jugadorService.findJugadorById(jugadorId);
         if(opt.isPresent()){
-            var jugador = opt.get();
+            Jugador jugador = opt.get();
             jugadorService.deleteJugador(jugador);
         }
         return "redirect:/jugadores/find";

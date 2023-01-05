@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.logro;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -42,9 +43,9 @@ public class Logro extends BaseEntity {
 	@Column(name = "tipo_logro")
 	private TipoLogro tipoLogro;
 
-	@ManyToMany
-	@JoinTable(name = "logro_jugador", joinColumns = @JoinColumn(name = "logro_id"),
-			inverseJoinColumns = @JoinColumn(name = "jugador_id"))
-	private Set<Jugador> jugadores;
+
+
+
+	
 
 }
