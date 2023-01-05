@@ -5,9 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.logro.Logro;
+import org.springframework.samples.petclinic.logro.LogroService;
+import org.springframework.samples.petclinic.partida.EstadoPartida;
 import org.springframework.samples.petclinic.partida.Partida;
+import org.springframework.samples.petclinic.partida.PartidaService;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
@@ -25,6 +31,12 @@ public class JugadorService {
 
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private PartidaService partidaService;
+
+	@Autowired 
+	private LogroService logroService;
 
 	@Autowired
 	private AutoridadService administradorService;
@@ -60,8 +72,32 @@ public class JugadorService {
 	}
 
 	@Transactional
-	public void deleteJugador(Jugador jugador) throws DataAccessException{
+	public void deleteJugador(Jugador jugador, HttpSession sesion) throws DataAccessException{
+		List<Partida> partidas = partidaService.partidasByPlayer(jugador.getId());
+
+		List<Logro> logros = logroService.LogroByPlayer(jugador.getId());
+		
+		if(partidas.stream().allMatch(x->x.getEstado().equals(EstadoPartida.FINALIZADA))){
+
+		for (Logro l: logros){
+			l.getJugadores().remove(jugador);
+			logroService.save(l);
+		}
+		for (Partida p: partidas){
+				if (p.getCreador().equals(jugador)){
+					p.setCreador(null);
+				}
+				p.setJugadorActual(null);
+			p.getJugadores().remove(jugador);
+			partidaService.save(p);
+		
+		}
+
 		jugadorRepository.delete(jugador);
+	}
+	else{
+		sesion.setAttribute("jugadorPartidaActiva", "No se puede eliminar un jugador que este en una partida activa");
+		}
 	}
 
 	@Transactional

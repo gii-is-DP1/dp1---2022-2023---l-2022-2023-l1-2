@@ -3,7 +3,9 @@ package org.springframework.samples.petclinic.jugador;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
@@ -40,20 +42,23 @@ public class JugadorController {
 
 
     @GetMapping("/jugadores/find")
-    public ModelAndView listJugadores(){
+    public ModelAndView listJugadores(HttpSession session){
 		ModelAndView mav = new ModelAndView("jugadores/listJugadores");
 		List<Jugador> jugadores = jugadorService.findAll();
 		mav.addObject("jugadores", jugadores);
+		mav.addObject("mensaje", session.getAttribute("jugadorPartidaActiva"));
+		mav.addObject("messageType", "info");
 		return mav;
 	}
 
 
     @GetMapping(value = "/jugadores/delete/{jugadorId}")
-    public String deleteJugador(@PathVariable("jugadorId") int jugadorId){
+    public String deleteJugador(@PathVariable("jugadorId") int jugadorId, HttpSession session){
         Optional<Jugador> opt = jugadorService.findJugadorById(jugadorId);
         if(opt.isPresent()){
             var jugador = opt.get();
-            jugadorService.deleteJugador(jugador);
+           	jugadorService.deleteJugador(jugador, session);
+
         }
         return "redirect:/jugadores/find";
     }
