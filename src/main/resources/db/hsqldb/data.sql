@@ -111,7 +111,26 @@ INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) V
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (6,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (7,0,2,0,null, 1);
 
-
-INSERT INTO logros(id,nombre_logro,descripcion,tipo_logro) VALUES (1,'Imparable','Gana 5 partidas',2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (1,'Buen comienzo','Gana tu primera partida',1,2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (2,'Profesional','Gana 5 partidas',5,2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (3,'Campeón','Gana 10 partidas',10,2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (4,'Imparable','Gana 20 partidas',20,2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (5,'Inmejorable','Gana 50 partidas',50,2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (6,'Todo un pirata','Gana 100 partidas',100,2);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (7,'Novato','Juega 10 partidas',10,1);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (8,'Principiante','Juega 25 partidas',25,1);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (9,'Profesional','Juega 50 partidas',50,1);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (10,'Veterano','Juega 100 partidas',100,1);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (11,'Un abrir y cerrar de ojos','Termina una partida en 10 minutos o menos',10,0);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (12,'¡Flash!','Termina una partida en 20 minutos o menos',20,0);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (13,'Justo a tiempo','Termina una partida en 30 minutos o menos',30,0);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (14,'Superando límites','Consigue 50 puntos en una sola partida',30,3);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (15,'Puntos y más puntos...','Consigue 75 puntos en una sola partida',30,3);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (16,'¡Botín!','Consigue 100 puntos en una sola partida',30,3);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (17,'¡Guinness!','Consigue 150 puntos en una sola partida',30,3);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (18,'Grumete','Acumula un total de 500 puntos',500,4);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (19,'Capitán','Acumula un total de 1000 puntos',1000,4);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (20,'Saqueador','Acumula un total de 2500 puntos',2500,4);
+INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (21,'¿Jack Sparrow?','Acumula un total de 5000 puntos',5000,4);
 
 INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (1,1);
