@@ -37,4 +37,16 @@ public class CartaService {
 	public Carta findByPosicion(Integer pos){
 		return cartaRepository.findByPosicion(pos);
 	}
+
+	public void retirarDoblones(List<Carta> doblones, Integer numDoblones){
+        Integer i=0;
+        while(i<numDoblones){
+            Carta c = doblones.get(i);
+            c.setJugador(null);
+            save(c);
+            i++;
+        }
+    }
+
+	
 }

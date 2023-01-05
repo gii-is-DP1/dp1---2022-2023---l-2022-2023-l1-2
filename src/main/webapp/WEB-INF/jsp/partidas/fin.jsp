@@ -7,6 +7,9 @@
 
 <petclinic:layout pageName="partidas">
     <h2>¡La partida ha finalizado!</h2>
+    <p>
+        El ganador es: <c:out value ="${ganador}"/>
+    </p>
     <tbody>
         La partida ha durado: <c:out value="${duracion}"/> minutos
     </tbody>

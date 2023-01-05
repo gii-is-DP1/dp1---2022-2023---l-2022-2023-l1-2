@@ -16,7 +16,7 @@
             <th>Partidas Jugadas</th>
             <th>Partidas Ganadas</th>
             <th>Puntos Totales</th>
-            <th>Record de Puntos</th>
+            <th>Récord de Puntos</th>
             <th></th>
         </tr>
         </thead>
@@ -24,8 +24,12 @@
         <c:forEach items="${jugadores}" var="jugador">
             <tr>
                 <td>
-                    <c:out value="${jugador.getUsuario().getNombreUsuario()}"/>
+                    <spring:url value="/jugadores/{jugadorId}" var="jugadorUrl">
+                        <spring:param name="jugadorId" value="${jugador.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(jugadorUrl)}"><c:out value="${jugador.getUsuario().getNombreUsuario()}"/></a>
                 </td>
+                
                 <td>
                     <c:out value="${jugador.partidasJugadas}"/>
                 </td>

@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -250,16 +252,23 @@ public class PartidaController {
         mav.addObject("messageType", "info");
         mav.addObject("islas", islas);
         mav.addObject("dado", valorDado);
-        /*
+        
         Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
         Jugador jug = jugadorService.findByUsuario(user.get());
         List<Carta> cartasJug = cartaService.findByJugador(jug.getId());
         if(cartasJug!=null && cartasJug.size()>=0){
-            Map<TipoCarta, List<Carta>> cartasPorTipo = cartasJug.stream().collect(Collectors.groupingBy(Carta::getTipoCarta));
+            Map<TipoCarta, Integer> cartasPorTipo = new HashMap<>();
+            for (Carta c : cartasJug) {
+                if(cartasPorTipo.containsKey(c.getTipoCarta())){
+                    Integer cont = cartasPorTipo.get(c.getTipoCarta());
+                    cartasPorTipo.put(c.getTipoCarta(), cont +1);
+                }else{
+                    cartasPorTipo.put(c.getTipoCarta(),1);
+                }
+            }
             mav.addObject("cartasJugador", cartasPorTipo);
-            System.out.println(cartasPorTipo.get(TipoCarta.DOBLON).size());
         }
-        */     
+            
         return mav;
 	}
 
@@ -286,7 +295,7 @@ public class PartidaController {
             }
 
         }
-        cambiarTurno(p);
+        partidaService.cambiarTurno(p);
         if (partidaService.partidaFinalizada(partidaId)){
             return "redirect:/partidas/"+partidaId+"/fin";
         } else {
@@ -294,20 +303,7 @@ public class PartidaController {
         }
     }
 
-    public void cambiarTurno(Partida p){
-        System.out.println("======================/////////////////////");
-        Integer n = p.getJugadores().size();
 
-        List<Jugador> jugadores = p.getJugadores();
-        Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
-        System.out.println(poscionActual);
-        Integer posicionJugadorProximo = (poscionActual+1)%n;
-
-        Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
-        p.setJugadorActual(jugadorProximo);  
-        p.setDadoTirado(false);
-        partidaService.save(p);
-    }
 
     @GetMapping("/{partidaId}/tablero/viajar")
     public String viajarAIsla(@PathVariable("partidaId") int partidaId, @RequestParam("isla") Integer isla, Principal principal, HttpSession session){
@@ -318,17 +314,15 @@ public class PartidaController {
         List<Carta> cartasJugador = cartaService.findByJugador(jug.getId());
         List<Carta> doblones = cartasJugador.stream().filter(x->x.getTipoCarta().equals(TipoCarta.DOBLON)).collect(Collectors.toList());
         Integer numDoblones = doblones.size();
-        System.out.println("=================================");
-        System.out.println(isla);
         
         Integer posicionCartaActual = (Integer)  session.getAttribute("valordado");
         if(p.getJugadorActual().equals(jug)){
             if(p.getDadoTirado()){
                 session.removeAttribute("dadoNoTirado");
-                if(doblonesSuficientes(isla,posicionCartaActual , numDoblones)){
+                if(partidaService.doblonesSuficientes(isla,posicionCartaActual , numDoblones)){
                     Carta cartaDestino = cartaService.findByPosicion(isla);
                     Integer numDoblonesARetirar = Math.abs(isla-posicionCartaActual);
-                    retirarDoblones(doblones, numDoblonesARetirar);
+                    cartaService.retirarDoblones(doblones, numDoblonesARetirar);
                     session.removeAttribute("doblonesInsuficientes");
                     return "redirect:/partidas/{partidaId}/tablero/"+cartaDestino.getId();
                 }else{
@@ -369,7 +363,6 @@ public class PartidaController {
             }
             
         }else{
-            System.out.println("Opción 2");
             String mensaje = "No es tu turno";
             sesion.setAttribute("turnoIncorrecto", mensaje);
             return "redirect:/partidas/{partidaId}/tablero";
@@ -377,34 +370,24 @@ public class PartidaController {
         
     }
 
-    public Boolean doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones){
-        if(Math.abs(islaDestino-islaActual)<=doblones){
-			return true;
-		}else{
-			return false;
-		}
-    }
-
-    public void retirarDoblones(List<Carta> doblones, Integer numDoblones){
-        Integer i=0;
-        while(i<numDoblones){
-            Carta c = doblones.get(i);
-            c.setJugador(null);
-            cartaService.save(c);
-            i++;
-        }
-    }
+   
 
     @GetMapping("/{partidaId}/fin")
-    public ModelAndView finishPartida(@PathVariable("partidaId") int partidaId) {
+    public ModelAndView finishPartida(@PathVariable("partidaId") int partidaId, Principal principal) {
         ModelAndView mav = new ModelAndView(FINPARTIDA);
         Partida partida = partidaService.findById(partidaId).get();
         partida.setEstado(EstadoPartida.FINALIZADA);
         Map<String, Integer> map = partidaService.contarPuntos(partidaId);
         partidaService.comprobarLogrosPartidaFinalizada(partidaId);
         partida.setHoraFin(LocalTime.now());
+        String nameGanador = map.keySet().stream().max(Comparator.comparing(k->map.get(k))).get();
+        Usuario usuarioGanador = usuarioService.findUserByNombreUsuario(nameGanador).get();
+        Jugador jugadorGanJugador = jugadorService.findByUsuario(usuarioGanador);
+        partida.setGanador(jugadorGanJugador);
         partidaService.save(partida);
+        jugadorService.actualizarEstadisticas(principal,map, partida);
         mav.addObject("partida",this.partidaService.findById(partidaId).get());
+        mav.addObject("ganador", nameGanador);
         mav.addObject("duracion", Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes());
         mav.addObject("puntuacion",map);
         return mav;
