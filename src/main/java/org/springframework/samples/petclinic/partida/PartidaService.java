@@ -168,6 +168,7 @@ public class PartidaService {
         return partida.getCartas().stream().allMatch(p->p.getPosicion()==0);    
     }
 
+	@Transactional
 	public void cambiarTurno(Partida p){
         Integer n = p.getJugadores().size();
         List<Jugador> jugadores = p.getJugadores();
