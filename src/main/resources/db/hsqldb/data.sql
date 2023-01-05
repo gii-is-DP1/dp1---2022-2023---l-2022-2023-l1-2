@@ -110,6 +110,11 @@ INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) V
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (5,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (6,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (7,0,2,0,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (8,0,2,0,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (9,0,2,0,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (10,0,2,0,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (11,0,2,0,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (12,0,2,0,null, 1);
 
 
 INSERT INTO logros(id,nombre_logro,descripcion,tipo_logro) VALUES (1,'Imparable','Gana 5 partidas',2);

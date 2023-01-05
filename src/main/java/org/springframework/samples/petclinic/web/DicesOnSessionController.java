@@ -58,6 +58,8 @@ public class DicesOnSessionController {
         if(partidaJugadorActual.getJugadorActual().equals(jug)){
             if(partidaJugadorActual.getDadoTirado().equals(false)){
                 session.setAttribute("valordado", valordado);
+                session.removeAttribute("turnoIncorrecto");
+                session.removeAttribute("dadoNoTirado");
                 partidaJugadorActual.setDadoTirado(true);
                 partidaService.save(partidaJugadorActual);
             }else{

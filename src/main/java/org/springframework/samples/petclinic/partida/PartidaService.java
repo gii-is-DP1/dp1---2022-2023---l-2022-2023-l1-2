@@ -113,7 +113,7 @@ public class PartidaService {
 		return map;
 	}
 
-	public Boolean numeroCorrecto(Partida p){
+	public Boolean numeroJugadoresCorrecto(Partida p){
 		if(p.getJugadores().size()>=2 && p.getJugadores().size()<=4){
 			return true;
 		}else{

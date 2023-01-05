@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.carta;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,6 +18,6 @@ public interface CartaRepository extends CrudRepository<Carta, Integer>{
     Carta save(Carta p);
 
     @Query("SELECT cart FROM Carta cart WHERE cart.posicion = ?1")
-    Carta findByPosicion(Integer pos);
+    Optional<Carta> findByPosicion(Integer pos);
    
 }

@@ -182,7 +182,7 @@ public class PartidaController {
         Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
         Jugador jug = jugadorService.findByUsuario(user.get());
         Partida p = this.partidaService.findById(partidaId).get();
-        if(p.getCreador().equals(jug) && p.getEstado().equals(EstadoPartida.EN_COLA) && partidaService.numeroCorrecto(p)){
+        if(p.getCreador().equals(jug) && p.getEstado().equals(EstadoPartida.EN_COLA) && partidaService.numeroJugadoresCorrecto(p)){
             p.setEstado(EstadoPartida.EN_CURSO);
             List<Carta> cartas = cartasAleatorias(p);
             p.setCartas(cartas);    
@@ -190,7 +190,7 @@ public class PartidaController {
             return "redirect:/partidas/"+partidaId+"/tablero";
         }else{
             if(p.getJugadores().contains(jug)){
-                if(!partidaService.numeroCorrecto(p)){
+                if(!partidaService.numeroJugadoresCorrecto(p)){
                     String message = "El número de jugadores debe estar entre 2 y 4";
                     sesion.setAttribute("messageNumJugadores", message);
                     return "redirect:/partidas/"+partidaId;
@@ -210,9 +210,12 @@ public class PartidaController {
         if(cartas.isEmpty() || cartas == null){
             cartas = cartaService.findAllCartas();
             cartas.stream().forEach(c->c.setPosicion(7));
+
             List<Carta> doblones = cartas.stream().filter(x->x.getTipoCarta().equals(TipoCarta.DOBLON)).collect(Collectors.toList());
             List<Carta> utilizadas = new ArrayList<>();
             Integer x =0;
+
+            //Se le añaden 3 doblones a cada jugador
             for(int j=0;j<p.getJugadores().size();j++){
                 Jugador jug = p.getJugadores().get(j);
                 for(int d = x; d<x+3;d++){
@@ -224,9 +227,13 @@ public class PartidaController {
                 }
                 x=x+3;
             }
+
+            //Se retiran los doblones asignados de las cartas disponibles
             cartas.removeAll(utilizadas);
             Collections.shuffle(cartas);
             cartas.stream().forEach(c->cartaService.save(c));
+
+            //Se reparten una carta a cada una de las 6 posiciones iniciales
             for(int i =0; i<6;i++){
                 Carta carta = cartas.get(i);
                 carta.setPosicion(i+1);
@@ -238,38 +245,44 @@ public class PartidaController {
 	@GetMapping("/{partidaId}/tablero")
 	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId, HttpServletResponse response, Principal principal, HttpSession sesion) {
 		response.addHeader("Refresh", "10");
-        ModelAndView mav = new ModelAndView(TABLERO);
-        Integer valorDado = (Integer) sesion.getAttribute("valordado");
-		
-        List<Integer> islas = List.of(1,2,3,4,5,6);
-        mav.addObject("partida",this.partidaService.findById(partidaId));
-        mav.addObject("tablero", tableroService.findById(1).get());
-        mav.addObject("cartasIniciales", this.partidaService.findById(partidaId).get().getCartas());
-        mav.addObject("message", sesion.getAttribute("doblonesInsuficientes"));
-        mav.addObject("message2", sesion.getAttribute("turnoIncorrecto"));
-        mav.addObject("message3", sesion.getAttribute("dadoNoTirado"));
-        mav.addObject("message4", sesion.getAttribute("dadoYaTirado"));
-        mav.addObject("messageType", "info");
-        mav.addObject("islas", islas);
-        mav.addObject("dado", valorDado);
-        
-        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
-        Jugador jug = jugadorService.findByUsuario(user.get());
-        List<Carta> cartasJug = cartaService.findByJugador(jug.getId());
-        if(cartasJug!=null && cartasJug.size()>=0){
-            Map<TipoCarta, Integer> cartasPorTipo = new HashMap<>();
-            for (Carta c : cartasJug) {
-                if(cartasPorTipo.containsKey(c.getTipoCarta())){
-                    Integer cont = cartasPorTipo.get(c.getTipoCarta());
-                    cartasPorTipo.put(c.getTipoCarta(), cont +1);
-                }else{
-                    cartasPorTipo.put(c.getTipoCarta(),1);
-                }
-            }
-            mav.addObject("cartasJugador", cartasPorTipo);
-        }
+        if (partidaService.partidaFinalizada(partidaId)){
+            return finishPartida(partidaId, principal);
+        }else{
+            ModelAndView mav = new ModelAndView(TABLERO);
+            Integer valorDado = (Integer) sesion.getAttribute("valordado");
             
-        return mav;
+            List<Integer> islas = List.of(1,2,3,4,5,6);
+            mav.addObject("partida",this.partidaService.findById(partidaId));
+            mav.addObject("tablero", tableroService.findById(1).get());
+            mav.addObject("cartasIniciales", this.partidaService.findById(partidaId).get().getCartas());
+            mav.addObject("message", sesion.getAttribute("doblonesInsuficientes"));
+            mav.addObject("message2", sesion.getAttribute("turnoIncorrecto"));
+            mav.addObject("message3", sesion.getAttribute("dadoNoTirado"));
+            mav.addObject("message4", sesion.getAttribute("dadoYaTirado"));
+            mav.addObject("message5", sesion.getAttribute("islaVacia"));
+            mav.addObject("messageType", "info");
+            mav.addObject("islas", islas);
+            mav.addObject("dado", valorDado);
+            
+            Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+            Jugador jug = jugadorService.findByUsuario(user.get());
+
+            //Se añaden al tablero las cartas que tiene cada jugador para poder visualizarlas
+            List<Carta> cartasJug = cartaService.findByJugador(jug.getId());
+            if(cartasJug!=null && cartasJug.size()>=0){
+                Map<TipoCarta, Integer> cartasPorTipo = new HashMap<>();
+                for (Carta c : cartasJug) {
+                    if(cartasPorTipo.containsKey(c.getTipoCarta())){
+                        Integer cont = cartasPorTipo.get(c.getTipoCarta());
+                        cartasPorTipo.put(c.getTipoCarta(), cont +1);
+                    }else{
+                        cartasPorTipo.put(c.getTipoCarta(),1);
+                    }
+                }
+                mav.addObject("cartasJugador", cartasPorTipo);
+            }
+            return mav;
+        }
 	}
 
     @GetMapping("/{partidaId}/tablero/{cartaId}")
@@ -285,7 +298,8 @@ public class PartidaController {
             c.setJugador(jug);
             cartaService.save(c);
 
-            for(int i=7; i<p.getCartas().size();i++){
+            //Asignar la siguiente carta disponible a la posición que ha quedado libre
+            for(int i=6; i<p.getCartas().size();i++){
                 if(p.getCartas().get(i).getPosicion()==7){
                     Carta nuevaCarta = p.getCartas().get(i);
                     nuevaCarta.setPosicion(pos);
@@ -320,11 +334,19 @@ public class PartidaController {
             if(p.getDadoTirado()){
                 session.removeAttribute("dadoNoTirado");
                 if(partidaService.doblonesSuficientes(isla,posicionCartaActual , numDoblones)){
-                    Carta cartaDestino = cartaService.findByPosicion(isla);
-                    Integer numDoblonesARetirar = Math.abs(isla-posicionCartaActual);
-                    cartaService.retirarDoblones(doblones, numDoblonesARetirar);
                     session.removeAttribute("doblonesInsuficientes");
-                    return "redirect:/partidas/{partidaId}/tablero/"+cartaDestino.getId();
+                    Optional<Carta> cartaDestino = cartaService.findByPosicion(isla);
+                    if(!cartaDestino.isPresent()){
+                        String mensaje = "Esa isla está vacía. Prueba con otra";
+                        session.setAttribute("islaVacia", mensaje);
+                        return "redirect:/partidas/{partidaId}/tablero";
+                    }else{
+                        Integer numDoblonesARetirar = Math.abs(isla-posicionCartaActual);
+                        cartaService.retirarDoblones(doblones, numDoblonesARetirar);
+                        session.removeAttribute("islaVacia");
+                        return "redirect:/partidas/{partidaId}/tablero/"+cartaDestino.get().getId();
+                    }
+                    
                 }else{
                     String mensaje = "No tienes doblones suficientes";
                     session.setAttribute("doblonesInsuficientes", mensaje);
@@ -351,11 +373,20 @@ public class PartidaController {
         Jugador jug = jugadorService.findByUsuario(user.get());
 
         if(p.getJugadorActual().equals(jug)){
+            sesion.removeAttribute("turnoIncorrecto");
             if(p.getDadoTirado().equals(true)){
                 sesion.removeAttribute("dadoNoTirado");
                 Integer dado = (Integer) sesion.getAttribute("valordado");
-                Carta c = cartaService.findByPosicion(dado);
-                return "redirect:/partidas/{partidaId}/tablero/"+c.getId();
+                Optional<Carta> c = cartaService.findByPosicion(dado);
+                if(!c.isPresent()){
+                    String mensaje = "Esa isla está vacía. Prueba con otra";
+                    sesion.setAttribute("islaVacia", mensaje);
+                    return "redirect:/partidas/{partidaId}/tablero";
+                }else{
+                    sesion.removeAttribute("islaVacia");
+                    return "redirect:/partidas/{partidaId}/tablero/"+c.get().getId();
+                }
+                
             }else{
                 String mensaje = "No has tirado el dado";
                 sesion.setAttribute("dadoNoTirado", mensaje);
