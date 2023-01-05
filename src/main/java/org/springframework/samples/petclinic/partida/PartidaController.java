@@ -314,7 +314,6 @@ public class PartidaController {
         List<Carta> cartasJugador = cartaService.findByJugador(jug.getId());
         List<Carta> doblones = cartasJugador.stream().filter(x->x.getTipoCarta().equals(TipoCarta.DOBLON)).collect(Collectors.toList());
         Integer numDoblones = doblones.size();
-        System.out.println(isla);
         
         Integer posicionCartaActual = (Integer)  session.getAttribute("valordado");
         if(p.getJugadorActual().equals(jug)){
@@ -364,7 +363,6 @@ public class PartidaController {
             }
             
         }else{
-            System.out.println("Opción 2");
             String mensaje = "No es tu turno";
             sesion.setAttribute("turnoIncorrecto", mensaje);
             return "redirect:/partidas/{partidaId}/tablero";
@@ -375,7 +373,7 @@ public class PartidaController {
    
 
     @GetMapping("/{partidaId}/fin")
-    public ModelAndView finishPartida(@PathVariable("partidaId") int partidaId) {
+    public ModelAndView finishPartida(@PathVariable("partidaId") int partidaId, Principal principal) {
         ModelAndView mav = new ModelAndView(FINPARTIDA);
         Partida partida = partidaService.findById(partidaId).get();
         partida.setEstado(EstadoPartida.FINALIZADA);
@@ -387,6 +385,7 @@ public class PartidaController {
         Jugador jugadorGanJugador = jugadorService.findByUsuario(usuarioGanador);
         partida.setGanador(jugadorGanJugador);
         partidaService.save(partida);
+        jugadorService.actualizarEstadisticas(principal,map, partida);
         mav.addObject("partida",this.partidaService.findById(partidaId).get());
         mav.addObject("ganador", nameGanador);
         mav.addObject("duracion", Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes());

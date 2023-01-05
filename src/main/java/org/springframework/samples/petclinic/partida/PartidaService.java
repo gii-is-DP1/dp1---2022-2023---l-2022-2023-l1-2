@@ -172,7 +172,6 @@ public class PartidaService {
         Integer n = p.getJugadores().size();
         List<Jugador> jugadores = p.getJugadores();
         Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
-        System.out.println(poscionActual);
         Integer posicionJugadorProximo = (poscionActual+1)%n;
 
         Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
