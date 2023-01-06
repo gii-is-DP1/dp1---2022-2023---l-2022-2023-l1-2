@@ -7,6 +7,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="jugadores">
+    <c:if test="${mensaje != null}">
+        <div class="alert alert-${messageType}">
+            <c:out value="${mensaje}"></c:out>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+        </div>
+    </c:if>
     <h2>Jugadores</h2>
 
     <table id="jugadoresTable" class="table table-striped">
