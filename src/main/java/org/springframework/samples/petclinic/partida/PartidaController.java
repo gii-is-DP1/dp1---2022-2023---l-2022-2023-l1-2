@@ -416,18 +416,31 @@ public class PartidaController {
 
     @GetMapping("/{partidaId}/fin")
     public ModelAndView finishPartida(@PathVariable("partidaId") int partidaId, Principal principal) {
+        Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+        Jugador jug = jugadorService.findByUsuario(user.get());
         ModelAndView mav = new ModelAndView(FINPARTIDA);
         Partida partida = partidaService.findById(partidaId).get();
         partida.setEstado(EstadoPartida.FINALIZADA);
-        Map<String, Integer> map = partidaService.contarPuntos(partidaId);
-        partidaService.comprobarLogrosPartidaFinalizada(partidaId);
+        partida.setJugadorActual(null);
         partida.setHoraFin(LocalTime.now());
+
+        //Conteo de puntos
+        Map<String, Integer> map = partidaService.contarPuntos(partidaId);
+        Integer puntosJugadorActual = map.get(user.get().getNombreUsuario());
+        List<String> jugadoresOrdenadosPorPuntos = map.keySet().stream().sorted(Comparator.comparing(x->map.get(x)).reversed()).collect(Collectors.toList());
+        Integer posicionJugadorActual = jugadoresOrdenadosPorPuntos.indexOf(user.get().getNombreUsuario()) +1;
+
+        //Ganador
         String nameGanador = map.keySet().stream().max(Comparator.comparing(k->map.get(k))).get();
         Usuario usuarioGanador = usuarioService.findUserByNombreUsuario(nameGanador).get();
         Jugador jugadorGanJugador = jugadorService.findByUsuario(usuarioGanador);
         partida.setGanador(jugadorGanJugador);
         partidaService.save(partida);
-        jugadorService.actualizarEstadisticas(principal,map, partida);
+        
+        jugadorService.actualizarEstadisticasJugador(principal,map, partida);
+        partidaService.comprobarLogrosPartidaFinalizada(partidaId);
+
+        estadisticaService.establecerPosicionYPuntos(jug.getId(), partida.getId(), posicionJugadorActual, puntosJugadorActual);
         mav.addObject("partida",this.partidaService.findById(partidaId).get());
         mav.addObject("ganador", nameGanador);
         mav.addObject("duracion", Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes());

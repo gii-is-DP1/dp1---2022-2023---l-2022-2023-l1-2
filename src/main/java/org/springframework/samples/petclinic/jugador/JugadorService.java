@@ -87,7 +87,6 @@ public class JugadorService {
 				if (p.getCreador().equals(jugador)){
 					p.setCreador(null);
 				}
-				p.setJugadorActual(null);
 			p.getJugadores().remove(jugador);
 			partidaService.save(p);
 		
@@ -101,7 +100,7 @@ public class JugadorService {
 	}
 
 	@Transactional
-	public void actualizarEstadisticas(Principal principal, Map<String, Integer> puntuaciones, Partida partida){
+	public void actualizarEstadisticasJugador(Principal principal, Map<String, Integer> puntuaciones, Partida partida){
 
 		String nombreUsuario = principal.getName();
 		Usuario us = usuarioService.findUserByNombreUsuario(nombreUsuario).get();

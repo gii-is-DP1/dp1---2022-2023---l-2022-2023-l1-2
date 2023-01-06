@@ -49,8 +49,14 @@ public class EstadisticaService {
 		est.setNumCartasObtenidas(0);
 		est.setPuntosObtenidos(0);
 		est.setPosicion(0);
-
 		save(est);
+	}
 
+	@Transactional
+	public void establecerPosicionYPuntos(Integer j, Integer p, Integer posicion, Integer puntos){
+		EstadísticaJugadorEnPartida est = findByJugadorAndPartida(j, p);
+		est.setPosicion(posicion);
+		est.setPuntosObtenidos(puntos);
+		save(est);
 	}
 }
