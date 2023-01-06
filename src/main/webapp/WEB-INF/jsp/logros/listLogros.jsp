@@ -7,14 +7,41 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="logros">
-    <h2>Logros</h2>
-
+    <h2>Tus Logros</h2>
     <table id="logrosTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150;">Nombre</th>
-            <th style="width: 120px">Descripcion</th>
-            <th></th>
+            <th style="width: 300;">Nombre</th>
+            <th style="width: 500;">Descripcion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${logrosJugador}" var="logroJug">
+            <tr>
+                <td>
+                    <c:out value="${logroJug.getNombreLogro()}"/>
+                </td>
+                <td>
+                    <c:out value="${logroJug.getDescripcion()}"/>
+                </td>
+                <c:if test = "${autoridad.isPresent()}">
+                    <td>
+                        <a class="btn btn-danger" href='<spring:url value="/logros/delete/${logroJug.id}" htmlEscape="true"/>'>Eliminar</a>
+                    </td>
+                    <td>
+                        <a class="btn" href='<spring:url value="/logros/edit/${logroJug.id}/" htmlEscape="true"/>'>Editar</a>
+                    </td>
+                </c:if>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <h2>Logros</h2>
+    <table id="logrosTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 300;">Nombre</th>
+            <th style="width: 500;">Descripcion</th>
         </tr>
         </thead>
         <tbody>
