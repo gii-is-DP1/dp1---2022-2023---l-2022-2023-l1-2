@@ -20,8 +20,37 @@ public class EstadisticaService {
 		return estadisticaRepository.save(e);
 	}
 
+	public EstadísticaJugadorEnPartida findByJugadorAndPartida(Integer j, Integer p){
+		return estadisticaRepository.findByJugadorAndPartida(j,p);
+	}
+	
 	@Transactional
-	public void aumentarBarcosUsados(Jugador j, Partida p){
-		
+	public void aumentarBarcosUsados(Integer j, Integer p){
+		EstadísticaJugadorEnPartida est = findByJugadorAndPartida(j, p);
+		Integer barcosOld = est.getNumBarcosUsados();
+		est.setNumBarcosUsados(barcosOld+1);
+		save(est);
+	}
+
+	@Transactional
+	public void aumentarCartasObtenidas(Integer j, Integer p){
+		EstadísticaJugadorEnPartida est = findByJugadorAndPartida(j, p);
+		Integer cartasOld = est.getNumCartasObtenidas();
+		est.setNumCartasObtenidas(cartasOld+1);
+		save(est);
+	}
+
+	@Transactional
+	public void crearEstadisticas(Jugador j, Partida p){
+		EstadísticaJugadorEnPartida est = new EstadísticaJugadorEnPartida();
+		est.setJugador(j);
+		est.setPartida(p);
+		est.setNumBarcosUsados(0);
+		est.setNumCartasObtenidas(0);
+		est.setPuntosObtenidos(0);
+		est.setPosicion(0);
+
+		save(est);
+
 	}
 }

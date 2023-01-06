@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.carta.CartaService;
 import org.springframework.samples.petclinic.carta.TipoCarta;
+import org.springframework.samples.petclinic.estadisticasPartida.EstadisticaService;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.tablero.TableroService;
@@ -44,6 +45,7 @@ public class PartidaController {
 	private final JugadorService jugadorService;
 	private final UsuarioService usuarioService;
     private final TableroService tableroService;
+    private final EstadisticaService estadisticaService;
     private final CartaService cartaService;
     private static final String PARTIDA_CREATE = "partidas/createPartidas";
     private static final String PARTIDA_JOIN = "partidas/joinPartidas";
@@ -51,12 +53,13 @@ public class PartidaController {
     private static final String FINPARTIDA = "partidas/fin";
 
     @Autowired
-	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService, TableroService tableroService, CartaService cartaService) {
+	public PartidaController(PartidaService partidaService, JugadorService jugadorService, UsuarioService usuarioService, TableroService tableroService, CartaService cartaService, EstadisticaService estadisticaService) {
 		this.partidaService = partidaService;
 		this.jugadorService = jugadorService;
 		this.usuarioService = usuarioService;
         this.tableroService = tableroService;
         this.cartaService = cartaService;
+        this.estadisticaService=estadisticaService;
 	}
 
     @GetMapping("/join/{partidaId}")
@@ -187,6 +190,9 @@ public class PartidaController {
             List<Carta> cartas = cartasAleatorias(p);
             p.setCartas(cartas);    
             partidaService.save(p);
+            for (Jugador j : p.getJugadores()) {
+                estadisticaService.crearEstadisticas(j, p);
+            }
             return "redirect:/partidas/"+partidaId+"/tablero";
         }else{
             if(p.getJugadores().contains(jug)){
@@ -308,6 +314,9 @@ public class PartidaController {
                 }
             }
 
+            estadisticaService.aumentarCartasObtenidas(jug.getId(), p.getId());
+
+
         }
         partidaService.cambiarTurno(p);
         if (partidaService.partidaFinalizada(partidaId)){
@@ -341,8 +350,10 @@ public class PartidaController {
                         session.setAttribute("islaVacia", mensaje);
                         return "redirect:/partidas/{partidaId}/tablero";
                     }else{
+                        //Se retiran los doblones correspondientes al jugador y se le aumenta su estadistica de barcos usados
                         Integer numDoblonesARetirar = Math.abs(isla-posicionCartaActual);
                         cartaService.retirarDoblones(doblones, numDoblonesARetirar);
+                        estadisticaService.aumentarBarcosUsados(jug.getId(), p.getId());
                         session.removeAttribute("islaVacia");
                         return "redirect:/partidas/{partidaId}/tablero/"+cartaDestino.get().getId();
                     }

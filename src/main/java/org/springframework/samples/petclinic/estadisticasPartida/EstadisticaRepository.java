@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface EstadisticaRepository extends CrudRepository<EstadísticaJugadorEnPartida, Integer>{
     EstadísticaJugadorEnPartida save(EstadísticaJugadorEnPartida e);
 
-   // @Query("SELECT est FROM EstadísticaJugadorEnPartida est WHERE est.jugador.id = ?1")
-   // EstadísticaJugadorEnPartida findByJugadorAndPartida(Integer j, Integer p);
+    @Query("SELECT est FROM EstadísticaJugadorEnPartida est WHERE est.jugador.id = ?1 and est.partida.id = ?2")
+    EstadísticaJugadorEnPartida findByJugadorAndPartida(Integer j, Integer p);
 }
