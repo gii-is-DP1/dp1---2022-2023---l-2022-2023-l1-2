@@ -147,7 +147,7 @@ public class PartidaService {
 						}
 						break;
 					case TIEMPO:
-						if (Duration.between(p.getHoraInicio(), p.getHoraFin()).toMinutes() == l.getObjetivo()) {
+						if (Duration.between(p.getHoraInicio(), p.getHoraFin()).toMinutes() <= l.getObjetivo()) {
 							l.getJugadores().add(j);
 							logroRepository.save(l);
 						}

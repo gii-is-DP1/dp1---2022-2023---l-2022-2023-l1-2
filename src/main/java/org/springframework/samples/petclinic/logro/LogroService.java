@@ -25,6 +25,9 @@ public class LogroService {
         return logroRepository.findById(id);
     }
 
+    public Optional<List<Logro>> findLogrosByPlayer(Integer id){
+        return logroRepository.findLogrosByPlayer(id);
+    }
     @Transactional
 	public Logro save(Logro l) throws DataAccessException {
 		return logroRepository.save(l);

@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.usuario.Autoridad;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
@@ -29,12 +30,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class LogroController {
     private final LogroService logroService;
     private final UsuarioService usuarioService;
+    private final JugadorService jugadorService;
     private static final String LOGRO_CREATE_UPDATE = "logros/createLogros";
 
     @Autowired
-    public LogroController(LogroService logroService, UsuarioService usuarioService, AutoridadService autoridadService) {
+    public LogroController(LogroService logroService, UsuarioService usuarioService, JugadorService jugadorService, AutoridadService autoridadService) {
         this.logroService = logroService;
         this.usuarioService = usuarioService;
+        this.jugadorService = jugadorService;
     }
 
     @GetMapping("/create")
@@ -96,9 +99,15 @@ public class LogroController {
     public ModelAndView listLogros(Principal principal){
 		ModelAndView mav = new ModelAndView("logros/listLogros");
         Usuario user = usuarioService.findUserByNombreUsuario(principal.getName()).get();
+        Jugador jug = jugadorService.findByUsuario(user);
+        Optional<List<Logro>> logrosJugador = logroService.findLogrosByPlayer(jug.getId());
 		List<Logro> logros = logroService.findAllLogros();
         Optional<Autoridad> autoridad = user.getAdministrador().stream().filter(x -> x.getAutoridad().equals("admin")).findAny();
-		mav.addObject("logros", logros);
+		if (logrosJugador.isPresent()){
+            logros.removeAll(logrosJugador.get());
+            mav.addObject("logrosJugador", logrosJugador.get());
+        }
+        mav.addObject("logros", logros);
         mav.addObject("autoridad", autoridad);
 		return mav;
 	}
