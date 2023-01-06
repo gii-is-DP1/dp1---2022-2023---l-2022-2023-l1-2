@@ -35,7 +35,12 @@ public class LogroService {
 
     @Transactional
 	public void delete(Logro logro) throws DataAccessException{
+        
 		logroRepository.delete(logro);
+	}
+
+    public List<Logro> LogroByPlayer(Integer id) {
+		return logroRepository.findByPlayer(id);
 	}
 
 }

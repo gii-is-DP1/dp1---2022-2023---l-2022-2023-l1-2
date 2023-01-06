@@ -14,4 +14,5 @@ public interface LogroRepository extends CrudRepository<Logro, Integer>{
 
     @Query("SELECT l FROM Logro l INNER JOIN l.jugadores as j WHERE j.id = ?1")
     Optional<List<Logro>> findLogrosByPlayer(Integer id);
+
 }
