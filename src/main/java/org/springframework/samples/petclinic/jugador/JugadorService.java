@@ -116,5 +116,9 @@ public class JugadorService {
 		jugadorRepository.save(j);
 	}
 
+	public List<Jugador> jugadoresOrderedByPuntos(){
+		return jugadorRepository.findAllOrderedByPuntos();
+	}
+
 	
 }

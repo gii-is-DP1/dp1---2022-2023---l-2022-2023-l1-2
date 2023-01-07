@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class JugadorController {
 
     private static final String VIEWS_PLAYER_CREATE_OR_UPDATE = "jugadores/updateForm";
+	private static final String RANKING = "jugadores/ranking";
 
     private final JugadorService jugadorService;
     private final UsuarioService usuarioService;
@@ -99,6 +100,14 @@ public class JugadorController {
 	public ModelAndView showJugador(@PathVariable("jugadorId") int jugadorId) {
 		ModelAndView mav = new ModelAndView("jugadores/jugadorDetails");
 		mav.addObject("jugador", this.jugadorService.findJugadorById(jugadorId).get());
+		return mav;
+	}
+
+	@GetMapping("/jugadores/ranking")
+	public ModelAndView ranking(){
+		ModelAndView mav = new ModelAndView(RANKING);
+		List<Jugador> jugadores = jugadorService.jugadoresOrderedByPuntos();
+		mav.addObject("jugadores", jugadores);
 		return mav;
 	}
     
