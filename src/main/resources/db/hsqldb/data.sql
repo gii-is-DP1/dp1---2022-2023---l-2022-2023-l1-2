@@ -107,7 +107,7 @@ INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) V
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (2,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (3,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (4,0,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (5,0,2,0,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (5,0,2,1,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (6,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (7,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (8,0,2,0,null, 1);
