@@ -75,7 +75,7 @@ public class JugadorService {
 	public void deleteJugador(Jugador jugador, HttpSession sesion) throws DataAccessException{
 		List<Partida> partidas = partidaService.partidasByPlayer(jugador.getId());
 
-		List<Logro> logros = logroService.LogroByPlayer(jugador.getId());
+		List<Logro> logros = logroService.findLogrosByPlayer(jugador.getId()).get();
 		
 		if(partidas.stream().allMatch(x->x.getEstado().equals(EstadoPartida.FINALIZADA))){
 
