@@ -34,6 +34,14 @@
 			<a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
 		</div>
 	</c:if>
+
+    <c:if test="${message5 != null}">
+		<div class="alert alert-${messageType}">
+			<c:out value="${message3}"></c:out>
+			<a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+		</div>
+	</c:if>
+
     <div>
        <p> Valor del dado: </p>
        <p> ${dado}</p>
@@ -53,7 +61,6 @@
             <p>Seleccione la Isla a la que quiere viajar</p>
             <form action = "/partidas/${partidaId}/tablero/viajar/">
                 <select name = isla>
-                    <option value = "NONE">--SELECT--</option>
                     <c:forEach items="${islas}" var="isla">
                         <option value = ${isla}> ${isla}</option>
                     </c:forEach>

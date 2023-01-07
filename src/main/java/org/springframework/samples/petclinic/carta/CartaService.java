@@ -34,7 +34,7 @@ public class CartaService {
 		return cartaRepository.findById(id);
 	} 
 
-	public Carta findByPosicion(Integer pos){
+	public Optional<Carta> findByPosicion(Integer pos){
 		return cartaRepository.findByPosicion(pos);
 	}
 
