@@ -7,14 +7,16 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="ranking">
-    <h2>Ranking por puntos totales</h2>
-
+    <h2>Ranking por partidas ganadas</h2>
+    <div style="text-align: right">
+        <a href="/jugadores/rankingPuntos" class="btn btn-default">Por Puntos Totales</a>
+    </div>
     <table id="rankingTable" class="table table-striped">
         <thead>
             <tr>
                 <th style="width: 200px;">Posición</th>
                 <th>Nombre de Usuario</th>
-                <th>Puntos Totales</th>
+                <th>Partidas Ganadas</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +33,7 @@
                     </td>
                     
                     <td>
-                        <c:out value="${jugador.totalPuntos}"/>
+                        <c:out value="${jugador.partidasGanadas}"/>
                     </td>
                 </tr>
             </c:forEach>

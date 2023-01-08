@@ -27,6 +27,10 @@
             <th>Fecha de Nacimiento</th>
             <td><c:out value="${jugador.usuario.getFechaNacimiento()}"/></td>
         </tr>
+    </table>
+
+    <h2>Estadísticas Globales</h2>
+    <table class="table table-striped">
         <tr>
             <th>Partidas Jugadas</th>
             <td><c:out value="${jugador.getPartidasJugadas()}"/></td>
@@ -40,6 +44,16 @@
             <td><c:out value="${jugador.getTotalPuntos()}"/></td>
         </tr>
         <tr>
+            <th>Barcos Usados en Total</th>
+            <td><c:out value="${numBarcos}"/></td>
+        </tr>
+
+        <tr>
+            <th>Cartas Obtenidas en Total</th>
+            <td><c:out value="${numCartas}"/></td>
+        </tr>
+
+        <tr>
             <th>Récord de Puntos</th>
             <td><c:out value="${jugador.getRecordPuntos()}"/></td>
         </tr>
@@ -49,7 +63,41 @@
         <spring:param name="jugadorId" value="${jugador.id}"/>
     </spring:url>
 
-    <a href="/" class="btn btn-default">Volver</a>
+    <h2>Partidas Jugadas</h2>
+
+    <c:forEach items="${estadisticas}" var="estadistica">
+        <h3>Partida <c:out value = "${estadisticas.indexOf(estadistica)+1}"/></h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Fecha</th>
+                <td><b><c:out value="${estadistica.partida.getFecha()}"/></b></td>
+            </tr>
+            <tr>
+                <th>Ganador</th>
+                <td><b><c:out value="${estadistica.partida.getGanador().getUsuario().getNombreUsuario()}"/></b></td>
+            </tr>
+            <tr>
+                <th>Posición</th>
+                <td><b><c:out value="${estadistica.posicion}"/></b></td>
+            </tr>
+            <tr>
+                <th>Puntos obtenidos</th>
+                <td><b><c:out value="${estadistica.puntosObtenidos}"/></b></td>
+            </tr>
+            <tr>
+                <th>Barcos usados</th>
+                <td><b><c:out value="${estadistica.numBarcosUsados}"/></b></td>
+            </tr>
+            <tr>
+                <th>Cartas obtenidas</th>
+                <td><b><c:out value="${estadistica.numCartasObtenidas}"/></b></td>
+            </tr>
+            
+        </table>
+    </c:forEach>
+
+
+    <a href="/jugadores/find" class="btn btn-default">Volver</a>
 
     <br/>
     <br/>

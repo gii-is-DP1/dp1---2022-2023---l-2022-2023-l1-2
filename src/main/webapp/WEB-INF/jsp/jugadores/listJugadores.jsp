@@ -24,6 +24,7 @@
             <th>Puntos Totales</th>
             <th>Récord de Puntos</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

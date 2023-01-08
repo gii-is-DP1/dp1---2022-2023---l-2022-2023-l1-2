@@ -123,5 +123,11 @@ public class JugadorService {
 		return jugadorRepository.findAllOrderedByPuntos();
 	}
 
+	public List<Jugador> jugadoresOrderedByPartidasGanadas(){
+		return jugadorRepository.findAllOrderedByPartidasGanadas();
+	}
+
+	
+
 	
 }

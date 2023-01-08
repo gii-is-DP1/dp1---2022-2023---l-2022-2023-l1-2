@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.estadisticasPartida;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -58,5 +60,17 @@ public class EstadisticaService {
 		est.setPosicion(posicion);
 		est.setPuntosObtenidos(puntos);
 		save(est);
+	}
+
+	public List<EstadísticaJugadorEnPartida> findByJugador(Integer j){
+		return estadisticaRepository.findByJugador(j);
+	}
+
+	public Integer numBarcosTotalesByJugador(Integer j){
+		return estadisticaRepository.findNumBarcosUsadosTotalesByJugador(j);
+	}
+
+	public Integer numCartasObtenidasByJugador(Integer j){
+		return estadisticaRepository.findNumCartasObtenidasTotalesByJugador(j);
 	}
 }

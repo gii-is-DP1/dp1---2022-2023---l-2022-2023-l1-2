@@ -8,6 +8,11 @@ import javax.validation.Valid;
 import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.estadisticasPartida.EstadisticaService;
+import org.springframework.samples.petclinic.estadisticasPartida.EstadísticaJugadorEnPartida;
+import org.springframework.samples.petclinic.partida.Partida;
+import org.springframework.samples.petclinic.partida.PartidaRepository;
+import org.springframework.samples.petclinic.partida.PartidaService;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
@@ -25,15 +30,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class JugadorController {
 
     private static final String VIEWS_PLAYER_CREATE_OR_UPDATE = "jugadores/updateForm";
-	private static final String RANKING = "jugadores/ranking";
+	private static final String RANKINGPUNTOS = "jugadores/rankingPuntos";
+	private static final String RANKINGPARTIDAS = "jugadores/rankingPartidasGanadas";
+
+	
 
     private final JugadorService jugadorService;
     private final UsuarioService usuarioService;
+	private final PartidaService partidaService;
+	private final EstadisticaService estadisticaService;
 
     @Autowired
-    public JugadorController(JugadorService jugadorService, UsuarioService uService, AutoridadService admnistradorService){
+    public JugadorController(JugadorService jugadorService, UsuarioService uService, AutoridadService admnistradorService, PartidaService partidaService,EstadisticaService estadisticaService){
         this.jugadorService=jugadorService; 
         this.usuarioService=uService;
+		this.partidaService=partidaService;
+		this.estadisticaService=estadisticaService;
     }
 
     @InitBinder
@@ -99,14 +111,29 @@ public class JugadorController {
     @GetMapping("/jugadores/{jugadorId}")
 	public ModelAndView showJugador(@PathVariable("jugadorId") int jugadorId) {
 		ModelAndView mav = new ModelAndView("jugadores/jugadorDetails");
+		Integer barcosTotales = estadisticaService.numBarcosTotalesByJugador(jugadorId);
+		Integer cartasTotales = estadisticaService.numCartasObtenidasByJugador(jugadorId);
+		List<EstadísticaJugadorEnPartida> estadisticasPartidasDeJugador = estadisticaService.findByJugador(jugadorId);
 		mav.addObject("jugador", this.jugadorService.findJugadorById(jugadorId).get());
+		mav.addObject("estadisticas",estadisticasPartidasDeJugador);
+		mav.addObject("numBarcos", barcosTotales);
+		mav.addObject("numCartas", cartasTotales);
+		
 		return mav;
 	}
 
-	@GetMapping("/jugadores/ranking")
-	public ModelAndView ranking(){
-		ModelAndView mav = new ModelAndView(RANKING);
+	@GetMapping("/jugadores/rankingPuntos")
+	public ModelAndView rankingPuntos(){
+		ModelAndView mav = new ModelAndView(RANKINGPUNTOS);
 		List<Jugador> jugadores = jugadorService.jugadoresOrderedByPuntos();
+		mav.addObject("jugadores", jugadores);
+		return mav;
+	}
+
+	@GetMapping("/jugadores/rankingPartidasGanadas")
+	public ModelAndView rankingPartidasGanadas(){
+		ModelAndView mav = new ModelAndView(RANKINGPARTIDAS);
+		List<Jugador> jugadores = jugadorService.jugadoresOrderedByPartidasGanadas();
 		mav.addObject("jugadores", jugadores);
 		return mav;
 	}

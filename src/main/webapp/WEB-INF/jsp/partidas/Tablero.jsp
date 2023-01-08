@@ -30,14 +30,14 @@
 
     <c:if test="${message4 != null}">
 		<div class="alert alert-${messageType}">
-			<c:out value="${message3}"></c:out>
+			<c:out value="${message4}"></c:out>
 			<a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
 		</div>
 	</c:if>
 
     <c:if test="${message5 != null}">
 		<div class="alert alert-${messageType}">
-			<c:out value="${message3}"></c:out>
+			<c:out value="${message5}"></c:out>
 			<a href="#" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
 		</div>
 	</c:if>
