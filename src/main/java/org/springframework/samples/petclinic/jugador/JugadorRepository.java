@@ -16,6 +16,9 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
     @Query("SELECT jug FROM Jugador jug ORDER BY jug.totalPuntos DESC")
     List<Jugador> findAllOrderedByPuntos();
 
+    @Query("SELECT jug FROM Jugador jug ORDER BY jug.partidasGanadas DESC")
+    List<Jugador> findAllOrderedByPartidasGanadas();
+
     Jugador save (Jugador jugador) throws DataAccessException;
 
 
