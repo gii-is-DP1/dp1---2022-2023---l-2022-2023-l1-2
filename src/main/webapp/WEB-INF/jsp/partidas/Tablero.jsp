@@ -45,22 +45,23 @@
    
 
     <div class="row">
-        <div class="col-md-12">
-            <petclinic:board tablero="${tablero}">
-            <c:forEach items="${cartasIniciales}" var="carta">
-                <c:if test="${carta.posicion!=0 && carta.posicion!=7}">
-            	    <petclinic:carta size="100" carta="${carta}"/>
-                </c:if>      	
-            </c:forEach> 
-            </petclinic:board>
+        <div class="column" style="width: 600px;">
+            <div class="row">
+                <petclinic:board tablero="${tablero}">
+                <c:forEach items="${cartasIniciales}" var="carta">
+                    <c:if test="${carta.posicion!=0 && carta.posicion!=7}">
+                        <petclinic:carta size="100" carta="${carta}"/>
+                    </c:if>      	
+                </c:forEach> 
+                </petclinic:board>
+            </div>
         </div>
 
         
-        <div>
-            <div>
+        <div style="position: relative; left: 750px; bottom: 330px; width: 200px; height: 300px;">
+            <div class="row">
                 
-                
-                <div class="container-cube" style="top: 470px; right: 540px; " >
+                <div class="container-cube" style=" position:relative ; bottom: 450px; right: 60px;" >
             
                     <div class="cube">
                         <div class="cube-face front">
@@ -110,41 +111,44 @@
                         </div>
                     </div>
                 </div>
-                <p style="margin-top: 905px;"> Valor del dado: ${dado} </p>
-             </div>
-            <p>Seleccione la Isla a la que quiere viajar</p>
-            <form action = "/partidas/${partidaId}/tablero/viajar/">
-                <select name = isla>
-                    <c:forEach items="${islas}" var="isla">
-                        <option value = ${isla}> ${isla}</option>
+                <p  > Valor del dado: ${dado} </p>
+                <p>Seleccione la Isla a la que quiere viajar</p>
+                <form action = "/partidas/${partidaId}/tablero/viajar/">
+                    <select name = isla>
+                        <c:forEach items="${islas}" var="isla">
+                            <option value = ${isla}> ${isla}</option>
+                        </c:forEach>
+                    </select>
+                    <input type="submit" value="Viajar a isla">
+                </form>
+
+                <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero/cogerCarta" htmlEscape="true"/>'> Quedarse con la carta del dado</a>
+
+                <div>
+                    <c:forEach items="${cartasJugador}" var="carJug">
+                        <tr>
+                            <td>
+                                <spring:url value="/resources/images/${carJug.key}.png" var="cartaImage"/>
+                                <img src="${cartaImage}" height="100" width="75"/>
+                            </td>
+                            <td>
+                                <c:out value=": ${carJug.value}"/>
+                            </td>
+                        </tr>
                     </c:forEach>
-                </select>
-                <input type="submit" value="Viajar a isla">
-            </form>
-
-            <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/tablero/cogerCarta" htmlEscape="true"/>'> Quedarse con la carta del dado</a>
-        </div>
-
-        <div>
-            <c:forEach items="${cartasJugador}" var="carJug">
-                <tr>
-                    <td>
-                        <spring:url value="/resources/images/${carJug.key}.png" var="cartaImage"/>
-                        <img src="${cartaImage}" height="100" width="75"/>
-                    </td>
-                    <td>
-                        <c:out value=": ${carJug.value}"/>
-                    </td>
-                </tr>
-            </c:forEach>
+                </div>
+             </div>
+            
         </div>
 
         
+
+        
     
-    <script src="/resources/js/dado.js"></script>
+    
     </div>
 
-    
+    <script src="/resources/js/dado.js"></script>
 
 
 
