@@ -42,10 +42,7 @@
 		</div>
 	</c:if>
 
-    <div>
-       <p> Valor del dado: </p>
-       <p> ${dado}</p>
-    </div>
+   
 
     <div class="row">
         <div class="col-md-12">
@@ -57,7 +54,64 @@
             </c:forEach> 
             </petclinic:board>
         </div>
+
+        
         <div>
+            <div>
+                
+                
+                <div class="container-cube" style="top: 470px; right: 540px; " >
+            
+                    <div class="cube">
+                        <div class="cube-face front">
+                            <div class="inside">
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube-face back">
+                            <div class="inside">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube-face left">
+                            <div class="inside">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube-face right">
+                            <div class="inside">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube-face top">
+                            <div class="inside">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube-face bottom">
+                            <div class="inside">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 905px;"> Valor del dado: ${dado} </p>
+             </div>
             <p>Seleccione la Isla a la que quiere viajar</p>
             <form action = "/partidas/${partidaId}/tablero/viajar/">
                 <select name = isla>
@@ -85,56 +139,7 @@
             </c:forEach>
         </div>
 
-        <div class="container-cube" style="position: relative; left: 500px; top: 150px;">
-            
-            <div class="cube">
-                <div class="cube-face front">
-                    <div class="inside">
-                        <span class="dot"></span>
-                    </div>
-                </div>
-                <div class="cube-face back">
-                    <div class="inside">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-                <div class="cube-face left">
-                    <div class="inside">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-                <div class="cube-face right">
-                    <div class="inside">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-                <div class="cube-face top">
-                    <div class="inside">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-                <div class="cube-face bottom">
-                    <div class="inside">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     
     <script src="/resources/js/dado.js"></script>
     </div>
