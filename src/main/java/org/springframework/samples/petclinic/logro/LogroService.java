@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,10 @@ public class LogroService {
 
     public Optional<List<Logro>> findLogrosByPlayer(Integer id){
         return logroRepository.findLogrosByPlayer(id);
+    }
+
+    public Page<Logro> findAllLogrosPage(Pageable page){
+        return logroRepository.findAllLogrosPage(page);
     }
     @Transactional
 	public Logro save(Logro l) throws DataAccessException {
