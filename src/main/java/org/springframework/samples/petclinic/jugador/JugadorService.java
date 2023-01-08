@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,7 +76,9 @@ public class JugadorService {
 	public void deleteJugador(Jugador jugador, HttpSession sesion) throws DataAccessException{
 		List<Partida> partidas = partidaService.partidasByPlayer(jugador.getId());
 
-		List<Logro> logros = logroService.LogroByPlayer(jugador.getId());
+		Optional<List<Logro>> logrosOptional = logroService.LogroByPlayer(jugador.getId());
+
+		List<Logro> logros = logrosOptional.isPresent()?logrosOptional.get(): new ArrayList<>();
 		
 		if(partidas.stream().allMatch(x->x.getEstado().equals(EstadoPartida.FINALIZADA))){
 

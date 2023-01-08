@@ -39,8 +39,8 @@ public class LogroService {
 		logroRepository.delete(logro);
 	}
 
-    public List<Logro> LogroByPlayer(Integer id) {
-		return logroRepository.findByPlayer(id);
+    public Optional<List<Logro>> LogroByPlayer(Integer id) {
+		return logroRepository.findLogrosByPlayer(id);
 	}
 
 }
