@@ -34,7 +34,7 @@
 					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					<span>Ranking</span>
 				</petclinic:menuItem>
-
+				
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
@@ -67,6 +67,7 @@
 											<p class="text-left">
 												<strong><sec:authentication property="name" /></strong>
 											</p>
+											
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
 													class="btn btn-primary btn-block btn-sm">Logout</a>

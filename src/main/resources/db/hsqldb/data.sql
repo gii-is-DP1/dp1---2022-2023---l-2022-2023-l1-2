@@ -210,4 +210,11 @@ INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (20,'
 INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (21,'¿Jack Sparrow?','Acumula un total de 5000 puntos',5000,4);
 
 INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (1,1);
-
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (2,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (3,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (4,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (5,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (6,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (7,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (8,1);
+INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (9,1);

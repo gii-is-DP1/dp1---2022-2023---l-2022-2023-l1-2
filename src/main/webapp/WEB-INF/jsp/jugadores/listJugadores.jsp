@@ -52,13 +52,15 @@
                 <td>
                     <c:out value="${jugador.recordPuntos}"/>
                 </td>
-                <sec:authorize access="hasAnyAuthority('admin')">
-                    <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
-                </sec:authorize>
                 <td>
-                <sec:authorize access="hasAnyAuthority('admin')"></sec:authorize>
+                    <sec:authorize access="hasAnyAuthority('admin')">
+                    <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
+                    </sec:authorize>
+                </td>
+                <td>
+                    <sec:authorize access="isAuthenticated()">
                     <a class="btn" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
-                </sec:authorize>
+                    </sec:authorize>
                 </td>
             </tr>
         </c:forEach>
