@@ -5,6 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 
 <petclinic:layout pageName="jugadores">
     <c:if test="${mensaje != null}">
@@ -49,11 +52,13 @@
                 <td>
                     <c:out value="${jugador.recordPuntos}"/>
                 </td>
-                <td>
+                <sec:authorize access="hasAnyAuthority('admin')">
                     <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
-                </td>
+                </sec:authorize>
                 <td>
+                <sec:authorize access="hasAnyAuthority('admin')"></sec:authorize>
                     <a class="btn" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
+                </sec:authorize>
                 </td>
             </tr>
         </c:forEach>
