@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.jugador;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,6 +122,14 @@ public class JugadorController {
 		
 		return mav;
 	}
+
+	@GetMapping("/jugadores/profile")
+	public ModelAndView profile(Principal principal){
+		Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
+		Jugador jug = jugadorService.findByUsuario(user.get());
+		return showJugador(jug.getId());
+	}
+
 
 	@GetMapping("/jugadores/rankingPuntos")
 	public ModelAndView rankingPuntos(){
