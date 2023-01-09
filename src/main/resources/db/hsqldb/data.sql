@@ -95,10 +95,18 @@ INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (12,'Pablo','jugador
 INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Jaime','jaime','Jaime','Rodriguez Mantero','2003-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (13,'Jaime','jugador');
 
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Kiko','kiko','kiko','Mota Mota','2002-01-10',True);
+INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (14,'Kiko','jugador');
+
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Juan','juan','juan','Recio Matamoros','2002-01-10',True);
+INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (15,'Juan','jugador');
+
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,0,12,12,'Pepe');
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,1,18,18,'Hola');
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (2,1,38,26,'Pablo');
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,0,15,15,'Jaime');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (0,0,0,0,'Kiko');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (0,0,0,0,'Juan');
 
 INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (1,'2001-01-10','23:00:00','23:20:00',2,'qwerty',1,1, false, null);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,1);

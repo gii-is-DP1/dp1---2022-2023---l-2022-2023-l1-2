@@ -5,13 +5,13 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.estadisticasPartida.EstadisticaService;
 import org.springframework.samples.petclinic.estadisticasPartida.EstadísticaJugadorEnPartida;
-import org.springframework.samples.petclinic.partida.Partida;
-import org.springframework.samples.petclinic.partida.PartidaRepository;
 import org.springframework.samples.petclinic.partida.PartidaService;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
@@ -55,9 +55,9 @@ public class JugadorController {
 
 
     @GetMapping("/jugadores/find")
-    public ModelAndView listJugadores(HttpSession session){
+    public ModelAndView listJugadores(HttpSession session, @PageableDefault(page = 0, size = 5) Pageable page){
 		ModelAndView mav = new ModelAndView("jugadores/listJugadores");
-		List<Jugador> jugadores = jugadorService.findAll();
+		Page<Jugador> jugadores = jugadorService.findAllJugadoresPage(page);
 		mav.addObject("jugadores", jugadores);
 		mav.addObject("mensaje", session.getAttribute("jugadorPartidaActiva"));
 		mav.addObject("messageType", "info");

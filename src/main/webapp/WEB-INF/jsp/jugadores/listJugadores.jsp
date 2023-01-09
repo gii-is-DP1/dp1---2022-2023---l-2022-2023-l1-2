@@ -31,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${jugadores}" var="jugador">
+        <c:forEach items="${jugadores.getContent()}" var="jugador">
             <tr>
                 <td>
                     <spring:url value="/jugadores/{jugadorId}" var="jugadorUrl">
@@ -66,4 +66,17 @@
         </c:forEach>
         </tbody>
     </table>
+    <div align="center">
+        <c:if test="${jugadores.number!=0}">
+            <a href="?page=${jugadores.number-1}"><span class="glyphicon glyphicon-arrow-left"></a>
+        </c:if>
+        <c:if test="${!jugadores.last}">
+            <a href="?page=${jugadores.number+1}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        </c:if>
+        <c:if test = "${autoridad.isPresent()}">
+            <td>
+                <a class="btn btn-danger" href='<spring:url value="/logros/create" htmlEscape="true"/>'>Crear logro</a>
+            </td>
+        </c:if>
+    </div>
 </petclinic:layout>
