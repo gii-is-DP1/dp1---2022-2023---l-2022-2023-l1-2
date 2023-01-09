@@ -142,11 +142,13 @@ public class PartidaController {
  		response.addHeader("Refresh", "3");
         ModelAndView mav = new ModelAndView("partidas/showPartida");
         Optional<Usuario> user = usuarioService.findUserByNombreUsuario(principal.getName());
-        mav.addObject("partida",this.partidaService.findById(partidaId));
+        Optional<Partida> partida = partidaService.findById(partidaId);
+        mav.addObject("partida",partida.get());
         mav.addObject("jugador", user);
         mav.addObject("message", sesion.getAttribute("messageNumJugadores"));
         mav.addObject("messageType", "info");
         return mav;
+        
  	}
 
 
@@ -187,7 +189,7 @@ public class PartidaController {
         Partida p = this.partidaService.findById(partidaId).get();
         if(p.getCreador().equals(jug) && p.getEstado().equals(EstadoPartida.EN_COLA) && partidaService.numeroJugadoresCorrecto(p)){
             p.setEstado(EstadoPartida.EN_CURSO);
-            List<Carta> cartas = cartasAleatorias(p);
+            List<Carta> cartas = cartaService.cartasAleatorias(p);
             p.setCartas(cartas);    
             partidaService.save(p);
             for (Jugador j : p.getJugadores()) {
@@ -211,43 +213,7 @@ public class PartidaController {
         }
     }
 
-    public List<Carta> cartasAleatorias(Partida p){
-        List<Carta> cartas = p.getCartas();
-        if(cartas.isEmpty() || cartas == null){
-            cartas = cartaService.findAllCartas();
-            cartas.stream().forEach(c->c.setPosicion(7));
-
-            List<Carta> doblones = cartas.stream().filter(x->x.getTipoCarta().equals(TipoCarta.DOBLON)).collect(Collectors.toList());
-            List<Carta> utilizadas = new ArrayList<>();
-            Integer x =0;
-
-            //Se le añaden 3 doblones a cada jugador
-            for(int j=0;j<p.getJugadores().size();j++){
-                Jugador jug = p.getJugadores().get(j);
-                for(int d = x; d<x+3;d++){
-                    Carta c = doblones.get(d);
-                    utilizadas.add(c);
-                    c.setJugador(jug);
-                    c.setPosicion(0);
-                    cartaService.save(c);
-                }
-                x=x+3;
-            }
-
-            //Se retiran los doblones asignados de las cartas disponibles
-            cartas.removeAll(utilizadas);
-            Collections.shuffle(cartas);
-            cartas.stream().forEach(c->cartaService.save(c));
-
-            //Se reparten una carta a cada una de las 6 posiciones iniciales
-            for(int i =0; i<6;i++){
-                Carta carta = cartas.get(i);
-                carta.setPosicion(i+1);
-                cartaService.save(carta);
-            }
-        }
-        return cartas;
-    }
+    
 	@GetMapping("/{partidaId}/tablero")
 	public ModelAndView showTablero(@PathVariable("partidaId") int partidaId, HttpServletResponse response, Principal principal, HttpSession sesion) {
 		response.addHeader("Refresh", "10");
@@ -313,10 +279,7 @@ public class PartidaController {
                     break;
                 }
             }
-
             estadisticaService.aumentarCartasObtenidas(jug.getId(), p.getId());
-
-
         }
         partidaService.cambiarTurno(p);
         if (partidaService.partidaFinalizada(partidaId)){
@@ -423,6 +386,8 @@ public class PartidaController {
         partida.setEstado(EstadoPartida.FINALIZADA);
         partida.setJugadorActual(null);
         partida.setHoraFin(LocalTime.now());
+        Integer duration = (int) Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes();
+        partida.setDuracion(duration);
 
         //Conteo de puntos
         Map<String, Integer> map = partidaService.contarPuntos(partidaId);
@@ -443,7 +408,6 @@ public class PartidaController {
         estadisticaService.establecerPosicionYPuntos(jug.getId(), partida.getId(), posicionJugadorActual, puntosJugadorActual);
         mav.addObject("partida",this.partidaService.findById(partidaId).get());
         mav.addObject("ganador", nameGanador);
-        mav.addObject("duracion", Duration.between(partida.getHoraInicio(), partida.getHoraFin()).toMinutes());
         mav.addObject("puntuacion",map);
         return mav;
     }

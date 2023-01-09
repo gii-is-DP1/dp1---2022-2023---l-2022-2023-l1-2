@@ -92,7 +92,7 @@ INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (11,'Pepe','jugador'
 INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pablo','pablo','pablo','pablo','2002-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (12,'Pablo','jugador');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Jaime','jaime','Jaime','Rodríguez Mantero','2003-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Jaime','jaime','Jaime','Rodriguez Mantero','2003-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (13,'Jaime','jugador');
 
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,0,12,12,'Pepe');
@@ -104,13 +104,13 @@ INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id,
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,1);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,2);
 
-INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (2,'2001-01-12','15:00:00','15:26:00',0,'password',3,3, false, 3);
+INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado,duracion, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (2,'2001-01-12','15:00:00','15:26:00',0,26,'password',3,3, false, 3);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (2,3);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (2,4);
 INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (3,2,1,26,4,7);
 INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (4,2,2,15,3,7);
 
-INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (3,'2015-12-12','17:00:00','17:38:00',0,'password',1,1, false, 2);
+INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado,duracion, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (3,'2015-12-12','17:00:00','17:38:00',0,38,'password',1,1, false, 2);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (3,1);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (3,2);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (3,3);

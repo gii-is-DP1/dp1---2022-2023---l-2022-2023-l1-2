@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.estadisticasPartida;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,10 @@ public class EstadisticaService {
 
 	public Integer numCartasObtenidasByJugador(Integer j){
 		return estadisticaRepository.findNumCartasObtenidasTotalesByJugador(j);
+	}
+
+	@Transactional
+	public void delete(EstadísticaJugadorEnPartida est)throws DataAccessException{
+		estadisticaRepository.delete(est);
 	}
 }
