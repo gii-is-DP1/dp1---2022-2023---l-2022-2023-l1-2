@@ -3,9 +3,11 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
+	
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
@@ -33,6 +35,12 @@
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					<span>Ranking</span>
+				</petclinic:menuItem>
+
+				<petclinic:menuItem active="${name eq 'estadisticas'}" url="/estadisticas/generales"
+					title="trigger a RuntimeException to see how it is handled">
+					<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+					<span>Estadisticas</span>
 				</petclinic:menuItem>
 				
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"

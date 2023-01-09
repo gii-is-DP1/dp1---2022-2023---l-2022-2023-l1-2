@@ -56,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/partidas/${partidaId}/tablero/cogerCarta").authenticated()
 				.antMatchers("/jugadores/rankingPuntos").authenticated()
 				.antMatchers("/jugadores/rankingPartidasGanadas").authenticated()
+				.antMatchers("/estadisticas/generales").permitAll()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
