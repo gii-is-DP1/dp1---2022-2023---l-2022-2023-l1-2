@@ -11,6 +11,9 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.usuario.Autoridad;
@@ -96,15 +99,15 @@ public class LogroController {
     }
 
     @GetMapping("/list")
-    public ModelAndView listLogros(Principal principal){
+    public ModelAndView listLogros(Principal principal, @PageableDefault(page = 0, size = 5) Pageable page){
 		ModelAndView mav = new ModelAndView("logros/listLogros");
         Usuario user = usuarioService.findUserByNombreUsuario(principal.getName()).get();
         Jugador jug = jugadorService.findByUsuario(user);
         Optional<List<Logro>> logrosJugador = logroService.findLogrosByPlayer(jug.getId());
-		List<Logro> logros = logroService.findAllLogros();
+		Page<Logro> logros = logroService.findAllLogrosPage(page);
         Optional<Autoridad> autoridad = user.getAdministrador().stream().filter(x -> x.getAutoridad().equals("admin")).findAny();
 		if (logrosJugador.isPresent()){
-            logros.removeAll(logrosJugador.get());
+            logros.toList().removeAll(logrosJugador.get());
             mav.addObject("logrosJugador", logrosJugador.get());
         }
         mav.addObject("logros", logros);
