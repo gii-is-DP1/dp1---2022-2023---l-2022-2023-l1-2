@@ -189,4 +189,25 @@ public class PartidaService {
 		}
 	}
 
+	public Integer numPartidas(){
+		return partidaRepository.numPartidas();
+	}
+
+	public Integer duracionMaxima(){
+		return partidaRepository.duracionMaxima();
+	}
+
+	public Integer duracionMinima(){
+		return partidaRepository.duracionMinima();
+	}
+
+	public Double duracionMedia(){
+		return partidaRepository.duracionMedia();
+	}
+
+	public Double mediaJugadores(){
+		return partidaRepository.mediaJugadores();
+	}
+
+
 }

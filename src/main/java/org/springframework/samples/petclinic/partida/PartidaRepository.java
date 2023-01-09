@@ -15,8 +15,24 @@ public interface PartidaRepository extends CrudRepository<Partida, Integer>{
 
     Partida save(Partida p);
 
-    @Query("SELECT p from Partida p INNER JOIN FETCH p.jugadores as j WHERE j.id = ?1")
+    @Query("SELECT p FROM Partida p INNER JOIN FETCH p.jugadores as j WHERE j.id = ?1")
     List<Partida> findByPlayer(Integer id);
+
+    @Query("SELECT count(p) FROM Partida p WHERE p.estado = 0")
+    Integer numPartidas();
+
+    @Query("SELECT max(p.duracion) FROM Partida p WHERE p.estado = 0")
+    Integer duracionMaxima();
+
+    @Query("SELECT min(p.duracion) FROM Partida p WHERE p.estado = 0")
+    Integer duracionMinima();
+
+    @Query("SELECT avg(p.duracion) FROM Partida p WHERE p.estado = 0")
+    Double duracionMedia();
+
+    @Query("SELECT avg(p.jugadores.size) FROM Partida p WHERE p.estado = 0")
+    Double mediaJugadores();
+
 
 
 }
