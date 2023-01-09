@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <th>Fecha de Nacimiento</th>
-            <td><c:out value="${jugador.usuario.getFechaNacimiento()}"/></td>
+            <td><b><c:out value="${jugador.usuario.getFechaNacimiento()}"/></b></td>
         </tr>
     </table>
 
@@ -33,29 +33,29 @@
     <table class="table table-striped">
         <tr>
             <th>Partidas Jugadas</th>
-            <td><c:out value="${jugador.getPartidasJugadas()}"/></td>
+            <td><b><c:out value="${jugador.getPartidasJugadas()}"/></b></td>
         </tr>
         <tr>
             <th>Partidas Ganadas</th>
-            <td><c:out value="${jugador.getPartidasGanadas()}"/></td>
+            <td><b><c:out value="${jugador.getPartidasGanadas()}"/></b></td>
         </tr>
         <tr>
             <th>Total Puntos</th>
-            <td><c:out value="${jugador.getTotalPuntos()}"/></td>
+            <td><b><c:out value="${jugador.getTotalPuntos()}"/></b></td>
         </tr>
         <tr>
             <th>Barcos Usados en Total</th>
-            <td><c:out value="${numBarcos}"/></td>
+            <td><b><c:out value="${numBarcos}"/></b></td>
         </tr>
 
         <tr>
             <th>Cartas Obtenidas en Total</th>
-            <td><c:out value="${numCartas}"/></td>
+            <td><b><c:out value="${numCartas}"/></b></td>
         </tr>
 
         <tr>
             <th>Récord de Puntos</th>
-            <td><c:out value="${jugador.getRecordPuntos()}"/></td>
+            <td><b><c:out value="${jugador.getRecordPuntos()}"/></b></td>
         </tr>
     </table>
 
@@ -71,6 +71,10 @@
             <tr>
                 <th>Fecha</th>
                 <td><b><c:out value="${estadistica.partida.getFecha()}"/></b></td>
+            </tr>
+            <tr>
+                <th>Duración</th>
+                <td><b><c:out value="${estadistica.partida.getDuracion()} minutos"/></b></td>
             </tr>
             <tr>
                 <th>Ganador</th>

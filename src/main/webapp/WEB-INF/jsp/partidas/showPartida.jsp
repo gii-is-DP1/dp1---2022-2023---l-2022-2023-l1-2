@@ -19,25 +19,25 @@
     <table class="table table-striped">
         <tr>
             <th>Codigo</th>
-            <td><b><c:out value="${partida.get().codigo}"/></b></td>
+            <td><b><c:out value="${partida.codigo}"/></b></td>
         </tr>
 
         <tr>
             <th>Fecha</th>
-            <td><b><c:out value="${partida.get().fecha}"/></b></td>
+            <td><b><c:out value="${partida.fecha}"/></b></td>
         </tr>
 
         <tr>
             <th>Estado</th>
-            <td><b><c:out value="${partida.get().estado}"/></b></td>
+            <td><b><c:out value="${partida.estado}"/></b></td>
         </tr>
 
         <tr>
             <th>Creador</th>
-            <td><b><c:out value="${partida.get().creador.getUsuario().getNombreUsuario()}"/></b></td>
+            <td><b><c:out value="${partida.creador.getUsuario().getNombreUsuario()}"/></b></td>
         </tr>
 
-        <c:forEach items="${partida.get().jugadores}" var="jugador">
+        <c:forEach items="${partida.jugadores}" var="jugador">
             <tr>
                 <th>Jugador: </th>
                 <td><b><c:out value="${jugador.getUsuario().getNombreUsuario()}"/></b></td>
@@ -46,8 +46,8 @@
         
     </table>
     
-    <c:if test = "${partida.get().estado == 'EN_COLA'}">
-        <c:if test = "${partida.get().creador.getUsuario().getNombreUsuario().equals(jugador.get().getNombreUsuario())}">
+    <c:if test = "${partida.estado == 'EN_COLA'}">
+        <c:if test = "${partida.creador.getUsuario().getNombreUsuario().equals(jugador.get().getNombreUsuario())}">
             <div>
                 <a class="btn btn-default" href='<spring:url value="/partidas/${partidaId}/inicio" htmlEscape="true"/>'> Empezar Partida</a>
             </div>

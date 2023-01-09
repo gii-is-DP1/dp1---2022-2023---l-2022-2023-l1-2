@@ -11,7 +11,7 @@
         El ganador es: <c:out value ="${ganador}"/>
     </p>
     <tbody>
-        La partida ha durado: <c:out value="${duracion}"/> minutos
+        La partida ha durado: <c:out value="${partida.duracion}"/> minutos
     </tbody>
     <table id="jugadoresTable" class="table table-striped">
         <thead>
