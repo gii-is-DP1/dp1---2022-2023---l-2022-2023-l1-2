@@ -113,8 +113,8 @@ public class PartidaService {
 		return map;
 	}
 
-	public Boolean numeroCorrecto(Partida p) {
-		if (p.getJugadores().size() >= 2 && p.getJugadores().size() <= 4) {
+	public Boolean numeroJugadoresCorrecto(Partida p){
+		if(p.getJugadores().size()>=2 && p.getJugadores().size()<=4){
 			return true;
 		} else {
 			return false;
@@ -162,25 +162,27 @@ public class PartidaService {
 		}
 	}
 
-	public Boolean partidaFinalizada(Integer id) {
-		Partida partida = partidaRepository.findById(id).get();
-		return partida.getCartas().stream().allMatch(p -> p.getPosicion() == 0);
-	}
 
-	public void cambiarTurno(Partida p) {
-		Integer n = p.getJugadores().size();
-		List<Jugador> jugadores = p.getJugadores();
-		Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
-		Integer posicionJugadorProximo = (poscionActual + 1) % n;
+	public Boolean partidaFinalizada(Integer id){
+        Partida partida = partidaRepository.findById(id).get();
+        return partida.getCartas().stream().allMatch(p->p.getPosicion()==0);    
+    }
 
-		Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
-		p.setJugadorActual(jugadorProximo);
-		p.setDadoTirado(false);
-		save(p);
-	}
+	@Transactional
+	public void cambiarTurno(Partida p){
+        Integer n = p.getJugadores().size();
+        List<Jugador> jugadores = p.getJugadores();
+        Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
+        Integer posicionJugadorProximo = (poscionActual+1)%n;
 
-	public Boolean doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones) {
-		if (Math.abs(islaDestino - islaActual) <= doblones) {
+        Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
+        p.setJugadorActual(jugadorProximo);  
+        p.setDadoTirado(false);
+        save(p);
+    }
+
+	public Boolean 	doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones){
+        if(Math.abs(islaDestino-islaActual)<=doblones){
 			return true;
 		} else {
 			return false;

@@ -58,6 +58,9 @@ public class DicesOnSessionController {
         if(partidaJugadorActual.getJugadorActual().equals(jug)){
             if(partidaJugadorActual.getDadoTirado().equals(false)){
                 session.setAttribute("valordado", valordado);
+                session.removeAttribute("turnoIncorrecto");
+                session.removeAttribute("dadoNoTirado");
+                session.removeAttribute("dadoYaTirado");
                 partidaJugadorActual.setDadoTirado(true);
                 partidaService.save(partidaJugadorActual);
             }else{
@@ -67,6 +70,7 @@ public class DicesOnSessionController {
             
         }else{
             String mensaje = "No es tu turno";
+            session.removeAttribute("dadoYaTirado");
             session.setAttribute("turnoIncorrecto", mensaje);
         }
         return "redirect:/partidas/"+partidaJugadorActual.getId()+"/tablero";

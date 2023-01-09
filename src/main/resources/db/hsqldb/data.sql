@@ -92,14 +92,31 @@ INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (11,'Pepe','jugador'
 INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pablo','pablo','pablo','pablo','2002-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (12,'Pablo','jugador');
 
-INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (10,2,21,12,'Pepe');
-INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (9,2,21,12,'Hola');
-INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (5,2,21,12,'Pablo');
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Jaime','jaime','Jaime','Rodríguez Mantero','2003-01-10',True);
+INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (13,'Jaime','jugador');
+
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,0,12,12,'Pepe');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,1,18,18,'Hola');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (2,1,38,26,'Pablo');
+INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,0,15,15,'Jaime');
 
 INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (1,'2001-01-10','23:00:00','23:20:00',2,'qwerty',1,1, false, null);
-
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,1);
 INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (1,2);
+
+INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (2,'2001-01-12','15:00:00','15:26:00',0,'password',3,3, false, 3);
+INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (2,3);
+INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (2,4);
+INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (3,2,1,26,4,7);
+INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (4,2,2,15,3,7);
+
+INSERT INTO partidas(id,fecha, hora_inicio, hora_fin, estado, codigo,creador_id, jugador_actual_id, dado_tirado, ganador_id) VALUES (3,'2015-12-12','17:00:00','17:38:00',0,'password',1,1, false, 2);
+INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (3,1);
+INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (3,2);
+INSERT INTO partida_jugador(partida_id, jugador_id) VALUES (3,3);
+INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (1,3,2,12,2,5);
+INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (2,3,1,18,3,5);
+INSERT INTO estadisticas(jugador_id,partida_id,posicion,puntos_obtenidos,barcos_usados,cartas_obtenidas) VALUES (3,3,3,12,2,5);
 
 INSERT INTO tablero(id,background,height,width) VALUES (1,'resources/images/tablero.png',850,700);
 
@@ -130,24 +147,24 @@ INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) V
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (25,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (26,0,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (27,0,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (28,1,2,2,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (28,1,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (29,1,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (30,1,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (31,2,2,3,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (31,2,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (32,2,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (33,2,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (34,3,2,4,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (34,3,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (35,3,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (36,3,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (37,4,2,5,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (37,4,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (38,4,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (39,4,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (40,4,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (41,5,2,6,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (41,5,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (42,5,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (43,5,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (44,5,2,0,null, 1);
-INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (45,6,2,7,null, 1);
+INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (45,6,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (46,6,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (47,6,2,0,null, 1);
 INSERT INTO cartas(id,tipo_carta,estado_carta,posicion,jugador_id, tablero_id) VALUES (48,6,2,0,null, 1);
@@ -193,3 +210,4 @@ INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (20,'
 INSERT INTO logros(id,nombre_logro,descripcion,objetivo,tipo_logro) VALUES (21,'¿Jack Sparrow?','Acumula un total de 5000 puntos',5000,4);
 
 INSERT INTO logro_jugador(logro_id, jugador_id) VALUES (1,1);
+

@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,7 +76,10 @@ public class JugadorService {
 	public void deleteJugador(Jugador jugador, HttpSession sesion) throws DataAccessException{
 		List<Partida> partidas = partidaService.partidasByPlayer(jugador.getId());
 
-		List<Logro> logros = logroService.findLogrosByPlayer(jugador.getId()).get();
+
+		Optional<List<Logro>> logrosOptional = logroService.LogroByPlayer(jugador.getId());
+
+		List<Logro> logros = logrosOptional.isPresent()?logrosOptional.get(): new ArrayList<>();
 		
 		if(partidas.stream().allMatch(x->x.getEstado().equals(EstadoPartida.FINALIZADA))){
 
@@ -87,7 +91,6 @@ public class JugadorService {
 				if (p.getCreador().equals(jugador)){
 					p.setCreador(null);
 				}
-				p.setJugadorActual(null);
 			p.getJugadores().remove(jugador);
 			partidaService.save(p);
 		
@@ -101,7 +104,7 @@ public class JugadorService {
 	}
 
 	@Transactional
-	public void actualizarEstadisticas(Principal principal, Map<String, Integer> puntuaciones, Partida partida){
+	public void actualizarEstadisticasJugador(Principal principal, Map<String, Integer> puntuaciones, Partida partida){
 
 		String nombreUsuario = principal.getName();
 		Usuario us = usuarioService.findUserByNombreUsuario(nombreUsuario).get();
@@ -116,6 +119,16 @@ public class JugadorService {
 		}
 		jugadorRepository.save(j);
 	}
+
+	public List<Jugador> jugadoresOrderedByPuntos(){
+		return jugadorRepository.findAllOrderedByPuntos();
+	}
+
+	public List<Jugador> jugadoresOrderedByPartidasGanadas(){
+		return jugadorRepository.findAllOrderedByPartidasGanadas();
+	}
+
+	
 
 	
 }

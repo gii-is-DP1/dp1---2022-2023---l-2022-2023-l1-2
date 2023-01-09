@@ -29,6 +29,12 @@
 					<span>Home</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'ranking'}" url="/jugadores/rankingPuntos"
+					title="trigger a RuntimeException to see how it is handled">
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span>Ranking</span>
+				</petclinic:menuItem>
+
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
