@@ -31,6 +31,10 @@ public class LogroService {
         return logroRepository.findLogrosByPlayer(id);
     }
 
+    public Optional<Page<Logro>> findLogrosByPlayerPage(Integer id, Pageable page){
+        return logroRepository.findLogrosByPlayerPage(id, page);
+    }
+
     public Page<Logro> findAllLogrosPage(Pageable page){
         return logroRepository.findAllLogrosPage(page);
     }

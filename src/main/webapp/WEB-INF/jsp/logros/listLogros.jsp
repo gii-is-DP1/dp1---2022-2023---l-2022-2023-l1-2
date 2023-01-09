@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${logrosJugador}" var="logroJug">
+        <c:forEach items="${logrosJugador.getContent()}" var="logroJug">
             <tr>
                 <td>
                     <c:out value="${logroJug.getNombreLogro()}"/>
@@ -36,6 +36,14 @@
         </c:forEach>
         </tbody>
     </table>
+    <div align="center">
+        <c:if test="${logrosJugador.number!=0}">
+            <a href="?p1=${logrosJugador.number-1}&p2=${logros.number}"><span class="glyphicon glyphicon-arrow-left"></a>
+        </c:if>
+        <c:if test="${!logrosJugador.last}">
+            <a href="?p1=${logrosJugador.number+1}&p2=${logros.number}"><span class="glyphicon glyphicon-arrow-right"></a>
+        </c:if>
+    </div>
     <h2>Logros</h2>
     <table id="logrosTable" class="table table-striped">
         <thead>
@@ -65,19 +73,17 @@
         </c:forEach>
         </tbody>
     </table>
-    <c:if test="${!logros.last}">
-        <li class="next">
-            <a href="?page=${logros.number+1}">Página siguiente</a>
-        </li>
-    </c:if>
-    <c:if test="${logros.number!=0}">
-        <li class="Back">
-            <a href="?page=${logros.number-1}">Página anterior</a>
-        </li>
-    </c:if>
-    <c:if test = "${autoridad.isPresent()}">
-        <td>
-            <a class="btn btn-danger" href='<spring:url value="/logros/create" htmlEscape="true"/>'>Crear logro</a>
-        </td>
-    </c:if>
+    <div align="center">
+        <c:if test="${logros.number!=0}">
+            <a href="?p1=${logrosJugador.number}&p2=${logros.number-1}"><span class="glyphicon glyphicon-arrow-left"></a>
+        </c:if>
+        <c:if test="${!logros.last}">
+            <a href="?p1=${logrosJugador.number}&p2=${logros.number+1}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        </c:if>
+        <c:if test = "${autoridad.isPresent()}">
+            <td>
+                <a class="btn btn-danger" href='<spring:url value="/logros/create" htmlEscape="true"/>'>Crear logro</a>
+            </td>
+        </c:if>
+    </div>
 </petclinic:layout>

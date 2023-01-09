@@ -3,7 +3,6 @@ package org.springframework.samples.petclinic.logro;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -11,7 +10,9 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.jugador.Jugador;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -99,15 +101,16 @@ public class LogroController {
     }
 
     @GetMapping("/list")
-    public ModelAndView listLogros(Principal principal, @PageableDefault(page = 0, size = 5) Pageable page){
+    public ModelAndView listLogros(Principal principal, @RequestParam("p1") Integer pageable1, @RequestParam("p2") Integer pageable2){
+        Pageable page1 = PageRequest.of(pageable1, 5);
+        Pageable page2 = PageRequest.of(pageable2, 5);
 		ModelAndView mav = new ModelAndView("logros/listLogros");
         Usuario user = usuarioService.findUserByNombreUsuario(principal.getName()).get();
         Jugador jug = jugadorService.findByUsuario(user);
-        Optional<List<Logro>> logrosJugador = logroService.findLogrosByPlayer(jug.getId());
-		Page<Logro> logros = logroService.findAllLogrosPage(page);
+        Optional<Page<Logro>> logrosJugador = logroService.findLogrosByPlayerPage(jug.getId(), page1);
+		Page<Logro> logros = logroService.findAllLogrosPage(page2);
         Optional<Autoridad> autoridad = user.getAdministrador().stream().filter(x -> x.getAutoridad().equals("admin")).findAny();
 		if (logrosJugador.isPresent()){
-            logros.toList().removeAll(logrosJugador.get());
             mav.addObject("logrosJugador", logrosJugador.get());
         }
         mav.addObject("logros", logros);
