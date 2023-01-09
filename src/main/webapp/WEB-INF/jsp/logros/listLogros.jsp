@@ -45,7 +45,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${logros}" var="logro">
+        <c:forEach items="${logros.getContent()}" var="logro">
             <tr>
                 <td>
                     <c:out value="${logro.getNombreLogro()}"/>
@@ -65,6 +65,16 @@
         </c:forEach>
         </tbody>
     </table>
+    <c:if test="${!logros.last}">
+        <li class="next">
+            <a href="?page=${logros.number+1}">Página siguiente</a>
+        </li>
+    </c:if>
+    <c:if test="${logros.number!=0}">
+        <li class="Back">
+            <a href="?page=${logros.number-1}">Página anterior</a>
+        </li>
+    </c:if>
     <c:if test = "${autoridad.isPresent()}">
         <td>
             <a class="btn btn-danger" href='<spring:url value="/logros/create" htmlEscape="true"/>'>Crear logro</a>

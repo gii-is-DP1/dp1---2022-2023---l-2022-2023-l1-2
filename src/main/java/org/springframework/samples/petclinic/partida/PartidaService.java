@@ -116,11 +116,10 @@ public class PartidaService {
 	public Boolean numeroJugadoresCorrecto(Partida p){
 		if(p.getJugadores().size()>=2 && p.getJugadores().size()<=4){
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-
 
 	public void comprobarLogrosPartidaFinalizada(Integer idPartida) {
 		Partida p = partidaRepository.findById(idPartida).get();
@@ -129,19 +128,19 @@ public class PartidaService {
 			for (Logro l : logros) {
 				switch (l.getTipoLogro()) {
 					case PARTIDAS:
-						if (j.getPartidasJugadas().equals(l.getObjetivo())) {
+						if (j.getPartidasJugadas() >= l.getObjetivo()) {
 							l.getJugadores().add(j);
 							logroRepository.save(l);
 						}
 						break;
 					case PUNTOSPARTIDA:
-						if (j.getRecordPuntos().equals(l.getObjetivo())) {
+						if (j.getRecordPuntos() >= l.getObjetivo()) {
 							l.getJugadores().add(j);
 							logroRepository.save(l);
 						}
 						break;
 					case PUNTOSTOTALES:
-						if (j.getTotalPuntos().equals(l.getObjetivo())) {
+						if (j.getTotalPuntos() >= l.getObjetivo()) {
 							l.getJugadores().add(j);
 							logroRepository.save(l);
 						}
@@ -153,7 +152,7 @@ public class PartidaService {
 						}
 						break;
 					case VICTORIAS:
-						if (j.getPartidasGanadas().equals(l.getObjetivo())) {
+						if (j.getPartidasGanadas() >= l.getObjetivo()) {
 							l.getJugadores().add(j);
 							logroRepository.save(l);
 						}
@@ -162,6 +161,7 @@ public class PartidaService {
 			}
 		}
 	}
+
 
 	public Boolean partidaFinalizada(Integer id){
         Partida partida = partidaRepository.findById(id).get();
@@ -184,9 +184,9 @@ public class PartidaService {
 	public Boolean 	doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones){
         if(Math.abs(islaDestino-islaActual)<=doblones){
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-    }
-	
+	}
+
 }
