@@ -83,22 +83,22 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Hola','hola','hola','hola','2000-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Hola','$2a$10$TLi2Ie51KQ.gAH7J/bpgM.3JAcGCZFu7uGz483ty7YF7RfxdoVtz2','hola','hola','2000-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (10,'Hola','admin');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pepe','pepe','pepe','pepe','2001-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pepe','$2a$10$QuFiLQHzfVwK0SUX3ZBGIOuln.wHqOXZv317SdBoIoft2E8YipLBa','pepe','pepe','2001-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (11,'Pepe','jugador');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pablo','pablo','pablo','pablo','2002-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Pablo','$2a$10$5SHbAO4WsM499ItJ91TjqORMxFI9ejP1gfZdJP5RvBHIz4Pphg74e','pablo','pablo','2002-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (12,'Pablo','jugador');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Jaime','jaime','Jaime','Rodriguez Mantero','2003-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Jaime','$2a$10$hwxxg6YaV0t./XkYcDcTXOLBY3l5GzfOMmASjbVHZVG.iyVmWJTK2','Jaime','Rodriguez Mantero','2003-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (13,'Jaime','jugador');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Kiko','kiko','kiko','Mota Mota','2002-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Kiko','$2a$10$DMquhgR55QNvtGBUW7hCCesHyGAYvc7a17UXexNTQfVj5VJSKdUPi','kiko','Mota Mota','2002-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (14,'Kiko','jugador');
 
-INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Juan','juan','juan','Recio Matamoros','2002-01-10',True);
+INSERT INTO usuarios(nombre_usuario,contrasena,nombre,apellidos,fecha_nacimiento,enabled) VALUES ('Juan','$2a$10$M8iK0OJU3xwDxgwm1GBcwukMtZFNbogfjX5b3KVcWnUIiEeAX37Pu','juan','Recio Matamoros','2002-01-10',True);
 INSERT INTO autoridades(id,nombre_usuario,autoridad) VALUES (15,'Juan','jugador');
 
 INSERT INTO jugadores(partidas_jugadas, partidas_ganadas, total_puntos, record_puntos, nombre_usuario) VALUES (1,0,12,12,'Pepe');
