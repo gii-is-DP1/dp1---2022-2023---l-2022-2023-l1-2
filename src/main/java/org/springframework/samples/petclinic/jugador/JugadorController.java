@@ -132,17 +132,17 @@ public class JugadorController {
 
 
 	@GetMapping("/jugadores/rankingPuntos")
-	public ModelAndView rankingPuntos(){
+	public ModelAndView rankingPuntos(@PageableDefault(page = 0, size = 5) Pageable page){
 		ModelAndView mav = new ModelAndView(RANKINGPUNTOS);
-		List<Jugador> jugadores = jugadorService.jugadoresOrderedByPuntos();
+		Page<Jugador> jugadores = jugadorService.jugadoresOrderedByPuntos(page);
 		mav.addObject("jugadores", jugadores);
 		return mav;
 	}
 
 	@GetMapping("/jugadores/rankingPartidasGanadas")
-	public ModelAndView rankingPartidasGanadas(){
+	public ModelAndView rankingPartidasGanadas(@PageableDefault(page = 0, size = 5) Pageable page){
 		ModelAndView mav = new ModelAndView(RANKINGPARTIDAS);
-		List<Jugador> jugadores = jugadorService.jugadoresOrderedByPartidasGanadas();
+		Page<Jugador> jugadores = jugadorService.jugadoresOrderedByPartidasGanadas(page);
 		mav.addObject("jugadores", jugadores);
 		return mav;
 	}

@@ -138,12 +138,12 @@ public class JugadorService {
 		jugadorRepository.save(j);
 	}
 
-	public List<Jugador> jugadoresOrderedByPuntos(){
-		return jugadorRepository.findAllOrderedByPuntos();
+	public Page<Jugador> jugadoresOrderedByPuntos(Pageable page){
+		return jugadorRepository.findAllOrderedByPuntos(page);
 	}
 
-	public List<Jugador> jugadoresOrderedByPartidasGanadas(){
-		return jugadorRepository.findAllOrderedByPartidasGanadas();
+	public Page<Jugador> jugadoresOrderedByPartidasGanadas(Pageable page){
+		return jugadorRepository.findAllOrderedByPartidasGanadas(page);
 	}
 
 	
