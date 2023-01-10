@@ -3,12 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="home" >
     <h2><fmt:message key="welcome"/></h2>
     <div class="row">
         <div align="center">
-            <a class="btn btn-default" href='<spring:url value="/jugadores/profile" htmlEscape="true"/>'> Mi Perfil</a>
+            <sec:authorize access="isAuthenticated()">
+                <a class="btn btn-default" href='<spring:url value="/jugadores/profile" htmlEscape="true"/>'> Mi Perfil</a>
+            </sec:authorize>
         </div>
         <br/>
         <div align="center">
