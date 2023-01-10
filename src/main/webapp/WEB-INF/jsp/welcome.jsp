@@ -7,10 +7,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout2 pageName="home" >
-    <h2><fmt:message key="welcome"/></h2>
-    <!-- <div class="row"  style="background-image: url(resources/images/3.jpg) no-repeat center center fixed;background-position: center; background-size: cover; "> -->
+
+    
+    
         
-        <div align="center">
+        <div align="center" style="margin-top: 100px;">
             <sec:authorize access="isAuthenticated()">
                 <a class="btn btn-default" href='<spring:url value="/jugadores/profile" htmlEscape="true"/>'> Mi Perfil</a>
             </sec:authorize>
