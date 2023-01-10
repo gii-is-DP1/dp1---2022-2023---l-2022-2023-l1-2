@@ -7,7 +7,7 @@
 
 <petclinic:layout pageName="jugadores">
 
-    <h2>Jugador Information</h2>
+    <h2>Información del Jugador</h2>
 
 
     <table class="table table-striped">
@@ -28,6 +28,11 @@
             <td><b><c:out value="${jugador.usuario.getFechaNacimiento()}"/></b></td>
         </tr>
     </table>
+    <c:if test = "${jugadorActual.getNombreUsuario().equals(jugador.usuario.getNombreUsuario())}">
+        <div align = "center">
+            <a class="btn btn-warning" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
+        </div>
+    </c:if>
 
     <h2>Estadísticas Globales</h2>
     <table class="table table-striped">
