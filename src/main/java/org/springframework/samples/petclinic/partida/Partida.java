@@ -3,37 +3,34 @@ package org.springframework.samples.petclinic.partida;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Size;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.samples.petclinic.carta.Carta;
 import org.springframework.samples.petclinic.jugador.Jugador;
-import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.model.NamedEntity;
-import org.springframework.samples.petclinic.web.Vistas;
-
-import com.fasterxml.jackson.annotation.JsonView;
-
+import org.springframework.samples.petclinic.model.AuditableEntity;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.Setter; 
 
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @Entity
 @Table(name = "partidas")
-public class Partida extends NamedEntity {
+public class Partida extends AuditableEntity {
     
+    @Size(min = 3, max = 50)
+	@Column(name = "name")
+	private String name;
 
     @Column(name = "fecha")
     private LocalDate fecha;
@@ -83,6 +80,9 @@ public class Partida extends NamedEntity {
     @JoinColumn(name = "ganador_id")
     private Jugador ganador;
 
-
+    @Override
+	public String toString() {
+		return this.getName();
+	}
 
 }

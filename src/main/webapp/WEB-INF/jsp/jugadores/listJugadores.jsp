@@ -26,8 +26,6 @@
             <th>Partidas Ganadas</th>
             <th>Puntos Totales</th>
             <th>Récord de Puntos</th>
-            <th></th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -52,16 +50,16 @@
                 <td>
                     <c:out value="${jugador.recordPuntos}"/>
                 </td>
-                <td>
-                    <sec:authorize access="hasAnyAuthority('admin')">
-                    <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
-                    </sec:authorize>
-                </td>
-                <td>
-                    <sec:authorize access="isAuthenticated()">
-                    <a class="btn" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
-                    </sec:authorize>
-                </td>
+                <sec:authorize access="hasAnyAuthority('admin')">
+                    <td>
+                        <a class="btn btn-danger" href='<spring:url value="/jugadores/delete/${jugador.id}" htmlEscape="true"/>'>Eliminar</a>
+                    </td>
+                    <td>
+                        <sec:authorize access="isAuthenticated()">
+                        <a class="btn" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
+                        </sec:authorize>
+                    </td>
+                </sec:authorize>
             </tr>
         </c:forEach>
         </tbody>
