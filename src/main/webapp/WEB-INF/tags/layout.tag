@@ -13,7 +13,7 @@
 <petclinic:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">
-    <div class="container xd-container">
+    <div class="container xd-container" >
 
         <jsp:doBody/>
 

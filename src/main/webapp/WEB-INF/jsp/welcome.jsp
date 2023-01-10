@@ -6,9 +6,10 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<petclinic:layout pageName="home" >
+<petclinic:layout2 pageName="home" >
     <h2><fmt:message key="welcome"/></h2>
-    <div class="row">
+    <!-- <div class="row"  style="background-image: url(resources/images/3.jpg) no-repeat center center fixed;background-position: center; background-size: cover; "> -->
+        
         <div align="center">
             <sec:authorize access="isAuthenticated()">
                 <a class="btn btn-default" href='<spring:url value="/jugadores/profile" htmlEscape="true"/>'> Mi Perfil</a>
@@ -33,4 +34,4 @@
 
         
     </div>
-</petclinic:layout>
+</petclinic:layout2>
