@@ -19,10 +19,10 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
     Page<Jugador> findAllJugadoresPage(Pageable page);
 
     @Query("SELECT jug FROM Jugador jug ORDER BY jug.totalPuntos DESC")
-    List<Jugador> findAllOrderedByPuntos();
+    Page<Jugador> findAllOrderedByPuntos(Pageable page);
 
     @Query("SELECT jug FROM Jugador jug ORDER BY jug.partidasGanadas DESC")
-    List<Jugador> findAllOrderedByPartidasGanadas();
+    Page<Jugador> findAllOrderedByPartidasGanadas(Pageable page);
 
     Jugador save (Jugador jugador) throws DataAccessException;
 

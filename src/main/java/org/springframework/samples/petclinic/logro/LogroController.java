@@ -61,7 +61,7 @@ public class LogroController {
             Set<Jugador> set = new HashSet<>();
             logro.setJugadores(set);
             this.logroService.save(logro);
-            return "redirect:/logros/list";
+            return "redirect:/logros/list?p1=0&p2=0";
         }
     }
 
@@ -86,7 +86,7 @@ public class LogroController {
             logro.setTipoLogro(logro.getTipoLogro());
             logro.setJugadores(logro.getJugadores());
             this.logroService.save(logro);
-            return "redirect:/logros/list";
+            return "redirect:/logros/list?p1=0&p2=0";
         }
     }
 
@@ -97,7 +97,7 @@ public class LogroController {
             Logro logro = opt.get();
             logroService.delete(logro);
         }
-        return "redirect:/logros/list";
+        return "redirect:/logros/list?p1=0&p2=0";
     }
 
     @GetMapping("/list")

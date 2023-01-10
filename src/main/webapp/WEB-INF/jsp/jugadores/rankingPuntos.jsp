@@ -20,10 +20,10 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${jugadores}" var="jugador">
+            <c:forEach items="${jugadores.getContent()}" var="jugador">
                 <tr>
                     <td>
-                        <c:out value="${jugadores.indexOf(jugador)+1}"/>
+                        <c:out value="${jugadores.getContent().indexOf(jugador)+1}"/>
                     </td>
                     <td>
                         <spring:url value="/jugadores/{jugadorId}" var="jugadorUrl">
@@ -39,4 +39,12 @@
             </c:forEach>
         </tbody>
     </table>
+    <div align="center">
+        <c:if test="${jugadores.number!=0}">
+            <a href="?page=${jugadores.number-1}"><span class="glyphicon glyphicon-arrow-left"></a>
+        </c:if>
+        <c:if test="${!jugadores.last}">
+            <a href="?page=${jugadores.number+1}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+        </c:if>
+    </div>
 </petclinic:layout>
