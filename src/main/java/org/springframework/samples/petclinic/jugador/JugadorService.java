@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.estadisticasPartida.EstadisticaService;
 import org.springframework.samples.petclinic.estadisticasPartida.EstadísticaJugadorEnPartida;
 import org.springframework.samples.petclinic.logro.Logro;
@@ -20,7 +22,6 @@ import org.springframework.samples.petclinic.partida.PartidaService;
 import org.springframework.samples.petclinic.usuario.AutoridadService;
 import org.springframework.samples.petclinic.usuario.Usuario;
 import org.springframework.samples.petclinic.usuario.UsuarioService;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,10 @@ public class JugadorService {
 	}
 	public Jugador findByUsuario(Usuario usuario){
 		return jugadorRepository.findByUsuario(usuario);
+	}
+
+	public Page<Jugador> findAllJugadoresPage(Pageable page){
+		return jugadorRepository.findAllJugadoresPage(page);
 	}
 
 	@Transactional
