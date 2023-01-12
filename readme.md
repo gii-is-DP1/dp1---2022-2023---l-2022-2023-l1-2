@@ -1,105 +1,100 @@
-# Spring PetClinic Sample Application 
+# Spring Application 7 Islas
 
-This is a fork of https://github.com/spring-projects/spring-petclinic to be used for the DP1 course. The main changes that have been performed were:
-- Trimming several parts of the application to keep the example low
-- Reorganize some parts of the code according to best practices introduced in the course
+## ¿Qué es 7 Islas?
+7 Islas es una Spring Application hecha para la asignatura de DP1 por Álvaro Vega Rodríguez, Francisco Fernández Mota, Antonio Peláez Moreno, Javier Ulecia García, Gabriel Vidal Tévar y Carlos del Río Pérez. 
 
-## Understanding the Spring Petclinic application with a few diagrams
-<a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
+### Objetivo
+En el juego de mesa 7 Islas tomaremos el papel de los piratas mas temibles de este lado del mundo. Nuestro objetivo será conseguir el tesoro más variado y más valioso al finalizar el saqueo de las 7 Islas.
 
-## Running petclinic locally
-Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
+### Preparación del juego
+1) Se reparten 3 cartas de doblones a los jugadores y se baraja el resto de cartas para formar un mazo.
 
+2) Se coloca una carta del mazo boca arriba en cada una de las islas del 1 al 6 y el mazo restante boca abajo en la Isla 7.
+
+3) Ya estamos listos para jugar.
+
+### Secuencia del juego
+7 Islas se juega por turnos y cada turno tiene dos acciones:
+
+#### Acción 1:
+1) El jugador lanza el dado.
+Opcion 1: Llevarse la carta de tesoro de la Isla correspondiente al número obtenido.
+Opcion 2: Contratar al barco pirata para llevarse un tesoro ubicado en otra isla. Para ello deberá pagar tantas cartas de tesoro como espacios desee moverse sin pasar de la Isla 7 (estas cartas se descartan del juego). Recordar
+que el reverso de las cartas muestra al barco pirata por lo que cualquier carta de tesoro (incluido los doblones) es capaz de contratar al barco para moverse un espacio.
+
+#### Acción 2:
+Se repone la isla vacía con una nueva carta de tesoro del mazo colocándola boca arriba.
+
+### Fin del juego
+Una vez se acabe el mazo de cartas de tesoro, se completará la ronda actual (para que todos jueguen la misma cantidad de turnos) y terminará el juego.
+
+Para calcular el puntaje final, por cada doblón se obtendrá 1 punto y además se otorgarán puntos por cada set de
+tesoros DISTINTOS (no incluye doblones) como tenga el jugador, guiándonos de la tabla mostrada abajo. Puede
+tenerse más de un set. Sumamos los puntajes y quien tenga el mayor puntaje, habrá ganado el juego. En caso de empate, quien tenga más doblones será el ganador
+
+<img width="1042" alt="puntaje" src="src\main\resources\static\resources\images\puntaje.png">
+
+## ¿Cómo arrancar la aplicación?
+7 Islas es un [Spring Boot](https://spring.io/guides/gs/spring-boot) application construida utilizando [Maven](https://spring.io/guides/gs/maven/). Antes de ejecutar la aplicación debes instalar Maven:
 
 ```
-git clone https://github.com/gii-is-DP1/spring-petclinic.git
-cd spring-petclinic
-./mvnw package
-java -jar target/*.jar
+mvn install
 ```
 
-You can then access petclinic here: http://localhost:8080/
+Tendrás acceso a la aplicación en: http://localhost:8080/
 
-<img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
-
-Or you can run it from Maven directly using the Spring Boot Maven plugin. If you do this it will pick up changes that you make in the project immediately (changes to Java source files require a compile as well - most people use an IDE for this):
-
-```
-./mvnw spring-boot:run
-```
-
-## In case you find a bug/suggested improvement for Spring Petclinic
-Our issue tracker is available here: https://github.com/gii-is-DP1/spring-petclinic/issues
+<img width="1042" alt="7Islas-screenshot" src="src\main\resources\static\resources\images\7Islas-screenshot.png">
 
 
-## Database configuration
+## Configuración de Base de Datos
 
-In its default configuration, Petclinic uses an in-memory database (H2) which
-gets populated at startup with data. 
+En su configuración predeterminada, Petclinic utiliza una base de datos en memoria (H2) que se llena al inicio con datos. 
 
-## Working with Petclinic in your IDE
+## Trabajar con 7 Islas en tu IDE
 
-### Prerequisites
-The following items should be installed in your system:
-* Java 8 or newer.
-* git command line tool (https://help.github.com/articles/set-up-git)
-* Your preferred IDE 
-  * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in `Help -> About` dialog. If m2e is
-  not there, just follow the install process here: https://www.eclipse.org/m2e/
+### Prerequisitos
+Los siguientes items deben estas instalados en su sistema:
+* Java 8 o superior.
+* Herramienta de línea de comandos de git (https://help.github.com/articles/set-up-git)
+* Su IDE preferido: 
+  * Eclipse con el plugin m2e.
   * [Spring Tools Suite](https://spring.io/tools) (STS)
   * IntelliJ IDEA
   * [VS Code](https://code.visualstudio.com)
 
-### Steps:
+### Pasos:
 
-1) On the command line
+1) En la línea de comandos
 ```
 git clone https://github.com/gii-is-DP1/spring-petclinic.git
 ```
-2) Inside Eclipse or STS
+2) En Eclipse o STS
 ```
 File -> Import -> Maven -> Existing Maven project
 ```
 
-Then either build on the command line `./mvnw generate-resources` or using the Eclipse launcher (right click on project and `Run As -> Maven install`) to generate the css. Run the application main method by right clicking on it and choosing `Run As -> Java Application`.
+Puedes utilizar la línea de comandos `./mvnw generate-resources` o usar el launcher de Eclipse (click derecho en proyecto y `Run As -> Maven install`) para generar el css. Arranca el método principal de la aplicación haciendo click derecho y eligiendo `Run As -> Java Application`.
 
-3) Inside IntelliJ IDEA
+3) En IntelliJ IDEA
 
-In the main menu, choose `File -> Open` and select the Petclinic [pom.xml](pom.xml). Click on the `Open` button.
+En el menú principal, elige `File -> Open` y selecciona el [pom.xml](pom.xml). Haz click en `Open`.
 
-CSS files are generated from the Maven build. You can either build them on the command line `./mvnw generate-resources`
-or right click on the `spring-petclinic` project then `Maven -> Generates sources and Update Folders`.
+Los archivos CSS se crean a partir de la construcción de Maven. Puedes hacerlo desde la líea de comandos `./mvnw generate-resources`.
 
-A run configuration named `PetClinicApplication` should have been created for you if you're using a recent Ultimate
-version. Otherwise, run the application by right clicking on the `PetClinicApplication` main class and choosing
-`Run 'PetClinicApplication'`.
+Arranca la aplicación haciendo click derecho en la clase principal `PetClinicApplication` y eligiendo `Run 'PetClinicApplication'`.
 
-4) Navigate to Petclinic
+4) Navega por 7 Islas.
 
-Visit [http://localhost:8080](http://localhost:8080) in your browser.
+Visita [http://localhost:8080](http://localhost:8080) en tu navegador.
 
 
-## Looking for something in particular?
+## ¿Buscas algo en particular?
 
 |Spring Boot Configuration | Class or Java property files  |
 |--------------------------|---|
-|The Main Class | [PetClinicApplication](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java) |
-|Properties Files | [application.properties](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/resources) |
-|Caching | [CacheConfiguration](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/java/org/springframework/samples/petclinic/system/CacheConfiguration.java) |
-
-## Interesting Spring Petclinic branches and forks
-
-The Spring Petclinic master branch in the main [spring-projects](https://github.com/spring-projects/spring-petclinic)
-GitHub org is the "canonical" implementation, currently based on Spring Boot and Thymeleaf. There are
-[quite a few forks](https://spring-petclinic.github.io/docs/forks.html) in a special GitHub org
-[spring-petclinic](https://github.com/spring-petclinic). If you have a special interest in a different technology stack
-that could be used to implement the Pet Clinic then please join the community there.
-
-# Contributing
-
-The [issue tracker](https://github.com/gii-is-DP1/spring-petclinic/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
-
-For pull requests, editor preferences are available in the [editor config](.editorconfig) for easy use in common text editors. Read more and download plugins at <https://editorconfig.org>. If you have not previously done so, please fill out and submit the [Contributor License Agreement](https://cla.pivotal.io/sign/spring).
+|Clase principal | [PetClinicApplication](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java) |
+|Archivos de propiedades | [application.properties](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/resources) |
+|Caché | [CacheConfiguration](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/java/org/springframework/samples/petclinic/system/CacheConfiguration.java) |
 
 # License
 
