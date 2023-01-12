@@ -4,7 +4,21 @@
 7 Islas es una Spring Application hecha para la asignatura de DP1 por Álvaro Vega Rodríguez, Francisco Fernández Mota, Antonio Peláez Moreno, Javier Ulecia García, Gabriel Vidal Tévar y Carlos del Río Pérez. 
 
 ### Objetivo
-En el juego de mesa 7 Islas tomaremos el papel de los piratas mas temibles de este lado del mundo. Nuestro objetivo será conseguir el tesoro más variado y más valioso al finalizar el saqueo de las 7 Islas.
+En el juego de mesa 7 Islas tomaremos el papel de los piratas más temibles de este lado del mundo. Nuestro objetivo será conseguir el tesoro más variado y más valioso al finalizar el saqueo de las 7 Islas.
+
+### Cartas
+Hay 66 cartas compuestas por:
+ - 27 doblones
+ - 3 cálices
+ - 3 rubíes
+ - 3 diamantes
+ - 4 collares
+ - 4 mapas del tesoro
+ - 4 coronas
+ - 6 revólveres
+ - 6 espadas
+ - 6 barriles de ron
+
 
 ### Preparación del juego
 1) Se reparten 3 cartas de doblones a los jugadores y se baraja el resto de cartas para formar un mazo.
@@ -18,9 +32,9 @@ En el juego de mesa 7 Islas tomaremos el papel de los piratas mas temibles de es
 
 #### Acción 1:
 1) El jugador lanza el dado.
-Opcion 1: Llevarse la carta de tesoro de la Isla correspondiente al número obtenido.
-Opcion 2: Contratar al barco pirata para llevarse un tesoro ubicado en otra isla. Para ello deberá pagar tantas cartas de tesoro como espacios desee moverse sin pasar de la Isla 7 (estas cartas se descartan del juego). Recordar
-que el reverso de las cartas muestra al barco pirata por lo que cualquier carta de tesoro (incluido los doblones) es capaz de contratar al barco para moverse un espacio.
+ - Opcion 1: Llevarse la carta de tesoro de la Isla correspondiente al número obtenido.
+ - Opcion 2: Contratar al barco pirata para llevarse un tesoro ubicado en otra isla. Para ello deberá pagar tantas cartas de tesoro como espacios desee moverse sin pasar de la Isla 7 (estas cartas se descartan del juego). Recordar
+ que el reverso de las cartas muestra al barco pirata por lo que cualquier carta de tesoro (incluido los doblones) es capaz de contratar al barco para moverse un espacio.
 
 #### Acción 2:
 Se repone la isla vacía con una nueva carta de tesoro del mazo colocándola boca arriba.
@@ -53,7 +67,7 @@ En su configuración predeterminada, Petclinic utiliza una base de datos en memo
 ## Trabajar con 7 Islas en tu IDE
 
 ### Prerequisitos
-Los siguientes items deben estas instalados en su sistema:
+Los siguientes ítems deben estas instalados en su sistema:
 * Java 8 o superior.
 * Herramienta de línea de comandos de git (https://help.github.com/articles/set-up-git)
 * Su IDE preferido: 
@@ -98,7 +112,7 @@ Visita [http://localhost:8080](http://localhost:8080) en tu navegador.
 
 # License
 
-The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
+La apliación 7 Islas está lanzada bajo la versión 2.0 de la[Licencia de Apache](https://www.apache.org/licenses/LICENSE-2.0).
 
 [spring-petclinic]: https://github.com/spring-projects/spring-petclinic
 [spring-framework-petclinic]: https://github.com/spring-petclinic/spring-framework-petclinic
