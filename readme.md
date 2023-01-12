@@ -112,7 +112,7 @@ Visita [http://localhost:8080](http://localhost:8080) en tu navegador.
 
 # License
 
-La apliación 7 Islas está lanzada bajo la versión 2.0 de la[Licencia de Apache](https://www.apache.org/licenses/LICENSE-2.0).
+La apliación 7 Islas está lanzada bajo la versión 2.0 de la [Licencia de Apache](https://www.apache.org/licenses/LICENSE-2.0).
 
 [spring-petclinic]: https://github.com/spring-projects/spring-petclinic
 [spring-framework-petclinic]: https://github.com/spring-petclinic/spring-framework-petclinic
