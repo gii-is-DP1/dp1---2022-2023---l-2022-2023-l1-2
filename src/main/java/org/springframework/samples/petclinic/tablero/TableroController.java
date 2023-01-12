@@ -29,18 +29,4 @@ public class TableroController {
     private static final String ERROR = "/error";
     
     
-  /*  @GetMapping(path = "/{partidaId}/cambiarTurno")
-    public String cambiarTurno(@PathVariable("partidaId") int partidaId, ModelMap modelMap) {
-
-        Optional<Partida> opt = partidaService.findById(partidaId).stream().findFirst();
-        if(opt.isPresent()) {
-
-            return tableroService.cambiarTurno(opt.get());
-        
-        } else {
-            return ERROR;
-        }
-
-    } */
-    
 }

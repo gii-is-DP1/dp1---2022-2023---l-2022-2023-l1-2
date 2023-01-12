@@ -21,7 +21,7 @@ public class UsuarioService {
         this.usuarioRepository=usuarioRepository;
         this.passwordEncoder=passwordEncoder;
     }
-
+    
     public Optional<Usuario> findUserByNombreUsuario(String nombreUsuario){
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }

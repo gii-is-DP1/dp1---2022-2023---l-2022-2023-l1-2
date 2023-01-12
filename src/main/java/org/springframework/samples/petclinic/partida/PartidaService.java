@@ -36,6 +36,11 @@ public class PartidaService {
 		this.logroRepository = logroRepository;
 	}
 
+	public PartidaService(PartidaRepository partidaRepository, CartaRepository cartaRepository) {
+		this.partidaRepository = partidaRepository;
+		this.cartaRepository=cartaRepository;
+	}
+
 	public PartidaService(PartidaRepository partidaRepository) {
 		this.partidaRepository = partidaRepository;
 	}
@@ -168,18 +173,6 @@ public class PartidaService {
         return partida.getCartas().stream().allMatch(p->p.getPosicion()==0);    
     }
 
-	@Transactional
-	public void cambiarTurno(Partida p){
-        Integer n = p.getJugadores().size();
-        List<Jugador> jugadores = p.getJugadores();
-        Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
-        Integer posicionJugadorProximo = (poscionActual+1)%n;
-
-        Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
-        p.setJugadorActual(jugadorProximo);  
-        p.setDadoTirado(false);
-        save(p);
-    }
 
 	public Boolean 	doblonesSuficientes(Integer islaDestino, Integer islaActual, Integer doblones){
         if(Math.abs(islaDestino-islaActual)<=doblones){
