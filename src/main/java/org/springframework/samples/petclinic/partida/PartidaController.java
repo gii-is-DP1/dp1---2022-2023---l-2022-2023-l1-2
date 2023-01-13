@@ -76,7 +76,7 @@ public class PartidaController {
             return PARTIDA_JOIN;
         } else {
             Partida p = partidaService.findById(partidaId).get();
-            if (!(p.getCodigo().equals(partida.getCodigo()))) {
+            if (!(p.getCodigo().equals(partida.getCodigo()))) { 
                 String message = "El código no es correcto";
                 sesion.setAttribute("message", message);
                 return "redirect:/partidas/join";
