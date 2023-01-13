@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.usuario;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -12,20 +14,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UsuarioController {
 
     private static final String VIEW_CREATE_FORM = "usuario/createForm";
 
-    private final JugadorService jugadorService; 
+    private final JugadorService jugadorService;
+	private final UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(JugadorService jService){
+    public UsuarioController(JugadorService jService, UsuarioService usuarioService){
         this.jugadorService = jService;
+		this.usuarioService = usuarioService;
     }
 
     @InitBinder
@@ -47,7 +51,8 @@ public class UsuarioController {
 			return VIEW_CREATE_FORM;
 		}
 		else {
-			//creating jugador, usuario, and administrador
+			//creating jugador, usuario, and administrador`
+			jugador.getUsuario().setCreatedDate(LocalDate.now());
 			jugador.setPartidasGanadas(0);	
 			jugador.setPartidasJugadas(0);
 			jugador.setRecordPuntos(0);
@@ -57,4 +62,11 @@ public class UsuarioController {
 		}
 	}
     
+	@GetMapping("/auditoria")
+	public ModelAndView auditoriaUsuarios(){
+		ModelAndView mav = new ModelAndView("auditoria");
+		List<Usuario> lista = usuarioService.findAllUsuarios();
+		mav.addObject("usuarios", lista);
+		return mav;
+	}
 }
