@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +39,20 @@ public class UsuarioServiceTest {
         us.setContrasena("password");
         passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         usuarioService = new UsuarioService(repo, passwordEncoder);
+    }
+
+
+    @Test
+    public void findAllTest(){
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(us);
+        when(repo.findAll()).thenReturn(usuarios);
+    
+        List<Usuario> UsuarioNew = new ArrayList<>();
+        UsuarioNew.add(us);
+        List<Usuario> usuarios2 = usuarioService.findAllUsuarios();
+        assertNotNull(usuarios2);
+        assertEquals(UsuarioNew, usuarios2);
     }
 
     @Test
