@@ -412,6 +412,12 @@ public class PartidaController {
         return mav;
     }
 
-
+    @GetMapping("/historial")
+	public ModelAndView historialPartidas(){
+		ModelAndView mav = new ModelAndView("partidas/historial");
+		List<Partida> partidas = partidaService.findAllPartidas();
+        mav.addObject("partidas", partidas);
+		return mav;
+	}
     
 }

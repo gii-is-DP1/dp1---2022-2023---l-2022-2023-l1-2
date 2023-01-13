@@ -28,10 +28,6 @@ import lombok.Setter;
 @Table(name = "partidas")
 public class Partida extends AuditableEntity {
     
-    @Size(min = 3, max = 50)
-	@Column(name = "name")
-	private String name;
-
     @Column(name = "fecha")
     private LocalDate fecha;
   
@@ -80,9 +76,5 @@ public class Partida extends AuditableEntity {
     @JoinColumn(name = "ganador_id")
     private Jugador ganador;
 
-    @Override
-	public String toString() {
-		return this.getName();
-	}
 
 }

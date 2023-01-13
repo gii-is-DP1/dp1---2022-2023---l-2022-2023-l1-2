@@ -1,11 +1,10 @@
 package org.springframework.samples.petclinic.usuario;
 
+import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +21,10 @@ public class UsuarioService {
         this.passwordEncoder=passwordEncoder;
     }
     
+    public List<Usuario> findAllUsuarios(){
+        return usuarioRepository.findAll();
+    }
+
     public Optional<Usuario> findUserByNombreUsuario(String nombreUsuario){
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }

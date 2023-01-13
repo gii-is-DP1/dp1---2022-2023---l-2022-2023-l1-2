@@ -30,7 +30,7 @@
     </table>
     <c:if test = "${jugadorActual.getNombreUsuario().equals(jugador.usuario.getNombreUsuario())}">
         <div align = "center">
-            <a class="btn btn-warning" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
+            <a class="btn btn-default" href='<spring:url value="/jugadores/edit/${jugador.id}/" htmlEscape="true"/>'>Editar</a>
         </div>
     </c:if>
 
