@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class TableroService {
 	private TableroRepository tableroRepository;
 
-    @Autowired
+    
     private PartidaService partidaService;
     private JugadorService jugadorService;
 
@@ -25,9 +25,10 @@ public class TableroService {
     private static final String REDIRECT_TABLERO = "redirect:/tableros/";
 
     @Autowired
-	public TableroService(TableroRepository tableroRepository, JugadorService jugadorService) {
+	public TableroService(TableroRepository tableroRepository, JugadorService jugadorService, PartidaService partidaService) {
 		this.tableroRepository = tableroRepository;
         this.jugadorService = jugadorService;
+        this.partidaService = partidaService;
 	}
 	
 	public Optional<Tablero> findById(Integer id){
