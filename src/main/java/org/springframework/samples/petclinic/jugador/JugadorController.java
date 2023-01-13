@@ -37,7 +37,7 @@ public class JugadorController {
 
 	private final JugadorService jugadorService;
 	private final UsuarioService usuarioService;
-	private final PartidaService partidaService;
+	
 	private final EstadisticaService estadisticaService;
 
 	@Autowired
@@ -46,7 +46,7 @@ public class JugadorController {
 			EstadisticaService estadisticaService) {
 		this.jugadorService = jugadorService;
 		this.usuarioService = uService;
-		this.partidaService = partidaService;
+		
 		this.estadisticaService = estadisticaService;
 	}
 

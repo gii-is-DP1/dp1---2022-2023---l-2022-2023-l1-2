@@ -23,7 +23,7 @@
             <c:forEach items="${jugadores.getContent()}" var="jugador">
                 <tr>
                     <td>
-                        <c:out value="${jugadores.getContent().indexOf(jugador)+1}"/>
+                        <c:out value="${jugadores.number*5+jugadores.getContent().indexOf(jugador)+1}"/>
                     </td>
                     <td>
                         <spring:url value="/jugadores/{jugadorId}" var="jugadorUrl">
