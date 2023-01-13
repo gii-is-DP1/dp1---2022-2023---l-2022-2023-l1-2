@@ -13,24 +13,24 @@
         
         <div align="center" style="margin-top: 100px;">
             <sec:authorize access="isAuthenticated()">
-                <a class="btn btn-default" href='<spring:url value="/jugadores/profile" htmlEscape="true"/>'> Mi Perfil</a>
+                <a class="btn btn-default"  style="min-width: 150px;" href='<spring:url value="/jugadores/profile" htmlEscape="true"/>'> Mi Perfil</a>
             </sec:authorize>
         </div>
         <br/>
         <div align="center">
-            <a class="btn btn-default" href='<spring:url value="/partidas/create" htmlEscape="true"/>'> Crear Partida</a>
+            <a class="btn btn-default"  style="min-width: 150px;" href='<spring:url value="/partidas/create" htmlEscape="true"/>'> Crear Partida</a>
         </div>
         <br/>
         <div align="center">
-            <a class="btn btn-default" href='<spring:url value="/partidas/join" htmlEscape="true"/>'> Unirse a Partida</a>
+            <a class="btn btn-default"  style="min-width: 150px;" href='<spring:url value="/partidas/join" htmlEscape="true"/>'> Unirse a Partida</a>
         </div>
         <br/>
         <div align="center">
-            <a class="btn btn-default" href='<spring:url value="/jugadores/find" htmlEscape="true"/>'> Ver jugadores</a>
+            <a class="btn btn-default"  style="min-width: 150px;" href='<spring:url value="/jugadores/find" htmlEscape="true"/>'> Ver jugadores</a>
         </div>
         <br/>
         <div align="center">
-            <a class="btn btn-default" href='<spring:url value="/logros/list?p1=0&p2=0" htmlEscape="true"/>'> Logros</a>
+            <a class="btn btn-default"  style="min-width: 150px;" href='<spring:url value="/logros/list?p1=0&p2=0" htmlEscape="true"/>'> Logros</a>
         </div>
 
         
