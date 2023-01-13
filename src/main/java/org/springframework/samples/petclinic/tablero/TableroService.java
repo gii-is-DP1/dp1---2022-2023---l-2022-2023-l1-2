@@ -34,18 +34,18 @@ public class TableroService {
 		return tableroRepository.findById(id);
 	}
 
-	@Transactional
-    public Partida cambiarTurno(Partida p){
 
+    @Transactional
+	public void cambiarTurno(Partida p){
         Integer n = p.getJugadores().size();
-
         List<Jugador> jugadores = p.getJugadores();
         Integer poscionActual = jugadores.indexOf(p.getJugadorActual());
-        Integer idJugadorProximo = (poscionActual+1)%n;
-        Jugador jug = jugadorService.findJugadorById(idJugadorProximo).get();
-        p.setJugadorActual(jug);   
+        Integer posicionJugadorProximo = (poscionActual+1)%n;
+
+        Jugador jugadorProximo = jugadores.get(posicionJugadorProximo);
+        p.setJugadorActual(jugadorProximo);  
         p.setDadoTirado(false);
-        return partidaService.save(p);
+        partidaService.save(p);
     }
 
 }

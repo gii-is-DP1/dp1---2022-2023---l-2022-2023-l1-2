@@ -281,7 +281,7 @@ public class PartidaController {
             }
             estadisticaService.aumentarCartasObtenidas(jug.getId(), p.getId());
         }
-        partidaService.cambiarTurno(p);
+        tableroService.cambiarTurno(p);
         if (partidaService.partidaFinalizada(partidaId)){
             return "redirect:/partidas/"+partidaId+"/fin";
         } else {

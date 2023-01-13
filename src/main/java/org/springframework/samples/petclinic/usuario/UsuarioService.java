@@ -20,7 +20,7 @@ public class UsuarioService {
         this.usuarioRepository=usuarioRepository;
         this.passwordEncoder=passwordEncoder;
     }
-
+    
     public List<Usuario> findAllUsuarios(){
         return usuarioRepository.findAll();
     }

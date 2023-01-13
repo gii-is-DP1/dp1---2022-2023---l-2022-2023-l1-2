@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AutoridadService {
     private AutoridadRepository administradoRepository;
-	private UsuarioService userService;
+	private UsuarioRepository usuarioRepository;
 
     @Autowired
-	public AutoridadService(AutoridadRepository administradorRepository,UsuarioService usuarioService) {
+	public AutoridadService(AutoridadRepository administradorRepository,UsuarioRepository usuarioRepository) {
 		this.administradoRepository = administradorRepository;
-		this.userService= usuarioService;
+		this.usuarioRepository= usuarioRepository;
 	}
 
 	@Transactional
@@ -29,7 +29,7 @@ public class AutoridadService {
 	@Transactional
 	public void saveAdministradores(String nombreUsuario, String rol) throws DataAccessException{
 		Autoridad ad = new Autoridad();
-		Optional<Usuario> usuario = userService.findUserByNombreUsuario(nombreUsuario);
+		Optional<Usuario> usuario = usuarioRepository.findByNombreUsuario(nombreUsuario);
 		if(usuario.isPresent()){
 			ad.setUsuario(usuario.get());
 			ad.setAutoridad(rol);
